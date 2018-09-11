@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/first_section" android:checkableBehavior="all">
+
+    <item
+        android:id="@+id/d_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/d_schedules"
+        android:icon="@drawable/ic_calendar"
+        android:title="Schedules" />
+    <item
+        android:id="@+id/d_history"
+        android:icon="@drawable/ic_history"
+        android:title="History" />
+    </group>
+    <group android:id="@+id/second_section" android:checkableBehavior="all">
+
+    <item
+        android:id="@+id/d_myinfo"
+        android:icon="@drawable/ic_user"
+        android:title="My Info" />
+
+    <item
+        android:id="@+id/d_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings" />
+
+    <item
+        android:id="@+id/d_aboutus"
+        android:icon="@drawable/ic_info"
+        android:title="About Us" />
+    </group>
+
+    <group android:id="@+id/third_section" android:checkableBehavior="all">
+
+    <item
+        android:id="@+id/d_logout"
+        android:icon="@drawable/ic_exit"
+        android:title="Logout" />
+</group>
+
+</menu>

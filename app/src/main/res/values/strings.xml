@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CleanbyDemandMobile</string>
     <string name="title_activity_cleaner_map">Map</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
