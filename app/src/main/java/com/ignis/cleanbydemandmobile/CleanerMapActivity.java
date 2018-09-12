@@ -135,7 +135,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_myinfo:
 
-                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        i = new Intent(getBaseContext(), MainActivityFragment.class);
+                        i.putExtra("fragment_state", "myinfo");
                         startActivity(i);
 
                         item.setChecked(true);
@@ -144,7 +145,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_schedules:
 
-                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        i = new Intent(getBaseContext(), MainActivityFragment.class);
+                        i.putExtra("fragment_state", "schedule");
                         startActivity(i);
 
                         item.setChecked(true);
@@ -153,7 +155,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_history:
 
-                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        i = new Intent(getBaseContext(), MainActivityFragment.class);
+                        i.putExtra("fragment_state", "history");
                         startActivity(i);
 
                         item.setChecked(true);
@@ -162,7 +165,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_settings:
 
-                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        i = new Intent(getBaseContext(), MainActivityFragment.class);
+                        i.putExtra("fragment_state", "settings");
                         startActivity(i);
 
                         item.setChecked(true);
@@ -172,7 +176,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_aboutus:
 
-                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        i = new Intent(getBaseContext(), MainActivityFragment.class);
+                        i.putExtra("fragment_state", "aboutus");
                         startActivity(i);
 
                         item.setChecked(true);
@@ -180,9 +185,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                         break;
 
                     case R.id.d_logout:
-
-                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
-                        startActivity(i);
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
@@ -221,12 +223,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         });
 
     }//end oncreate
-
-    @OnClick(R.id.jump)
-    public void jumpbtn(){
-    Intent i = new Intent(this,MainActivityFragment.class);
-    startActivity(i);
-    }
 
     @Override
     protected void onStart() {

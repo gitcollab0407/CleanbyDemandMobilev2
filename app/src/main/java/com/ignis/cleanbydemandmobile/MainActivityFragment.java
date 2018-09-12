@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +15,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-;
+;import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivityFragment extends AppCompatActivity {
 
@@ -22,12 +25,19 @@ public class MainActivityFragment extends AppCompatActivity {
     private Toolbar mtoolbar;
     private NavigationView navigationView;
 
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+
+    String fragment_state;
+
+    @BindView(R.id.action_title) TextView action_title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_fragment);
-
+        ButterKnife.bind(this);
 
         mtoolbar = (Toolbar) findViewById(R.id.nav_action);
         setSupportActionBar(mtoolbar);
@@ -38,10 +48,48 @@ public class MainActivityFragment extends AppCompatActivity {
         mdrawelayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView action_title = (TextView) findViewById(R.id.action_title);
-        action_title.setText("Home");
+        fragment_state = getIntent().getStringExtra("fragment_state");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+//--------------------------------------------------------------------------------------------------
+
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        if(fragment_state.contains("schedule")){
+            ScheduleFragment scheduleFragment = new ScheduleFragment();
+            fragmentTransaction.add(R.id.fragment_container,scheduleFragment, null);
+            fragmentTransaction.commit();
+            action_title.setText("Schedules");
+
+        }else if(fragment_state.contains("history")){
+            HistoryFragment historyFragment = new HistoryFragment();
+            fragmentTransaction.add(R.id.fragment_container,historyFragment, null);
+            fragmentTransaction.commit();
+            action_title.setText("History");
+
+        }else if(fragment_state.contains("myinfo")){
+            MyInfoFragment myInfoFragment = new MyInfoFragment();
+            fragmentTransaction.add(R.id.fragment_container,myInfoFragment, null);
+            fragmentTransaction.commit();
+
+        }else if(fragment_state.contains("settings")){
+            SettingsFragment settingsFragment = new SettingsFragment();
+            fragmentTransaction.add(R.id.fragment_container,settingsFragment, null);
+            fragmentTransaction.commit();
+            action_title.setText("Settings");
+
+        }else if(fragment_state.contains("aboutus")){
+            AboutUsFragment aboutUsFragment = new AboutUsFragment();
+            fragmentTransaction.add(R.id.fragment_container,aboutUsFragment, null);
+            fragmentTransaction.commit();
+            action_title.setText("AboutUs");
+        }
+
+//--------------------------------------------------------------------------------------------------
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View headerView = navigationView.getHeaderView(0);
@@ -50,10 +98,12 @@ public class MainActivityFragment extends AppCompatActivity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
                 switch (item.getItemId()) {
 
                     case R.id.d_home:
+
                         Intent i = new Intent(MainActivityFragment.this, CleanerMapActivity.class);
                         startActivity(i);
                         item.setChecked(true);
@@ -62,28 +112,44 @@ public class MainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_myinfo:
 
-                        Toast.makeText(MainActivityFragment.this, "2", Toast.LENGTH_SHORT).show();
+                        MyInfoFragment myInfoFragment = new MyInfoFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,myInfoFragment, null);
+                        fragmentTransaction.commit();
+                        action_title.setText("My Info");
+
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;
 
                     case R.id.d_schedules:
 
-                        Toast.makeText(MainActivityFragment.this, "3", Toast.LENGTH_SHORT).show();
+                        ScheduleFragment scheduleFragment = new ScheduleFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,scheduleFragment, null);
+                        fragmentTransaction.commit();
+                        action_title.setText("Schedules");
+
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;
 
                     case R.id.d_history:
 
-                        Toast.makeText(MainActivityFragment.this, "4", Toast.LENGTH_SHORT).show();
+                        HistoryFragment historyFragment = new HistoryFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,historyFragment, null);
+                        fragmentTransaction.commit();
+                        action_title.setText("History");
+
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;
 
                     case R.id.d_settings:
 
-                        Toast.makeText(MainActivityFragment.this, "5", Toast.LENGTH_SHORT).show();
+                        SettingsFragment settingsFragment = new SettingsFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,settingsFragment, null);
+                        fragmentTransaction.commit();
+                        action_title.setText("Settings");
+
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;
@@ -91,7 +157,11 @@ public class MainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_aboutus:
 
-                        Toast.makeText(MainActivityFragment.this, "6", Toast.LENGTH_SHORT).show();
+                        AboutUsFragment aboutUsFragment = new AboutUsFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,aboutUsFragment, null);
+                        fragmentTransaction.commit();
+                        action_title.setText("About Us");
+
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;
