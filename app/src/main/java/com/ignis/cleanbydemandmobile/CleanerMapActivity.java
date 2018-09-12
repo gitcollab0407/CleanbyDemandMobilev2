@@ -27,8 +27,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,6 +44,11 @@ import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 //AppCompatActivity
 public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.OnCameraMoveStartedListener,
                                                                              GoogleMap.OnCameraMoveListener,
@@ -49,20 +57,14 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                                                              OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
-
     LocationManager locationManager;
     LocationListener locationListener;
-
     LatLng userLocation;
     LatLng centerph = new LatLng(12.496333, 123.008514);// PH_Luzon
     LatLng lastKnown_userLocation;
 
-    private static final String TAG = "MapsActivity"; // Log
-
-    private Marker OtherUser;
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
-
     private DrawerLayout mdrawelayout;
     private Toolbar mtoolbar;
 
@@ -75,13 +77,14 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     public String markerUid, markerUsername, myUsername;
     private Marker currentMarker;
+
     int hideinfo = 0;
 
     private static final int REQUEST_LOCATION = 1;
 
     TextView navlocation, navuser;
 
-    ArrayList<String> Locations = new ArrayList<String>();
+    private static final String TAG = "MapsActivity"; // Log
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -89,14 +92,17 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     private Boolean mLocationPermissionsGranted = false;
 
-    public int mylocationblue = 0;
-    LatLng mylocationcompare;
+    private Unbinder unbinder;
+
+    Intent i;
+
+    //@BindView(R.id.average) TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cleaner_map);
-
+        ButterKnife.bind(this);
         getLocationPermission();
 
         mtoolbar = (Toolbar) findViewById(R.id.nav_action);
@@ -127,15 +133,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                 switch (item.getItemId()) {
 
-                    case R.id.d_home:
-
-
-                        item.setChecked(true);
-                        mdrawelayout.closeDrawers();
-                        break;
-
                     case R.id.d_myinfo:
 
+                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        startActivity(i);
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
@@ -143,6 +144,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_schedules:
 
+                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        startActivity(i);
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
@@ -150,6 +153,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_history:
 
+                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        startActivity(i);
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
@@ -157,6 +162,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_settings:
 
+                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        startActivity(i);
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
@@ -165,6 +172,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_aboutus:
 
+                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        startActivity(i);
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
@@ -172,6 +181,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_logout:
 
+                        i = new Intent(CleanerMapActivity.this, MainActivityFragment.class);
+                        startActivity(i);
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
@@ -210,6 +221,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         });
 
     }//end oncreate
+
+    @OnClick(R.id.jump)
+    public void jumpbtn(){
+    Intent i = new Intent(this,MainActivityFragment.class);
+    startActivity(i);
+    }
 
     @Override
     protected void onStart() {

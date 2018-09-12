@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#545454"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_centerInParent="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/d_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="133dp"
+                android:paddingLeft="5dp"
+                android:gravity="center"
+                android:text="Premium Cleaning (4Hours)"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/d_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignStart="@+id/d_payment"
+                android:layout_alignTop="@+id/d_date"
+                android:drawableLeft="@drawable/d_clock"
+                android:gravity="center|left"
+                android:paddingLeft="5dp"
+                android:text=" 9:00AM"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/d_cleaner"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/d_date"
+                android:layout_marginTop="209dp"
+                android:drawableLeft="@drawable/d_cleaning"
+                android:gravity="center|left"
+                android:paddingLeft="5dp"
+                android:text=" = 1"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/d_date"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="174dp"
+                android:drawableLeft="@drawable/d_calendar"
+                android:gravity="center|left"
+                android:paddingLeft="5dp"
+                android:text=" Sep, 20, 2018"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/d_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignEnd="@+id/d_message_content"
+                android:layout_alignTop="@+id/d_cleaner"
+                android:drawableLeft="@drawable/d_credit_card"
+                android:gravity="center|left"
+                android:paddingLeft="5dp"
+                android:text=" Credit Card"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/d_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/d_cleaner"
+                android:layout_marginBottom="220dp"
+                android:gravity="center|left"
+                android:text=" Message"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/d_message_content"
+                android:layout_width="300dp"
+                android:layout_height="130dp"
+
+                android:layout_alignStart="@+id/d_cleaner"
+                android:layout_below="@+id/d_message"
+                android:layout_marginTop="-220dp"
+                android:gravity="center|left|top"
+                android:paddingRight="30dp"
+                android:paddingLeft="5dp"
+                android:text="In the opening paragraph--or with more complex request letters this is the second paragraph. After you make your request, give any necessary details to help the receiver of your letter fully understand what you are asking for."
+                android:textSize="15dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:text="Accept"
+                android:textColor="@color/colorAccent"
+                android:background="@color/white"
+                android:textSize="25dp"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_background">
+
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/h_profile"
+                        android:layout_width="81dp"
+                        android:layout_height="75dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/kindred"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp" />
+
+                    <TextView
+                        android:id="@+id/d_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="31dp"
+                        android:layout_toEndOf="@+id/h_profile"
+                        android:paddingLeft="5dp"
+                        android:text="Kindred Inocencio"
+                        android:textColor="@color/white"
+                        android:textSize="25dp" />
+
+                    <TextView
+                        android:id="@+id/d_userinfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/d_username"
+                        android:layout_toEndOf="@+id/h_profile"
+                        android:paddingLeft="5dp"
+                        android:text="User info here"
+                        android:textColor="@color/white"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

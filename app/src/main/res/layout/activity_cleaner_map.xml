@@ -52,6 +52,15 @@
             android:src="@drawable/mylocationbutton"
             android:visibility="invisible" />
 
+        <Button
+            android:id="@+id/jump"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/mylocation"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="180dp"
+            android:text=" jump" />
+
     </RelativeLayout>
 
 <LinearLayout
