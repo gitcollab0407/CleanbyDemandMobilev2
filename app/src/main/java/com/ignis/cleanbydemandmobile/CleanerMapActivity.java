@@ -235,7 +235,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         try {
             android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
             View mView = getLayoutInflater().inflate(R.layout.dialog_schedule_info, null);
-            TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
+            ImageView call = (ImageView) mView.findViewById(R.id.call);
             TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
             TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
             mBuilder.setView(mView);
@@ -245,7 +245,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             messagecontent.setMovementMethod(new ScrollingMovementMethod());
             addresscontent.setMovementMethod(new ScrollingMovementMethod());
 
-            btnconfirm.setOnClickListener(new View.OnClickListener() {
+            call.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();

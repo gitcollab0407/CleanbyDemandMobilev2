@@ -222,18 +222,15 @@ In the opening paragraph--or with more complex request letters this is the secon
         android:layout_marginTop="30dp"
         android:paddingBottom="20dp">
 
-        <TextView
-            android:id="@+id/accept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
+        <ImageView
+            android:id="@+id/call"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/phone"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="21dp"
-            android:background="@color/white"
-            android:text="Accept"
-            android:textColor="@color/colorAccent"
-            android:textSize="25dp" />
+
+          />
 
     </RelativeLayout>
 
