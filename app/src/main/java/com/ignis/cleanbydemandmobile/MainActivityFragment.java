@@ -52,8 +52,17 @@ public class MainActivityFragment extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        HomeMapFragment homeMapFragment = new HomeMapFragment();
+        fragmentTransaction.replace(R.id.fragment_container,homeMapFragment, null);
+        fragmentTransaction.commit();
+        action_title.setText("Home");
+
 
 //--------------------------------------------------------------------------------------------------
+/*
 
 
         fragmentManager = getSupportFragmentManager();
@@ -88,6 +97,7 @@ public class MainActivityFragment extends AppCompatActivity {
             fragmentTransaction.commit();
             action_title.setText("AboutUs");
         }
+*/
 
 //--------------------------------------------------------------------------------------------------
 
@@ -104,8 +114,11 @@ public class MainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_home:
 
-                        Intent i = new Intent(MainActivityFragment.this, CleanerMapActivity.class);
-                        startActivity(i);
+                        HomeMapFragment homeMapFragment = new HomeMapFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,homeMapFragment, null);
+                        fragmentTransaction.commit();
+                        action_title.setText("Home");
+
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;

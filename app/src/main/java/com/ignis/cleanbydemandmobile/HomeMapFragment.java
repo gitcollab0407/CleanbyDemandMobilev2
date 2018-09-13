@@ -16,19 +16,23 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,31 +41,39 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-//AppCompatActivity
-public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.OnCameraMoveStartedListener,
-                                                                             GoogleMap.OnCameraMoveListener,
-                                                                             GoogleMap.OnCameraMoveCanceledListener,
-                                                                             GoogleMap.OnCameraIdleListener,
-                                                                             OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
+public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveStartedListener,
+                                                                 GoogleMap.OnCameraMoveListener,
+                                                                 GoogleMap.OnCameraMoveCanceledListener,
+                                                                 GoogleMap.OnCameraIdleListener,
+                                                                 OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+
+
+    SupportMapFragment mapFragment;
     private GoogleMap mMap;
+
     LocationManager locationManager;
     LocationListener locationListener;
     LatLng userLocation;
     LatLng centerph = new LatLng(12.496333, 123.008514);// PH_Luzon
     LatLng lastKnown_userLocation;
+
+    private Marker OtherUser;
 
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
@@ -70,7 +82,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     private Animation myFadeInAnimation, myFadeOutAnimation;
 
-    private ImageView mylocation;
+
     int focus_location = 1;
 
     private AutoCompleteTextView mSearchText;
@@ -94,139 +106,69 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     private Unbinder unbinder;
 
-    Intent i;
+    ArrayList<String> Locations = new ArrayList<String>();
 
-    //@BindView(R.id.average) TextView tv;
+    @BindView(R.id.mylocation) ImageView mylocation;
+
+    View view;
+    public HomeMapFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cleaner_map);
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home_map, container, false);
+
+        ButterKnife.bind(this, view);
         getLocationPermission();
 
-        mtoolbar = (Toolbar) findViewById(R.id.nav_action);
-        setSupportActionBar(mtoolbar);
+        myFadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadein_icon);
+        myFadeOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout_icon);
 
-        mdrawelayout = (DrawerLayout) findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this, mdrawelayout, R.string.open, R.string.close);
+        return view;
+    }
 
-        mdrawelayout.addDrawerListener(mToggle);
-        mToggle.syncState();
+    @OnClick(R.id.infobar)
+    public  void infobar(View view){
+        try {
+                android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
+                TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
+                TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+                mBuilder.setView(mView);
+                final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            messagecontent.setMovementMethod(new ScrollingMovementMethod());
+            btnconfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "asdasd", Toast.LENGTH_SHORT).show();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView action_title = (TextView)findViewById(R.id.action_title);
-        action_title.setText("Home");
-
-
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View headerView = navigationView.getHeaderView(0);
-
-    /*    navuser = (TextView) headerView.findViewById(R.id.headeruser);
-        navlocation = (TextView) headerView.findViewById(R.id.headerlocation);*/
-
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.d_myinfo:
-
-                        i = new Intent(getBaseContext(), MainActivityFragment.class);
-                        i.putExtra("fragment_state", "myinfo");
-                        startActivity(i);
-
-                        item.setChecked(true);
-                        mdrawelayout.closeDrawers();
-                        break;
-
-                    case R.id.d_schedules:
-
-                        i = new Intent(getBaseContext(), MainActivityFragment.class);
-                        i.putExtra("fragment_state", "schedule");
-                        startActivity(i);
-
-                        item.setChecked(true);
-                        mdrawelayout.closeDrawers();
-                        break;
-
-                    case R.id.d_history:
-
-                        i = new Intent(getBaseContext(), MainActivityFragment.class);
-                        i.putExtra("fragment_state", "history");
-                        startActivity(i);
-
-                        item.setChecked(true);
-                        mdrawelayout.closeDrawers();
-                        break;
-
-                    case R.id.d_settings:
-
-                        i = new Intent(getBaseContext(), MainActivityFragment.class);
-                        i.putExtra("fragment_state", "settings");
-                        startActivity(i);
-
-                        item.setChecked(true);
-                        mdrawelayout.closeDrawers();
-                        break;
-
-
-                    case R.id.d_aboutus:
-
-                        i = new Intent(getBaseContext(), MainActivityFragment.class);
-                        i.putExtra("fragment_state", "aboutus");
-                        startActivity(i);
-                        Toast.makeText(CleanerMapActivity.this, "", Toast.LENGTH_SHORT).show();
-                        item.setChecked(true);
-                        mdrawelayout.closeDrawers();
-                        break;
-
-                    case R.id.d_logout:
-
-                        item.setChecked(true);
-                        mdrawelayout.closeDrawers();
-                        break;
-
+                    dialog.hide();
                 }
-                return true;
-            }
-        });
+            });
 
-        myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein_icon);
-        myFadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fadeout_icon);
+        }catch(Exception e){}
+    }
 
-        mylocation = (ImageView) findViewById(R.id.mylocation);
-        mylocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @OnClick(R.id.mylocation)
+    public void mylocation(View view) {
+        if (userLocation != null) {
+            CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
+            // Log.d(TAG, "onLocationChanged 1:" + userLocation);
+        } else if (lastKnown_userLocation != null) {
+            CameraPosition position = new CameraPosition.Builder().target(lastKnown_userLocation).zoom(17).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
+            //  Log.d(TAG, "lastKnown_userLocation 1:" + lastKnown_userLocation);
+        }
 
-                if (userLocation != null) {
-                    CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
-                    // Log.d(TAG, "onLocationChanged 1:" + userLocation);
-                } else if (lastKnown_userLocation != null) {
-                    CameraPosition position = new CameraPosition.Builder().target(lastKnown_userLocation).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
-                    //  Log.d(TAG, "lastKnown_userLocation 1:" + lastKnown_userLocation);
-                }
-
-                focus_location = 1;
-                if (mylocation.getVisibility() == View.VISIBLE) {
-                    mylocation.startAnimation(myFadeOutAnimation);
-                    mylocation.setVisibility(View.INVISIBLE);
-                }
-
-            }
-        });
-
-    }//end oncreate
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+        focus_location = 1;
+        if (mylocation.getVisibility() == View.VISIBLE) {
+            mylocation.startAnimation(myFadeOutAnimation);
+            mylocation.setVisibility(View.INVISIBLE);
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -248,7 +190,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             // in a raw resource file.
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_json));
+                            getActivity(), R.raw.style_json));
 
             if (!success) {
                 Log.e(TAG, "Style parsing failed.");
@@ -259,30 +201,30 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
 //------------------------------------------------------------------------------------User Location
 
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
 
             @Override
             public void onLocationChanged(Location location) {
                 userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-                 Log.d(TAG, "user location: " + userLocation);
+                Log.d(TAG, "user location: " + userLocation);
 
 
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
                 if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     buildAlertMessageNoGps();
 
                 } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
-                    hidenavbar();
 
                     if (userLocation != null && focus_location == 1) {
 
-                            CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
-                            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
+                        CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
 
-                        if(mMap.isMyLocationEnabled() == false) {
+                        if (mMap.isMyLocationEnabled() == false) {
                             mMap.setMyLocationEnabled(true);
 
                             if (mylocation.getVisibility() == View.VISIBLE) {
@@ -319,6 +261,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             }
 
         };
+
 //------------------------------------------------------------------------------------
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -355,17 +298,30 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             mMap.setMyLocationEnabled(true);
         }
 //------------------------------------------------------------------------------------Other Location
-   /*
-                    LatLng UsersCoordinate = new LatLng(lat, lng);
+        Locations.add("14.552045, 121.017155");
+        Locations.add("14.552419, 121.015031");
+        Locations.add("14.550570, 121.013775");
+        Locations.add("14.554831, 121.014166");
+        Locations.add("14.5485926,121.00755");
 
-                    //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
-                    OtherUser = mMap.addMarker(new MarkerOptions()
-                                                       .position(UsersCoordinate)
-                                                       .title(username)
-                                                       .snippet("My Frequency: " + frequency)
-                                                       .icon(BitmapDescriptorFactory.fromResource(R.drawable.sflag)));
-                    OtherUser.setTag(id);
-                    */
+        for (int a = 0; a < 5; a++) {
+
+            String[] separated = Locations.get(a).split(",");
+
+            Double lat = Double.parseDouble(separated[0]);
+            Double lng = Double.parseDouble(separated[1]);
+
+        LatLng UsersCoordinate = new LatLng(lat, lng);
+
+        //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
+        OtherUser = mMap.addMarker(new MarkerOptions()
+                                           .position(UsersCoordinate)
+                                           .title("Username")
+                                           .snippet("My Frequency:")
+                                           .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
+        OtherUser.setTag("ref");
+
+    }
 
     }//end googlemap
 
@@ -378,7 +334,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             if (userLocation != null || lastKnown_userLocation != null) {
 
                 focus_location = 0;
-                if (mylocation.getVisibility() == View.INVISIBLE) {
+                if (mylocation.getVisibility() == getView().INVISIBLE) {
                     mylocation.startAnimation(myFadeInAnimation);
                     mylocation.setVisibility(View.VISIBLE);
                 }
@@ -412,37 +368,34 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        hidenavbar();
-
-    }
-
-    private void hidenavbar() {
-
-        this.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-    }
-
-    @Override
     public boolean onMarkerClick(Marker marker) {
+
+        try {
+            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+            View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
+            TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
+            TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+            mBuilder.setView(mView);
+            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+            dialog.show();
+            messagecontent.setMovementMethod(new ScrollingMovementMethod());
+            btnconfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "asdasd", Toast.LENGTH_SHORT).show();
+
+                    dialog.hide();
+                }
+            });
+
+        }catch(Exception e){}
+
         return false;
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 
     protected void buildAlertMessageNoGps() {
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Please Turn ON your GPS Connection")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -459,39 +412,35 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         alert.show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void getLocationPermission() {
         // Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permissions = { Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION };
 
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+            if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionsGranted = true;
                 initMap();
             } else {
-                ActivityCompat.requestPermissions(this,
+                ActivityCompat.requestPermissions(getActivity(),
                         permissions,
                         LOCATION_PERMISSION_REQUEST_CODE);
             }
         } else {
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(getActivity(),
                     permissions,
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
 
     private void initMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if(mapFragment == null){
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+        }
         mapFragment.getMapAsync(this);
 
     }
@@ -519,6 +468,5 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             }
         }
     }
-
 
 }

@@ -35,13 +35,14 @@
         <activity
             android:name=".CleanerMapActivity"
             android:label="@string/title_activity_cleaner_map">
+
+        </activity>
+        <activity android:name=".MainActivityFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivityFragment"></activity>
     </application>
 
 </manifest>
