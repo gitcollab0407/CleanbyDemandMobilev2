@@ -3,12 +3,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".MyInfoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="myinfo" />
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/h_profile"
+            android:layout_width="121dp"
+            android:layout_height="124dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/kindred"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:text="Change photo"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <RatingBar
+            android:id="@+id/MyRating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/h_email"
+            android:layout_gravity="center"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:paddingTop="10dp"
+            android:progressTint="@color/progresstint"
+            android:rating="4"
+            android:stepSize="0.1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:paddingTop="10dp"
+            android:text="Kindred Inocencio"
+            android:textColor="@color/white"
+            android:textSize="40dp" />
+
+        <TextView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Email: kindred.inocencio@gmail.com"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Contact Number: 09369275915"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
+            android:text="Address:44 Delupio Compound,Fortune Village 1, GenT Deleon,Valenzuela City"/>
+
+    </LinearLayout>
+
 
 </FrameLayout>
