@@ -73,21 +73,12 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
     LatLng centerph = new LatLng(12.496333, 123.008514);// PH_Luzon
     LatLng lastKnown_userLocation;
 
-    private Marker OtherUser;
-
-    private ActionBarDrawerToggle mToggle;
-    private NavigationView navigationView;
-    private DrawerLayout mdrawelayout;
-    private Toolbar mtoolbar;
-
     private Animation myFadeInAnimation, myFadeOutAnimation;
-
 
     int focus_location = 1;
 
     private AutoCompleteTextView mSearchText;
 
-    public String markerUid, markerUsername, myUsername;
     private Marker currentMarker;
 
     int hideinfo = 0;
@@ -133,19 +124,30 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
     public  void infobar(View view){
         try {
                 android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-                View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
+                View mView = getLayoutInflater().inflate(R.layout.dialog_schedule_info, null);
                 TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
                 TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+                TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
                 mBuilder.setView(mView);
                 final android.support.v7.app.AlertDialog dialog = mBuilder.create();
                 dialog.show();
+
             messagecontent.setMovementMethod(new ScrollingMovementMethod());
+            addresscontent.setMovementMethod(new ScrollingMovementMethod());
+
             btnconfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(getActivity(), "asdasd", Toast.LENGTH_SHORT).show();
 
                     dialog.hide();
+                }
+            });
+
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    hidenavbar();
                 }
             });
 
@@ -201,7 +203,6 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
 
 //------------------------------------------------------------------------------------User Location
 
-
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
 
@@ -218,13 +219,14 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
 
                 } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
+                    hidenavbar();
 
                     if (userLocation != null && focus_location == 1) {
 
                         CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
 
-                        if (mMap.isMyLocationEnabled() == false) {
+                        if(mMap.isMyLocationEnabled() == false) {
                             mMap.setMyLocationEnabled(true);
 
                             if (mylocation.getVisibility() == View.VISIBLE) {
@@ -261,7 +263,6 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
             }
 
         };
-
 //------------------------------------------------------------------------------------
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -298,30 +299,17 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
             mMap.setMyLocationEnabled(true);
         }
 //------------------------------------------------------------------------------------Other Location
-        Locations.add("14.552045, 121.017155");
-        Locations.add("14.552419, 121.015031");
-        Locations.add("14.550570, 121.013775");
-        Locations.add("14.554831, 121.014166");
-        Locations.add("14.5485926,121.00755");
+   /*
+                    LatLng UsersCoordinate = new LatLng(lat, lng);
 
-        for (int a = 0; a < 5; a++) {
-
-            String[] separated = Locations.get(a).split(",");
-
-            Double lat = Double.parseDouble(separated[0]);
-            Double lng = Double.parseDouble(separated[1]);
-
-        LatLng UsersCoordinate = new LatLng(lat, lng);
-
-        //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
-        OtherUser = mMap.addMarker(new MarkerOptions()
-                                           .position(UsersCoordinate)
-                                           .title("Username")
-                                           .snippet("My Frequency:")
-                                           .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
-        OtherUser.setTag("ref");
-
-    }
+                    //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
+                    OtherUser = mMap.addMarker(new MarkerOptions()
+                                                       .position(UsersCoordinate)
+                                                       .title(username)
+                                                       .snippet("My Frequency: " + frequency)
+                                                       .icon(BitmapDescriptorFactory.fromResource(R.drawable.sflag)));
+                    OtherUser.setTag(id);
+                    */
 
     }//end googlemap
 
@@ -334,7 +322,7 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
             if (userLocation != null || lastKnown_userLocation != null) {
 
                 focus_location = 0;
-                if (mylocation.getVisibility() == getView().INVISIBLE) {
+                if (mylocation.getVisibility() == View.INVISIBLE) {
                     mylocation.startAnimation(myFadeInAnimation);
                     mylocation.setVisibility(View.VISIBLE);
                 }
@@ -367,29 +355,20 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
     public void onCameraIdle() {
     }
 
+    private void hidenavbar() {
+
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+    }
+
     @Override
     public boolean onMarkerClick(Marker marker) {
-
-        try {
-            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-            View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
-            TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
-            TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
-            mBuilder.setView(mView);
-            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
-            dialog.show();
-            messagecontent.setMovementMethod(new ScrollingMovementMethod());
-            btnconfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getActivity(), "asdasd", Toast.LENGTH_SHORT).show();
-
-                    dialog.hide();
-                }
-            });
-
-        }catch(Exception e){}
-
         return false;
     }
 
@@ -413,7 +392,6 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
     }
 
     private void getLocationPermission() {
-        // Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permissions = { Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION };
 
@@ -447,7 +425,6 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        // Log.d(TAG, "onRequestPermissionsResult: called.");
         mLocationPermissionsGranted = false;
 
         switch (requestCode) {

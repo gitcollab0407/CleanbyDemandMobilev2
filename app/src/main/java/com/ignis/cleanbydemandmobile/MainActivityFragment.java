@@ -52,18 +52,7 @@ public class MainActivityFragment extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        HomeMapFragment homeMapFragment = new HomeMapFragment();
-        fragmentTransaction.replace(R.id.fragment_container,homeMapFragment, null);
-        fragmentTransaction.commit();
-        action_title.setText("Home");
-
-
 //--------------------------------------------------------------------------------------------------
-/*
-
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -84,6 +73,7 @@ public class MainActivityFragment extends AppCompatActivity {
             MyInfoFragment myInfoFragment = new MyInfoFragment();
             fragmentTransaction.add(R.id.fragment_container,myInfoFragment, null);
             fragmentTransaction.commit();
+            action_title.setText("My Info");
 
         }else if(fragment_state.contains("settings")){
             SettingsFragment settingsFragment = new SettingsFragment();
@@ -95,9 +85,8 @@ public class MainActivityFragment extends AppCompatActivity {
             AboutUsFragment aboutUsFragment = new AboutUsFragment();
             fragmentTransaction.add(R.id.fragment_container,aboutUsFragment, null);
             fragmentTransaction.commit();
-            action_title.setText("AboutUs");
+            action_title.setText("About Us");
         }
-*/
 
 //--------------------------------------------------------------------------------------------------
 
@@ -114,10 +103,8 @@ public class MainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_home:
 
-                        HomeMapFragment homeMapFragment = new HomeMapFragment();
-                        fragmentTransaction.replace(R.id.fragment_container,homeMapFragment, null);
-                        fragmentTransaction.commit();
-                        action_title.setText("Home");
+                        Intent i = new Intent(getBaseContext(), CleanerMapActivity.class);
+                        startActivity(i);
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();

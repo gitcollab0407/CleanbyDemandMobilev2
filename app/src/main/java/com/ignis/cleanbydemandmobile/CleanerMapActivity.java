@@ -21,6 +21,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,10 +38,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -70,7 +73,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     private Animation myFadeInAnimation, myFadeOutAnimation;
 
-    private ImageView mylocation;
     int focus_location = 1;
 
     private AutoCompleteTextView mSearchText;
@@ -93,6 +95,11 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     private Boolean mLocationPermissionsGranted = false;
 
     private Unbinder unbinder;
+
+    private Marker OtherUser;
+
+    ArrayList<String> Locations = new ArrayList<String>();
+    @BindView(R.id.mylocation)  ImageView mylocation;
 
     Intent i;
 
@@ -122,8 +129,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View headerView = navigationView.getHeaderView(0);
 
-    /*    navuser = (TextView) headerView.findViewById(R.id.headeruser);
-        navlocation = (TextView) headerView.findViewById(R.id.headerlocation);*/
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -132,6 +137,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
+
+                    case R.id.d_home:
+
+                        item.setChecked(true);
+                        mdrawelayout.closeDrawers();
+                        break;
 
                     case R.id.d_myinfo:
 
@@ -198,31 +209,61 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein_icon);
         myFadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fadeout_icon);
 
-        mylocation = (ImageView) findViewById(R.id.mylocation);
-        mylocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (userLocation != null) {
-                    CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
-                    // Log.d(TAG, "onLocationChanged 1:" + userLocation);
-                } else if (lastKnown_userLocation != null) {
-                    CameraPosition position = new CameraPosition.Builder().target(lastKnown_userLocation).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
-                    //  Log.d(TAG, "lastKnown_userLocation 1:" + lastKnown_userLocation);
-                }
-
-                focus_location = 1;
-                if (mylocation.getVisibility() == View.VISIBLE) {
-                    mylocation.startAnimation(myFadeOutAnimation);
-                    mylocation.setVisibility(View.INVISIBLE);
-                }
-
-            }
-        });
-
     }//end oncreate
+
+    @OnClick(R.id.mylocation)
+    public void mylocation(View view) {
+        if (userLocation != null) {
+            CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
+            // Log.d(TAG, "onLocationChanged 1:" + userLocation);
+        } else if (lastKnown_userLocation != null) {
+            CameraPosition position = new CameraPosition.Builder().target(lastKnown_userLocation).zoom(17).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
+            //  Log.d(TAG, "lastKnown_userLocation 1:" + lastKnown_userLocation);
+        }
+
+        focus_location = 1;
+        if (mylocation.getVisibility() == View.VISIBLE) {
+            mylocation.startAnimation(myFadeOutAnimation);
+            mylocation.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @OnClick(R.id.infobar)
+    public  void infobar(View view){
+        try {
+            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+            View mView = getLayoutInflater().inflate(R.layout.dialog_schedule_info, null);
+            TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
+            TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+            TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
+            mBuilder.setView(mView);
+            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+            dialog.show();
+
+            messagecontent.setMovementMethod(new ScrollingMovementMethod());
+            addresscontent.setMovementMethod(new ScrollingMovementMethod());
+
+            btnconfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
+                    hidenavbar();
+                    dialog.hide();
+                }
+            });
+
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    hidenavbar();
+                }
+            });
+
+        }catch(Exception e){}
+    }
+
 
     @Override
     protected void onStart() {
@@ -355,18 +396,27 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             mMap.setMyLocationEnabled(true);
         }
 //------------------------------------------------------------------------------------Other Location
-   /*
-                    LatLng UsersCoordinate = new LatLng(lat, lng);
+        Locations.add("14.552045, 121.017155");
+        Locations.add("14.552419, 121.015031");
+        Locations.add("14.550570, 121.013775");
+        Locations.add("14.554831, 121.014166");
+        Locations.add("14.5485926,121.00755");
 
-                    //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
-                    OtherUser = mMap.addMarker(new MarkerOptions()
-                                                       .position(UsersCoordinate)
-                                                       .title(username)
-                                                       .snippet("My Frequency: " + frequency)
-                                                       .icon(BitmapDescriptorFactory.fromResource(R.drawable.sflag)));
-                    OtherUser.setTag(id);
-                    */
+        for (int a = 0; a < 5; a++) {
 
+            String[] separated = Locations.get(a).split(",");
+
+            Double lat = Double.parseDouble(separated[0]);
+            Double lng = Double.parseDouble(separated[1]);
+
+            LatLng UsersCoordinate = new LatLng(lat, lng);
+
+            //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
+            OtherUser = mMap.addMarker(new MarkerOptions()
+                                               .position(UsersCoordinate)
+                                               .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
+            OtherUser.setTag("ref");
+        }
     }//end googlemap
 
     @Override
@@ -432,6 +482,35 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+
+        try {
+            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+            View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
+            TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
+            TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+            mBuilder.setView(mView);
+            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+            dialog.show();
+            messagecontent.setMovementMethod(new ScrollingMovementMethod());
+            btnconfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
+                    hidenavbar();
+                    dialog.hide();
+
+                }
+            });
+
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    hidenavbar();
+                }
+            });
+
+        }catch(Exception e){}
+
         return false;
     }
 

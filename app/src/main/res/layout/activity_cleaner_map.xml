@@ -32,11 +32,10 @@
 
         </fragment>
 
-
-
     </LinearLayout>
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -51,117 +50,118 @@
             android:src="@drawable/mylocationbutton"
             android:visibility="invisible" />
 
-
-
     </RelativeLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.github.captain_miao.optroundcardview.OptRoundCardView
-        android:layout_gravity="center|bottom"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        app:optRoundCardBackgroundColor="#dcede7"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cardElevation="20dp"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-        <TextView
+        <com.github.captain_miao.optroundcardview.OptRoundCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:text="No job schedule"
-            android:visibility="invisible"
-            />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/h_profile"
-                android:layout_width="53dp"
-                android:layout_height="52dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_marginStart="15dp"
-                android:src="@drawable/kindred"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="3dp" />
+            android:layout_height="80dp"
+            android:layout_gravity="center|bottom"
+            app:cardElevation="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="parent"
+            app:optRoundCardBackgroundColor="#dcede7">
 
             <TextView
-                android:id="@+id/b_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/h_profile"
-                android:layout_toEndOf="@+id/h_profile"
-                android:paddingLeft="5dp"
-                android:text="kindred inocencio"
-                android:textSize="20dp" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="No job schedule"
+                android:textSize="18dp"
+                android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/b_clean"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/b_username"
-                android:layout_toEndOf="@+id/h_profile"
-                android:paddingLeft="5dp"
-                android:text="Premium Cleaning"
-                android:textSize="15dp" />
+            <RelativeLayout
+                android:id="@+id/infobar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/h_profile"
+                    android:layout_width="53dp"
+                    android:layout_height="52dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/kindred"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="3dp" />
+
+                <TextView
+                    android:id="@+id/b_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/h_profile"
+                    android:layout_toEndOf="@+id/h_profile"
+                    android:paddingLeft="5dp"
+                    android:text="kindred inocencio"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/b_clean"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/b_username"
+                    android:layout_toEndOf="@+id/h_profile"
+                    android:paddingLeft="5dp"
+                    android:text="Premium Cleaning"
+                    android:textSize="15dp" />
 
 
-            <com.github.captain_miao.optroundcardview.OptRoundCardView
+                <com.github.captain_miao.optroundcardview.OptRoundCardView
 
-                android:layout_width="123dp"
-                android:layout_height="80dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="0dp"
-                app:optRoundCardBackgroundColor="#18945A">
+                    android:layout_width="123dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="0dp"
+                    app:optRoundCardBackgroundColor="#18945A">
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/b_time"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginBottom="11dp"
-                        android:drawableLeft="@drawable/ic_clock_colored"
-                        android:paddingLeft="5dp"
-                        android:text=" 9:00 AM"
-                        android:textColor="@color/white" />
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/b_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="13dp"
-                        android:drawableLeft="@drawable/ic_calendar_colored"
-                        android:paddingLeft="5dp"
-                        android:text=" Sep, 20, 2018"
-                        android:textColor="@color/white" />
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/b_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginBottom="11dp"
+                            android:drawableLeft="@drawable/ic_clock_colored"
+                            android:paddingLeft="5dp"
+                            android:text=" 9:00 AM"
+                            android:textColor="@color/white" />
 
-            </com.github.captain_miao.optroundcardview.OptRoundCardView>
+                        <TextView
+                            android:id="@+id/b_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="13dp"
+                            android:drawableLeft="@drawable/ic_calendar_colored"
+                            android:paddingLeft="5dp"
+                            android:text=" Sep, 20, 2018"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
 
-        </RelativeLayout>
+                </com.github.captain_miao.optroundcardview.OptRoundCardView>
 
-    </com.github.captain_miao.optroundcardview.OptRoundCardView>
+            </RelativeLayout>
 
-</LinearLayout>
+        </com.github.captain_miao.optroundcardview.OptRoundCardView>
+
+    </LinearLayout>
+
     <android.support.design.widget.NavigationView
         app:headerLayout="@layout/header"
         android:id="@+id/navigation_view"
@@ -175,6 +175,4 @@
         >
 
     </android.support.design.widget.NavigationView>
-
-
 </android.support.v4.widget.DrawerLayout>
