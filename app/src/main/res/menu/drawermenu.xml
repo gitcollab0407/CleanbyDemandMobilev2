@@ -24,10 +24,10 @@
         android:icon="@drawable/ic_user"
         android:title="My Info" />
 
-    <item
+  <!--  <item
         android:id="@+id/d_settings"
         android:icon="@drawable/ic_settings"
-        android:title="Settings" />
+        android:title="Settings" />-->
 
     <item
         android:id="@+id/d_aboutus"

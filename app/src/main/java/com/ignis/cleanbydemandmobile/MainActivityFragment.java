@@ -75,11 +75,11 @@ public class MainActivityFragment extends AppCompatActivity {
             fragmentTransaction.commit();
             action_title.setText("My Info");
 
-        }else if(fragment_state.contains("settings")){
+       /* }else if(fragment_state.contains("settings")){
             SettingsFragment settingsFragment = new SettingsFragment();
             fragmentTransaction.add(R.id.fragment_container,settingsFragment, null);
             fragmentTransaction.commit();
-            action_title.setText("Settings");
+            action_title.setText("Settings");*/
 
         }else if(fragment_state.contains("aboutus")){
             AboutUsFragment aboutUsFragment = new AboutUsFragment();
@@ -143,7 +143,7 @@ public class MainActivityFragment extends AppCompatActivity {
                         mdrawelayout.closeDrawers();
                         break;
 
-                    case R.id.d_settings:
+                   /* case R.id.d_settings:
 
                         SettingsFragment settingsFragment = new SettingsFragment();
                         fragmentTransaction.replace(R.id.fragment_container,settingsFragment, null);
@@ -152,7 +152,7 @@ public class MainActivityFragment extends AppCompatActivity {
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
-                        break;
+                        break;*/
 
 
                     case R.id.d_aboutus:

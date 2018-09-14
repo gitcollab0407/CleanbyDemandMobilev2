@@ -16,7 +16,7 @@ public class ScheduleFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private List<String> listdata = new ArrayList<>();
 
-    RecyclerViewAdapterSchedule adapter;
+
     public ScheduleFragment() {
         // Required empty public constructor
     }
@@ -26,9 +26,9 @@ public class ScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
-setupList();
+        setupList();
 
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_schedule);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_schedule);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -38,8 +38,9 @@ setupList();
     }
 
     private void setupList() {
-        for (int i = 1; i<=10; i++){
-            listdata.add("kindred" + i);
+        for (int i = 1; i <= 10; i++) {
+            //listdata.add("kindred" + i + "|" + "service" + "|" +"Sep,03,2018" +"|" + "10:30 AM");
+                listdata.add("kindred" + i);
         }
     }
 

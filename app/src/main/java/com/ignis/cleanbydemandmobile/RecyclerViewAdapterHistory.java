@@ -17,16 +17,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+class RecyclerViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
     public TextView a_username;
     public TextView a_service;
     public TextView a_date;
     public TextView a_time;
 
-    private ScheduleItemClickListener scheduleItemClickListener;
+    private HistoryItemClickListener historyItemClickListener;
 
-    public RecyclerViewHolder(View itemView) {
+    public RecyclerViewHolder1(View itemView) {
         super(itemView);
         a_username = (TextView) itemView.findViewById(R.id.a_username);
         a_service = (TextView) itemView.findViewById(R.id.a_service);
@@ -38,43 +38,43 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
 
     }
 
-    public void setItemClickListener(ScheduleItemClickListener scheduleItemClickListener) {
-        this.scheduleItemClickListener = scheduleItemClickListener;
+    public void setItemClickListener(HistoryItemClickListener HistoryItemClickListener) {
+        this.historyItemClickListener = HistoryItemClickListener;
 
     }
 
     @Override
     public void onClick(View view) {
-        scheduleItemClickListener.OnClick(view, getAdapterPosition(), false);
+        historyItemClickListener.OnClick(view, getAdapterPosition(), false);
     }
 
     @Override
     public boolean onLongClick(View view) {
 
-        scheduleItemClickListener.OnClick(view, getAdapterPosition(), true);
+        historyItemClickListener.OnClick(view, getAdapterPosition(), true);
         return true;
     }
 }
 
-public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerViewHolder1> {
 
     private List<String> listData = new ArrayList<>();
     private Context context;
 
-    public RecyclerViewAdapterSchedule(List<String> listData, Context context) {
+    public RecyclerViewAdapterHistory(List<String> listData, Context context) {
         this.listData = listData;
         this.context = context;
     }
 
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder1 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.recyclerview_schedule, parent, false);
-        return new RecyclerViewHolder(itemView);
+        View itemView = inflater.inflate(R.layout.recyclerview_hisoty, parent, false);
+        return new RecyclerViewHolder1(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder1 holder, int position) {
       /*  String[] separated = listData.get(position).split("|");
 
         String username = separated[0];
@@ -92,15 +92,21 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
         holder. a_date.setText(date);
 
         holder. a_time.setText(time);*/
-      holder.a_username.setText(listData.get(position));
+        holder.a_username.setText(listData.get(position));
 
-        holder.setItemClickListener(new ScheduleItemClickListener() {
+        holder.setItemClickListener(new HistoryItemClickListener() {
             @Override
             public void OnClick(View view, int position, boolean isLongClick) {
+           /*     if(isLongClick) {
+                    Toast.makeText(context, "long click" + listData.get(position), Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(context, "click" + listData.get(position), Toast.LENGTH_SHORT).show();
+
+                }*/
+
                 try {
                     android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(context);
-                    View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_schedule_info, null);
-                    ImageView call = (ImageView) mView.findViewById(R.id.call);
+                    View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_history_info, null);
                     TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
                     TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
                     mBuilder.setView(mView);
@@ -109,15 +115,6 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
 
                     messagecontent.setMovementMethod(new ScrollingMovementMethod());
                     addresscontent.setMovementMethod(new ScrollingMovementMethod());
-
-                    call.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(context, "asdasd", Toast.LENGTH_SHORT).show();
-                            hidenavbar();
-                            dialog.hide();
-                        }
-                    });
 
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
@@ -130,6 +127,7 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
             }
         });
     }
+
     private void hidenavbar() {
 
         ((Activity) context).getWindow().getDecorView().setSystemUiVisibility(
@@ -141,8 +139,6 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
     }
-
-
 
     @Override
     public int getItemCount() {

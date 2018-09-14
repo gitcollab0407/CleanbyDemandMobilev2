@@ -3,12 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".AboutUsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="aboutus" />
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
+            android:src="@drawable/cleanbydemandlogo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+
+            android:text="Life is stressful and so is keeping a clean home. It is important that our home is a place of calm sanctuary - relaxing space where we can linger and retreat from outside world. We understand that each one of us is busy with
+
+\n\n Clean by Demand was founded to help people achieve balance and tranquility in their homes. We offer eco-friendly cleaning services that supports safe and non-toxic materials in your home.
+
+\n\n Our cleaning service is 100% guaranteed efficient and true. Our cleaning technique is comparable to any 5* hotel housekeeping. Our cleaners are trained professionally to ensure that your satisfaction is our number 1 priority."/>
+
+    </LinearLayout>
+
 
 </FrameLayout>

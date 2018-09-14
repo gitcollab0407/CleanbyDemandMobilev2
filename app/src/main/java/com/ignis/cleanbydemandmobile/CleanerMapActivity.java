@@ -174,7 +174,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                         mdrawelayout.closeDrawers();
                         break;
 
-                    case R.id.d_settings:
+                 /*   case R.id.d_settings:
 
                         i = new Intent(getBaseContext(), MainActivityFragment.class);
                         i.putExtra("fragment_state", "settings");
@@ -182,7 +182,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
-                        break;
+                        break;*/
 
 
                     case R.id.d_aboutus:
@@ -190,7 +190,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                         i = new Intent(getBaseContext(), MainActivityFragment.class);
                         i.putExtra("fragment_state", "aboutus");
                         startActivity(i);
-                        Toast.makeText(CleanerMapActivity.this, "", Toast.LENGTH_SHORT).show();
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;
