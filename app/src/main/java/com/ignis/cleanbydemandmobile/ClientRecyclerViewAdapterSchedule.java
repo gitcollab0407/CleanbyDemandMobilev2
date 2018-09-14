@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-class RecyclerViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+class ClientRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
     public TextView a_username;
     public TextView a_service;
@@ -25,9 +25,9 @@ class RecyclerViewHolder1 extends RecyclerView.ViewHolder implements View.OnClic
     public TextView a_time;
     public TextView a_status;
 
-    private HistoryItemClickListener historyItemClickListener;
+    private ScheduleItemClickListener scheduleItemClickListener;
 
-    public RecyclerViewHolder1(View itemView) {
+    public ClientRecyclerViewHolder(View itemView) {
         super(itemView);
         a_username = (TextView) itemView.findViewById(R.id.a_username);
         a_service = (TextView) itemView.findViewById(R.id.a_service);
@@ -40,75 +40,53 @@ class RecyclerViewHolder1 extends RecyclerView.ViewHolder implements View.OnClic
 
     }
 
-    public void setItemClickListener(HistoryItemClickListener HistoryItemClickListener) {
-        this.historyItemClickListener = HistoryItemClickListener;
+    public void setItemClickListener(ScheduleItemClickListener scheduleItemClickListener) {
+        this.scheduleItemClickListener = scheduleItemClickListener;
 
     }
 
     @Override
     public void onClick(View view) {
-        historyItemClickListener.OnClick(view, getAdapterPosition(), false);
+        scheduleItemClickListener.OnClick(view, getAdapterPosition(), false);
     }
 
     @Override
     public boolean onLongClick(View view) {
 
-        historyItemClickListener.OnClick(view, getAdapterPosition(), true);
+        scheduleItemClickListener.OnClick(view, getAdapterPosition(), true);
         return true;
     }
 }
 
-public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerViewHolder1> {
+public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<ClientRecyclerViewHolder> {
 
     private List<String> listData = new ArrayList<>();
     private Context context;
 
-    public RecyclerViewAdapterHistory(List<String> listData, Context context) {
+    public ClientRecyclerViewAdapterSchedule(List<String> listData, Context context) {
         this.listData = listData;
         this.context = context;
     }
 
     @Override
-    public RecyclerViewHolder1 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ClientRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.recyclerview_hisoty, parent, false);
-        return new RecyclerViewHolder1(itemView);
+        View itemView = inflater.inflate(R.layout.clientrecyclerview_schedule, parent, false);
+        return new ClientRecyclerViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder1 holder, int position) {
-      /*  String[] separated = listData.get(position).split("|");
+    public void onBindViewHolder(@NonNull ClientRecyclerViewHolder holder, int position) {
 
-        String username = separated[0];
+      holder.a_username.setText(listData.get(position));
 
-        String service = separated[1];
-
-        String date = separated[2];
-
-        String time = separated[3];
-
-        holder. a_username.setText(username);
-
-        holder. a_service.setText(service);
-
-        holder. a_date.setText(date);
-
-        holder. a_time.setText(time);*/
-        holder.a_username.setText(listData.get(position));
-
-        holder.setItemClickListener(new HistoryItemClickListener() {
+        holder.setItemClickListener(new ScheduleItemClickListener() {
             @Override
             public void OnClick(View view, int position, boolean isLongClick) {
-           /*     if(isLongClick) {
-                    Toast.makeText(context, "long click" + listData.get(position), Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(context, "click" + listData.get(position), Toast.LENGTH_SHORT).show();
-
-                }*/
-
                 try {
                     android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(context);
-                    View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_history_info, null);
+                    View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_schedule_info, null);
+                    ImageView call = (ImageView) mView.findViewById(R.id.call);
                     TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
                     TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
                     mBuilder.setView(mView);
@@ -117,6 +95,15 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                     messagecontent.setMovementMethod(new ScrollingMovementMethod());
                     addresscontent.setMovementMethod(new ScrollingMovementMethod());
+
+                    call.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(context, "asdasd", Toast.LENGTH_SHORT).show();
+                            hidenavbar();
+                            dialog.hide();
+                        }
+                    });
 
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
@@ -129,7 +116,6 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
             }
         });
     }
-
     private void hidenavbar() {
 
         ((Activity) context).getWindow().getDecorView().setSystemUiVisibility(
@@ -141,6 +127,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
     }
+
 
     @Override
     public int getItemCount() {

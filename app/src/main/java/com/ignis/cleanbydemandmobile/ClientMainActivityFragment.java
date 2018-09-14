@@ -18,7 +18,7 @@ import android.widget.Toast;
 ;import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivityFragment extends AppCompatActivity {
+public class ClientMainActivityFragment extends AppCompatActivity {
 
     private DrawerLayout mdrawelayout;
     private ActionBarDrawerToggle mToggle;
@@ -36,61 +36,33 @@ public class MainActivityFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_fragment);
+        setContentView(R.layout.activity_client_main_fragment);
         ButterKnife.bind(this);
 
         mtoolbar = (Toolbar) findViewById(R.id.nav_action);
         setSupportActionBar(mtoolbar);
 
-        mdrawelayout = (DrawerLayout) findViewById(R.id.drawer);
+        mdrawelayout = (DrawerLayout) findViewById(R.id.clientdrawer);
         mToggle = new ActionBarDrawerToggle(this, mdrawelayout, R.string.open, R.string.close);
 
         mdrawelayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
-        fragment_state = getIntent().getStringExtra("fragment_state");
+      //  fragment_state = getIntent().getStringExtra("fragment_state");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//--------------------------------------------------------------------------------------------------
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        if(fragment_state.contains("schedule")){
-            ScheduleFragment scheduleFragment = new ScheduleFragment();
-            fragmentTransaction.add(R.id.fragment_container,scheduleFragment, null);
-            fragmentTransaction.commit();
-            action_title.setText("Schedules");
-
-        }else if(fragment_state.contains("history")){
-            HistoryFragment historyFragment = new HistoryFragment();
-            fragmentTransaction.add(R.id.fragment_container,historyFragment, null);
-            fragmentTransaction.commit();
-            action_title.setText("History");
-
-        }else if(fragment_state.contains("myinfo")){
-            MyInfoFragment myInfoFragment = new MyInfoFragment();
-            fragmentTransaction.add(R.id.fragment_container,myInfoFragment, null);
-            fragmentTransaction.commit();
-            action_title.setText("My Info");
-
-/*        }else if(fragment_state.contains("settings")){
-            SettingsFragment settingsFragment = new SettingsFragment();
-            fragmentTransaction.add(R.id.fragment_container,settingsFragment, null);
-            fragmentTransaction.commit();
-            action_title.setText("Settings");*/
-
-        }else if(fragment_state.contains("aboutus")){
-            AboutUsFragment aboutUsFragment = new AboutUsFragment();
-            fragmentTransaction.add(R.id.fragment_container,aboutUsFragment, null);
-            fragmentTransaction.commit();
-            action_title.setText("About Us");
-        }
+        ClientScheduleFragment clientscheduleFragment = new ClientScheduleFragment();
+        fragmentTransaction.add(R.id.fragment_container,clientscheduleFragment, null);
+        fragmentTransaction.commit();
+        action_title.setText("Schedules");
 
 //--------------------------------------------------------------------------------------------------
 
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView = (NavigationView) findViewById(R.id.clienavigation_view);
         View headerView = navigationView.getHeaderView(0);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -143,7 +115,7 @@ public class MainActivityFragment extends AppCompatActivity {
                         mdrawelayout.closeDrawers();
                         break;
 
-      /*              case R.id.d_settings:
+                   /* case R.id.d_settings:
 
                         SettingsFragment settingsFragment = new SettingsFragment();
                         fragmentTransaction.replace(R.id.fragment_container,settingsFragment, null);
@@ -152,8 +124,8 @@ public class MainActivityFragment extends AppCompatActivity {
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
-                        break;
-*/
+                        break;*/
+
 
                     case R.id.d_aboutus:
 
@@ -168,7 +140,7 @@ public class MainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_logout:
 
-                        Toast.makeText(MainActivityFragment.this, "7", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ClientMainActivityFragment.this, "7", Toast.LENGTH_SHORT).show();
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;
