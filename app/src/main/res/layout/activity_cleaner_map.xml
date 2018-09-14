@@ -45,7 +45,7 @@
             android:layout_height="63dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="96dp"
+            android:layout_marginBottom="137dp"
             android:layout_marginEnd="15dp"
             android:src="@drawable/mylocationbutton"
             android:visibility="invisible" />
@@ -75,10 +75,11 @@
                 android:gravity="center"
                 android:text="No job schedule"
                 android:textSize="18dp"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
             <RelativeLayout
                 android:id="@+id/infobar"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 

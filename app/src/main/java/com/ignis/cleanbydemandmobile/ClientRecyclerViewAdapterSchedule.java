@@ -85,8 +85,9 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
             public void OnClick(View view, int position, boolean isLongClick) {
                 try {
                     android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(context);
-                    View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_schedule_info, null);
-                    ImageView call = (ImageView) mView.findViewById(R.id.call);
+                    View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_client_schedule_info, null);
+                    TextView call = (TextView) mView.findViewById(R.id.callcleaner);
+                    TextView cancel = (TextView) mView.findViewById(R.id.cancelbooking);
                     TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
                     TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
                     mBuilder.setView(mView);
@@ -99,7 +100,16 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                     call.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(context, "asdasd", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "call", Toast.LENGTH_SHORT).show();
+                            hidenavbar();
+                            dialog.hide();
+                        }
+                    });
+
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
                             hidenavbar();
                             dialog.hide();
                         }

@@ -73,10 +73,12 @@ public class ClientMainActivityFragment extends AppCompatActivity {
                 fragmentTransaction = fragmentManager.beginTransaction();
                 switch (item.getItemId()) {
 
-                    case R.id.d_home:
+                    case R.id.d_cleanmyhouse:
 
-                        Intent i = new Intent(getBaseContext(), CleanerMapActivity.class);
-                        startActivity(i);
+                        ClientCleanMyHouseFragment clientCleanMyHouseFragment = new ClientCleanMyHouseFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,clientCleanMyHouseFragment, null);
+                        fragmentTransaction.commit();
+                        action_title.setText("Clean my House");
 
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
@@ -95,8 +97,8 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_schedules:
 
-                        ScheduleFragment scheduleFragment = new ScheduleFragment();
-                        fragmentTransaction.replace(R.id.fragment_container,scheduleFragment, null);
+                        ClientScheduleFragment clientScheduleFragment = new ClientScheduleFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,clientScheduleFragment, null);
                         fragmentTransaction.commit();
                         action_title.setText("Schedules");
 
