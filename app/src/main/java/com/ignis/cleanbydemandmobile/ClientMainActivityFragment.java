@@ -86,8 +86,8 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_myinfo:
 
-                        MyInfoFragment myInfoFragment = new MyInfoFragment();
-                        fragmentTransaction.replace(R.id.fragment_container,myInfoFragment, null);
+                        ClientMyInfoFragment clientmyInfoFragment = new ClientMyInfoFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,clientmyInfoFragment, null);
                         fragmentTransaction.commit();
                         action_title.setText("My Info");
 
@@ -108,8 +108,8 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_history:
 
-                        HistoryFragment historyFragment = new HistoryFragment();
-                        fragmentTransaction.replace(R.id.fragment_container,historyFragment, null);
+                        ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
+                        fragmentTransaction.replace(R.id.fragment_container,clientHistoryFragment, null);
                         fragmentTransaction.commit();
                         action_title.setText("History");
 

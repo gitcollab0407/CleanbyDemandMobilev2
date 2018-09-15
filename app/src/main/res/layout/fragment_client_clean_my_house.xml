@@ -3,52 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClientCleanMyHouseFragment">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    tools:context=".ClientCleanMyHouseFragment"
     android:background="@drawable/gradient_background">
 
-    <RelativeLayout
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_marginTop="30dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
         <Button
             android:id="@+id/deluxecleaning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:background="@drawable/deluxecleaning"/>
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <Button
             android:id="@+id/premiumcleaning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:background="@drawable/premiumcleaning"/>
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <Button
             android:id="@+id/yayaforaday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:background="@drawable/yayaforaday"/>
-    </RelativeLayout>
 
+    </LinearLayout>
 
-
-
-
-</LinearLayout>
 
 </FrameLayout>

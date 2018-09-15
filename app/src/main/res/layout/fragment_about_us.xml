@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="170dp"
             android:layout_gravity="center"
-            android:src="@drawable/cleanbydemandlogo"/>
+            android:src="@drawable/cleanbymandlogo"/>
 
         <TextView
             android:layout_width="wrap_content"
