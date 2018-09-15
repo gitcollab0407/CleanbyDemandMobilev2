@@ -38,6 +38,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
 
+    implementation 'com.wdullaer:materialdatetimepicker:3.6.3'
 
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 }

@@ -3,6 +3,8 @@ package com.ignis.cleanbydemandmobile;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,9 @@ public class ClientCleanMyHouseFragment extends Fragment {
     public ClientCleanMyHouseFragment() {
         // Required empty public constructor
     }
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
 
     @Override
@@ -49,9 +54,22 @@ public class ClientCleanMyHouseFragment extends Fragment {
             booknow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "adasdasd", Toast.LENGTH_SHORT).show();
                     dialog.hide();
                     hidenavbar();
+
+                    try {
+
+                        ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking");
+                    }catch(Exception ex){
+                        Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+                    }
+                    fragmentManager = getFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+
+                    BookingFragment bookingFragment = new BookingFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
+                    fragmentTransaction.commit();
+
                 }
             });
 
@@ -88,7 +106,19 @@ public class ClientCleanMyHouseFragment extends Fragment {
                 public void onClick(View view) {
                     dialog.hide();
                     hidenavbar();
-                    Toast.makeText(getActivity(), "adasdasd", Toast.LENGTH_SHORT).show();
+
+                    try {
+
+                        ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking");
+                    }catch(Exception ex){
+                        Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+                    }
+                    fragmentManager = getFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+
+                    BookingFragment bookingFragment = new BookingFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
+                    fragmentTransaction.commit();
                 }
             });
 
@@ -106,7 +136,7 @@ public class ClientCleanMyHouseFragment extends Fragment {
     }
 
     @OnClick(R.id.yayaforaday)
-    public void yayaforaday(View view) {
+    public void yayaforaday(View view)  {
         try {
             android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
             View mView = getLayoutInflater().inflate(R.layout.dialog_yaya_info, null);
@@ -125,7 +155,19 @@ public class ClientCleanMyHouseFragment extends Fragment {
                 public void onClick(View view) {
                     dialog.hide();
                     hidenavbar();
-                    Toast.makeText(getActivity(), "adasdasd", Toast.LENGTH_SHORT).show();
+
+                    try {
+
+                        ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking");
+                    }catch(Exception ex){
+                        Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+                    }
+                    fragmentManager = getFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+
+                    BookingFragment bookingFragment = new BookingFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
+                    fragmentTransaction.commit();
                 }
             });
 
