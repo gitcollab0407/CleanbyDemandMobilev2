@@ -2,6 +2,7 @@ package com.ignis.cleanbydemandmobile;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.sql.Time;
 import java.text.Format;
@@ -32,6 +34,10 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
 
     @BindView(R.id.datepickercontent) TextView datepickercontent;
+    @BindView(R.id.locationcontent) TextView locationcontent;
+    @BindView(R.id.messagecontent) TextView messagecontent;
+    @BindView(R.id.cleanercontent) TextView cleanercontent;
+    @BindView(R.id.service) TextView service;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,19 +47,6 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
         ButterKnife.bind(this, view);
         return view;
-    }
-
-    @OnClick(R.id.datepicker)
-    public void datepicker(View view) {
-        Calendar calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity()
-                , this, year, month, day);
-        datePickerDialog.show();
-
     }
 
     @Override
@@ -104,4 +97,48 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         datepickercontent.setText(monthFinal + "/" + dayFinal + "/" + yearFinal + " " + aTime);
 
     }
+
+    @OnClick(R.id.datepicker)
+    public void datepicker(View view) {
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity()
+                , this, year, month, day);
+        datePickerDialog.show();
+
+    }
+
+    @OnClick(R.id.location)
+    public void location(View view) {
+        Toast.makeText(getActivity(), "open map", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @OnClick(R.id.increase)
+    public void increase(View view) {
+      cleanercontent.setText(""+(Integer.parseInt(cleanercontent.getText().toString())+1));
+
+    }
+
+    @OnClick(R.id.decrease)
+    public void decrease(View view) {
+        if(Integer.parseInt(cleanercontent.getText().toString()) >1) {
+            cleanercontent.setText(""+(Integer.parseInt(cleanercontent.getText().toString()) - 1));
+        }
+    }
+
+    @OnClick(R.id.cash)
+    public void cash(View view) {
+        Toast.makeText(getActivity(), "cash", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.card)
+    public void card(View view) {
+        Toast.makeText(getActivity(), "credit card", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
