@@ -5,6 +5,9 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +35,17 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     int day, month, year, hour, minute;
     int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
 
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     @BindView(R.id.datepickercontent) TextView datepickercontent;
     @BindView(R.id.locationcontent) TextView locationcontent;
     @BindView(R.id.messagecontent) TextView messagecontent;
     @BindView(R.id.cleanercontent) TextView cleanercontent;
     @BindView(R.id.service) TextView service;
+
+
+    String set_address, set_coordinates, set_service;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +54,17 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
 
         ButterKnife.bind(this, view);
+
+        try {
+            Bundle arguments = getArguments();
+            set_address = arguments.getString("address");
+            set_coordinates = arguments.getString("coordinates");
+            set_service = arguments.getString("service");
+            service.setText(set_service);
+            locationcontent.setText(set_address);
+        }catch(Exception ex){}
+        Log.d("fragment_booking", "");
+
         return view;
     }
 
@@ -113,7 +132,18 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.location)
     public void location(View view) {
-        Toast.makeText(getActivity(), "open map", Toast.LENGTH_SHORT).show();
+        try {
+
+            ((ClientMainActivityFragment) getActivity()).action_title.setText("Location");
+        }catch(Exception ex){
+            Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+        }
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        GetLocationFragment getLocationFragment = new GetLocationFragment();
+        fragmentTransaction.replace(R.id.fragment_container,getLocationFragment, null);
+        fragmentTransaction.addToBackStack(null).commit();
 
     }
 
@@ -134,6 +164,8 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     public void cash(View view) {
         Toast.makeText(getActivity(), "cash", Toast.LENGTH_SHORT).show();
     }
+
+
 
     @OnClick(R.id.card)
     public void card(View view) {

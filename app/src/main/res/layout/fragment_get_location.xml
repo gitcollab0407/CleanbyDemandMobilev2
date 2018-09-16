@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GetLocationFragment"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#00ffffff">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MapsActivity">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+        </fragment>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/marker1" />
+
+
+
+        <Button
+            android:id="@+id/setlocation"
+            android:layout_width="223dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="73dp"
+            android:background="@drawable/border2"
+            android:text="Set Location"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+
+        <AutoCompleteTextView
+            android:id="@+id/searchbar"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/searchbar"
+            android:gravity="center_vertical"
+            android:hint="Search"
+            android:imeOptions="actionSearch"
+            android:paddingBottom="12dp"
+            android:paddingLeft="46dp"
+            android:paddingRight="20dp"
+            android:paddingTop="12dp"
+            android:scrollbars="vertical"
+            android:textColor="#000000"
+            android:textColorHint="#87000000"
+            android:textCursorDrawable="@null"
+            android:textSize="16dp" />
+
+
+        <ImageView
+            android:id="@+id/mylocation"
+            android:layout_width="58dp"
+            android:layout_height="63dp"
+            android:layout_alignEnd="@+id/searchbar"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="160dp"
+            android:src="@drawable/mylocationbutton"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+</FrameLayout>

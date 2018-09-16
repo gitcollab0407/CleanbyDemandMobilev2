@@ -67,9 +67,13 @@ public class ClientCleanMyHouseFragment extends Fragment {
                     fragmentTransaction = fragmentManager.beginTransaction();
 
                     BookingFragment bookingFragment = new BookingFragment();
-                    fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
-                    fragmentTransaction.commit();
 
+                    Bundle arguments = new Bundle();
+                    arguments.putString( "service" , "Deluxe Cleaning (2 Hours)");
+                    bookingFragment.setArguments(arguments);
+
+                    fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
+                    fragmentTransaction.addToBackStack(null).commit();
                 }
             });
 
@@ -117,8 +121,13 @@ public class ClientCleanMyHouseFragment extends Fragment {
                     fragmentTransaction = fragmentManager.beginTransaction();
 
                     BookingFragment bookingFragment = new BookingFragment();
+
+                    Bundle arguments = new Bundle();
+                    arguments.putString( "service" , "Premium Cleaning (4 Hours)");
+                    bookingFragment.setArguments(arguments);
+
                     fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.addToBackStack(null).commit();
                 }
             });
 
@@ -166,8 +175,13 @@ public class ClientCleanMyHouseFragment extends Fragment {
                     fragmentTransaction = fragmentManager.beginTransaction();
 
                     BookingFragment bookingFragment = new BookingFragment();
+
+                    Bundle arguments = new Bundle();
+                    arguments.putString( "service" , "Yaya for a day (8 Hours)");
+                    bookingFragment.setArguments(arguments);
+
                     fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.addToBackStack(null).commit();
                 }
             });
 
@@ -180,8 +194,7 @@ public class ClientCleanMyHouseFragment extends Fragment {
 
         } catch(Exception e) {
         }
-
-
+        
     }
 
     private void hidenavbar() {

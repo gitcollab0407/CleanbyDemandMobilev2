@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashFragment"
+    android:background="@color/white">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
+
+    <ImageView
+        android:id="@+id/splashimage"
+        android:layout_width="144dp"
+        android:layout_height="213dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/splashlogo" />
+
+</RelativeLayout>
+
+</FrameLayout>

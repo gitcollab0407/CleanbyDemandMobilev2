@@ -57,7 +57,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
         ClientScheduleFragment clientscheduleFragment = new ClientScheduleFragment();
         fragmentTransaction.add(R.id.fragment_container,clientscheduleFragment, null);
-        fragmentTransaction.commit();
+          fragmentTransaction.commit();
         action_title.setText("Schedules");
 
 //--------------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                         ClientCleanMyHouseFragment clientCleanMyHouseFragment = new ClientCleanMyHouseFragment();
                         fragmentTransaction.replace(R.id.fragment_container,clientCleanMyHouseFragment, null);
-                        fragmentTransaction.commit();
+                          fragmentTransaction.addToBackStack(null).commit();
                         action_title.setText("Clean my House");
 
                         item.setChecked(true);
@@ -88,7 +88,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                         ClientMyInfoFragment clientmyInfoFragment = new ClientMyInfoFragment();
                         fragmentTransaction.replace(R.id.fragment_container,clientmyInfoFragment, null);
-                        fragmentTransaction.commit();
+                          fragmentTransaction.addToBackStack(null).commit();
                         action_title.setText("My Info");
 
                         item.setChecked(true);
@@ -99,7 +99,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                         ClientScheduleFragment clientScheduleFragment = new ClientScheduleFragment();
                         fragmentTransaction.replace(R.id.fragment_container,clientScheduleFragment, null);
-                        fragmentTransaction.commit();
+                          fragmentTransaction.addToBackStack(null).commit();
                         action_title.setText("Schedules");
 
                         item.setChecked(true);
@@ -110,7 +110,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                         ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
                         fragmentTransaction.replace(R.id.fragment_container,clientHistoryFragment, null);
-                        fragmentTransaction.commit();
+                          fragmentTransaction.addToBackStack(null).commit();
                         action_title.setText("History");
 
                         item.setChecked(true);
@@ -121,7 +121,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                         SettingsFragment settingsFragment = new SettingsFragment();
                         fragmentTransaction.replace(R.id.fragment_container,settingsFragment, null);
-                        fragmentTransaction.commit();
+                          fragmentTransaction.addToBackStack(null).commit();
                         action_title.setText("Settings");
 
                         item.setChecked(true);
@@ -133,7 +133,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
                         AboutUsFragment aboutUsFragment = new AboutUsFragment();
                         fragmentTransaction.replace(R.id.fragment_container,aboutUsFragment, null);
-                        fragmentTransaction.commit();
+                        fragmentTransaction.addToBackStack(null).commit();
                         action_title.setText("About Us");
 
                         item.setChecked(true);
@@ -160,11 +160,6 @@ public class ClientMainActivityFragment extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 
     @Override
