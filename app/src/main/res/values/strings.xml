@@ -7,4 +7,57 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="terms_and_conditions">
+
+COVERAGE.The housekeeping service of Clean by Demand covers the following: dusting of shelves, sanitizing counters, cleaning of sink, polishing of faucets, cleaning of backsplash, cleaning and sanitizing of stove, cleaning of jars, washing dishes, tidying the bed, dry vacuuming of carpet, cleaning of interior glass windows, tidying of couch, sweep/mop/polishing of floor, polishing tables and furnitures, wiping clean of ornaments, dusting of frames, sanitizing of toilet bowl, polishing of faucets and showers, cleaning of bathroom tiles, cleaning of bathroom floor, and cleaning of mirrors.
+
+\n\n HOUSEKEEPERS. Clean by Demand assigns the number of housekeepers based on the customer requests for additional housekeepers, in which case, an additional fee shall be charged. A customer may request for a specific housekeeper, but subject to the latter’s availability.
+
+\n\n FEES. All fees for the services of Clean by Demand are published on the website at www.cleanbydemand.com. Rates may be changed without prior notice to customers. The rate covers the labor fee of the housekeeper, as well as all necessary tools, equipment, and materials. Rates are fixed depending on the services required, subject however, to a maximum of eight (8) hours for the day. Work in excess of 8 hours shall be charged anew. This, however, does not mean that every cleaning duty shall be maxed out for 8 hours. Clean by Demand housekeepers are professional cleaners capable of rendering the services within a reasonable time depending on the degree of cleaning demanded by the condition of the house or unit.
+
+\n\n TAX. All prices are inclusive of 12% Value Added Tax (VAT), and a corresponding Official Receipt is issued after payment.
+
+\n\n PAYMENT. Payments shall be given to the housekeeper at the end of the cleaning, after full inspection of the entire unit, and checking of the bags of the housekeeper. Clean by demand accepts payment in CASH or CREDIT CARD via online transaction prior to booking.
+
+\n\n INSPECTION.After the cleaning, the customer or his representative is required to inspect all areas cleaned to ensure that everything had been cleaned according to specifications. If, after inspection, the customer is not satisfied with the cleaning, the same should be communicated to the Clean by Demand Manager within 24 hours after cleaning, and Clean by Demand shall assign housekeeper/s to clean the areas complained of within 48 hours, free of charge. Failure to report the same within 24 hours, or to inspect the area after cleaning, shall be deemed absolute acceptance and satisfaction of the cleaning service, and waiver of the right to claim otherwise.
+
+\n\n LOSS OR DAMAGE. In case of loss or damage due to the fault of Clean by Demand housekeeper, the same should be communicated immediately to the housekeeper and the Clean by Demand Manager before the housekeeper leaves the unit. After inquiry/investigation and it is found that the loss or damage was due to the fault of the Clean by Demand housekeeper, the assigned Cleaner shall cover the liability, but the same shall be limited only up to the extent of the cleaning charge paid by the customer. In such instance, the entire cleaning service shall be free of charge. The customer is required to inspect the bags of the housekeeper to make sure that nothing is taken from the unit. Failure or waiver of the right to inspect is deemed absolute waiver of the right to claim.
+
+\n\n SAFETY. It is the obligation of the customer to ensure the safety of the Clean by Demand housekeeper/s while inside house/unit. Any injury sustained by the housekeeper due to pet bites, dangerous weapons/items, live exposed wires, and other similar things or incidents due to the fault or negligence of the customer shall be for the account of the customer.
+
+\n\n CLEARANCE. Payment of full fees after inspection of the areas cleaned and of the bags of the housekeeper/s is equivalent to absolute clearance and acceptance of the following: 1. That the whole area is cleaned in accordance to the customer’s specifications within the time constraint. 2. That there are no lost/damaged/stolen items within the unit The customer, however, may report any overlooked concerns to the Clean by Demand Manager within twenty-four (24) hours and the same shall be acted upon and investigated by Clean by Demand. After 24 hours, the cleaning job shall be considered closed and Clean by Demand and its housekeeper/s are deemed absolutely cleared.
+
+\n\n CANCELLATION BY THE CUSTOMER. The customer may request for the cancellation of a cleaning duty within twelve (12) hours before the scheduled cleaning time. If cancellation is made short of notice and the housekeeper is already on the location or the way thereto, the customer shall pay the corresponding transportation charge.
+
+\n\n CANCELLATION/DECLINED BY Clean by Demand. Clean by Demand reserves the right to cancel any cleaning duty on account of bad weather, strikes, sickness of the housekeeper, and other emergency incidents, without any liability to the customer. Clean by Demand may likewise cancel in case of any unethical or undesirable treatment of the customer towards its housekeepers. In such cases, Clean by Demand shall not be liable to the customer.
+
+\n\n PROFESSIONALISM. Clean by Demand is a cleaning company and its housekeepers are professional cleaners; thus, all customers are treated with respect and courtesy. The same respect and courtesy are, therefore, expected from the customers. Otherwise, Clean by Demand reserves the right to reject service or blacklist any customer/s with unethical, unprofessional, or discourteous attitude.
+
+\n\n INDEMNIFICATION. You agree to indemnify, defend, and hold harmless Clean by Demand, its officers, directors, employees, agents, licensors and suppliers (collectively the “Service Providers”) from and against all losses, expenses, damages and costs, including reasonable attorneys’ fees, resulting from any violation of these terms and conditions or any activity related to your account (including negligent or wrongful conduct) by you or any other person accessing the site using your Internet account.
+
+\n\n\n\n    <b>Service Disclaimer</b> \n\n
+
+\n\n \u2022 Clean by Demand does NOT guarantee the removal of stains such as, rust, mildew or others caused by hard water build-up or lack of maintenance.
+\n\n \u2022 All areas are expected to be free of clutter.
+\n\n \u2022 We require to be informed of items or surfaces needing special care.
+\n\n \u2022 We are NOT responsible for damage due to fault and/or improper installation of any item.
+\n\n \u2022 All surfaces (i.e. marble, granite, hardwood floors, etc.) are assumed sealed and ready to clean without causing harm.
+\n\n \u2022 Furniture on wood floors is assumed to have proper protection.
+\n\n \u2022 For safety, no other jobs should be done while we are cleaning.
+\n\n \u2022 The presence of other workers or excess of people in the house might cause the estimate to be inaccurate.
+\n\n \u2022 Having other work done in a house while our teams are working might affect the cost and time needed to complete the cleaning to your satisfaction.
+\n\n \u2022 No heavy furniture will be moved.
+\n\n \u2022 For terms and limitations refer to our Terms and Conditions.
+\n\n \u2022 Clean by Demand is local company that relies primarily on word-of-mouth recommendations, so please communicate any concerns you might have about the service disclaimer or a house cleaning experience with our company. We want to make sure your experience is great so you share it with others.
+    </string>
+
+    <string name="rights">
+    Decline works outside specified chosen service. \n\n
+    \u2022 Run errands i.e buy items for the client within the specified.\n\n
+    \u2022 Decline heavy lifting of furnitures, equipments, trash or any object that may cause physical harm to the cleaners.\n\n
+    \u2022 Decline works that will put the cleaner’s life in danger.\n\n
+    \u2022 Decline instructions to move personal valuables such as jewelry, watches, money and gadgets.\n\n
+    \u2022 Decline to render service should the environment place the cleaner’s life in danger.
+     </string>
 </resources>

@@ -98,6 +98,33 @@
                             android:layout_height="match_parent">
 
                             <TextView
+
+                                android:layout_width="250dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true"
+                                android:drawableTint="#85e277"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:scrollbars="vertical"
+                                android:text="Clean by Demand Housekeeper Rights:"
+                                />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
                                 android:id="@+id/info"
                                 android:layout_width="250dp"
                                 android:layout_height="300dp"
@@ -106,12 +133,7 @@
                                 android:drawableTint="#85e277"
                                 android:textSize="15dp"
                                 android:scrollbars="vertical"
-                                android:text="\u2022 Decline works outside specified chosen service. \n\n
-\u2022 Run errands i.e buy items for the client within the specified.\n\n
-\u2022 Decline heavy lifting of furnitures, equipments, trash or any object that may cause physical harm to the cleaners.\n\n
-\u2022 Decline works that will put the cleaner’s life in danger.\n\n
-\u2022 Decline instructions to move personal valuables such as jewelry, watches, money and gadgets.\n\n
-\u2022 Decline to render service should the environment place the cleaner’s life in danger."
+                                android:text="@string/rights"
                                 />
 
                         </RelativeLayout>

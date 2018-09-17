@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class Application3Fragment extends Fragment {
@@ -32,5 +33,17 @@ public class Application3Fragment extends Fragment {
 
         return view;
     }
+
+    @OnClick(R.id.join)
+    public void join(View view){
+
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        Application1Fragment application1Fragment = new Application1Fragment();
+        fragmentTransaction.replace(R.id.fragment_container,application1Fragment, null);
+        fragmentTransaction.addToBackStack(null).commit();
+
+    }
+
 
 }
