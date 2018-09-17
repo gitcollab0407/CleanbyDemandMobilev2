@@ -2,6 +2,7 @@ package com.ignis.cleanbydemandmobile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +73,8 @@ public class SignupFragment extends Fragment {
                 public void onClick(View view) {
                     dialog.hide();
 
+                    BackGround signup=new BackGround();
+                    signup.execute(firstname.getText().toString()+","+lastname.getText().toString(),email.getText().toString(),password.getText().toString(),email.getText().toString(),contact.getText().toString());
 //comment moto
                     Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
                     startActivity(i);
@@ -88,6 +99,56 @@ public class SignupFragment extends Fragment {
         Login_SignupHomeFragment login_signupHomeFragment = new Login_SignupHomeFragment();
         fragmentTransaction.replace(R.id.fragment_container,login_signupHomeFragment, null);
         fragmentTransaction.addToBackStack(null).commit();
+    }
+
+    //function from server
+
+    class BackGround extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String name = params[0];
+            String username = params[1];
+            String password = params[2];
+            String email = params[3];
+            String cp_number = params[4];
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://cleanbydemand.com/mobile/function.php");
+                String urlParams = "id=" + 1 + "&name=" + name + "&username=" + username + "&password=" + password
+                        + "&email=" + email + "&cp_number=" + cp_number+ "&role=" + "user";
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+            Toast.makeText(getActivity(),"sample",Toast.LENGTH_LONG).show();
+        }
     }
 
 }
