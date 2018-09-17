@@ -31,7 +31,8 @@ public class SignupFragment extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    @BindView(R.id.username) EditText username;
+    @BindView(R.id.firstname) EditText firstname;
+    @BindView(R.id.lastname) EditText lastname;
     @BindView(R.id.contact) EditText contact;
     @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText password;
