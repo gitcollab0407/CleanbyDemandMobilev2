@@ -73,12 +73,16 @@ public class SignupFragment extends Fragment {
                 public void onClick(View view) {
                     dialog.hide();
 
-                    BackGround signup=new BackGround();
-                    signup.execute(firstname.getText().toString()+","+lastname.getText().toString(),email.getText().toString(),password.getText().toString(),email.getText().toString(),contact.getText().toString());
-//comment moto
-                    Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
-                    startActivity(i);
+                    if(firstname.getText().toString() !="" && lastname.getText().toString() != ""
+                            && contact.getText().toString() != "" && email.getText().toString() !=""
+                            && password.getText().toString() != "") {
 
+                        BackGround signup = new BackGround();
+                        signup.execute(firstname.getText().toString() + "," + lastname.getText().toString(), email.getText().toString(), password.getText().toString(), email.getText().toString(), contact.getText().toString());
+//comment moto
+
+
+                    }
                 }
             });
 
@@ -147,7 +151,20 @@ public class SignupFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-            Toast.makeText(getActivity(),"sample",Toast.LENGTH_LONG).show();
+
+
+            if(!s.contains("Username already exist")) {
+
+                Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
+                startActivity(i);
+
+                getActivity().finish();
+
+            }else{
+                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+            }
+
+
         }
     }
 

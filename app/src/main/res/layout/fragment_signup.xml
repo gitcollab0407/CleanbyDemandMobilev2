@@ -157,6 +157,7 @@
                                 android:drawableLeft="@drawable/ic_phone"
                                 android:drawableTint="#85e277"
                                 android:textSize="15dp"
+                                android:inputType="number"
                                 android:hint="Contact number"
                                 />
 
@@ -182,6 +183,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:drawableLeft="@drawable/ic_email"
                                 android:drawableTint="#85e277"
+                                android:inputType="textEmailAddress"
                                 android:textSize="15dp"
                                 android:hint=" Email"
                                 />
