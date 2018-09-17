@@ -14,7 +14,7 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="120dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,14 +39,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:gravity="center"
-                            android:text="TERMS AND CONDITIONS"
+                            android:text="Terms and Conditions"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="25dp" />
 
                     </RelativeLayout>
 
@@ -90,7 +97,7 @@
                 android:paddingBottom="20dp">
 
                 <TextView
-                    android:id="@+id/Accept"
+                    android:id="@+id/accept"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 

@@ -1,15 +1,19 @@
 package com.ignis.cleanbydemandmobile;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -30,7 +34,6 @@ public class ApplyAsCleanerFragment extends Fragment {
     @BindView(R.id.username) EditText username;
     @BindView(R.id.contact) EditText contact;
     @BindView(R.id.email) EditText email;
-    @BindView(R.id.password) EditText password;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,12 +48,41 @@ public class ApplyAsCleanerFragment extends Fragment {
 
     @OnClick(R.id.next)
     public void next(View view){
+        try {
+            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+            View mView = getLayoutInflater().inflate(R.layout.dialog_tems_and_condition, null);
 
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        Application1Fragment application1Fragment = new Application1Fragment();
-        fragmentTransaction.replace(R.id.fragment_container,application1Fragment, null);
-        fragmentTransaction.addToBackStack(null).commit();
+            TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+            TextView accept = (TextView) mView.findViewById(R.id.accept);
+
+            mBuilder.setView(mView);
+            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+            dialog.show();
+
+            messagecontent.setMovementMethod(new ScrollingMovementMethod());
+
+            accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.hide();
+
+                    fragmentManager = getFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    Application1Fragment application1Fragment = new Application1Fragment();
+                    fragmentTransaction.replace(R.id.fragment_container,application1Fragment, null);
+                    fragmentTransaction.commit();
+
+                }
+            });
+
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                }
+            });
+
+        } catch(Exception e) {
+        }
 
     }
 
