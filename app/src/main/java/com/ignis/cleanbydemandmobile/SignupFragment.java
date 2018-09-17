@@ -120,7 +120,7 @@ public class SignupFragment extends Fragment {
             int tmp;
 
             try {
-                URL url = new URL("http://cleanbydemand.com/mobile/function.php");
+                URL url = new URL("http://cleanbydemand.com/php/mobile.php");
                 String urlParams = "id=" + 1 + "&name=" + name + "&username=" + username + "&password=" + password
                         + "&email=" + email + "&cp_number=" + cp_number+ "&role=" + "user";
 
