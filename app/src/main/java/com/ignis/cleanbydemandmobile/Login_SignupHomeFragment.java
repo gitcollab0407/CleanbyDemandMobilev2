@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +27,7 @@ public class Login_SignupHomeFragment extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    @BindView(R.id.username) EditText username;
+    @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText password;
 
     @Override
@@ -46,6 +47,11 @@ public class Login_SignupHomeFragment extends Fragment {
         SignupFragment signupFragment = new SignupFragment();
         fragmentTransaction.replace(R.id.fragment_container,signupFragment, null);
         fragmentTransaction.addToBackStack(null).commit();
+    }
+
+    @OnClick(R.id.signin)
+    public void signin(View view){
+        Toast.makeText(getActivity(), "asdasdasdasd", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.applyascleaner)
