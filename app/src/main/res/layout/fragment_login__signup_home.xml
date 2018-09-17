@@ -93,6 +93,7 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
                                 android:drawableLeft="@drawable/ic_email"
+                                android:inputType="textEmailAddress"
                                 android:drawableTint="#85e277"
                                 android:textSize="15dp"
                                 android:hint="Email"
