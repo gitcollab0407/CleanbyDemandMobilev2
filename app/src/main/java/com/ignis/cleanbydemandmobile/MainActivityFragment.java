@@ -1,7 +1,10 @@
 package com.ignis.cleanbydemandmobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -32,12 +35,15 @@ public class MainActivityFragment extends AppCompatActivity {
 
     @BindView(R.id.action_title) TextView action_title;
 
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_fragment);
         ButterKnife.bind(this);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         mtoolbar = (Toolbar) findViewById(R.id.nav_action);
         setSupportActionBar(mtoolbar);
@@ -168,7 +174,15 @@ public class MainActivityFragment extends AppCompatActivity {
 
                     case R.id.d_logout:
 
-                        Toast.makeText(MainActivityFragment.this, "7", Toast.LENGTH_SHORT).show();
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("id","" );
+                        editor.putString("role","" );
+                        editor.commit();
+
+                        Intent v = new Intent(getBaseContext(), Login_SignupActivity.class);
+                        startActivity(v);
+                        finish();
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;

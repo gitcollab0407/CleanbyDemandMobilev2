@@ -39,8 +39,8 @@ public class ScheduleFragment extends Fragment {
 
     private void setupList() {
         for (int i = 1; i <= 10; i++) {
-            //listdata.add("kindred" + i + "|" + "service" + "|" +"Sep,03,2018" +"|" + "10:30 AM");
-                listdata.add("kindred" + i);
+            listdata.add("kindred" + i + "/" + "service" + "/" +"Sep,03,2018" + "/" + "10:30 AM");
+              //  listdata.add("kindred" + i);
         }
     }
 

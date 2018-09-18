@@ -75,24 +75,13 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-      /*  String[] separated = listData.get(position).split("|");
 
-        String username = separated[0];
-
-        String service = separated[1];
-
-        String date = separated[2];
-
-        String time = separated[3];
-
-        holder. a_username.setText(username);
-
-        holder. a_service.setText(service);
-
-        holder. a_date.setText(date);
-
-        holder. a_time.setText(time);*/
-      holder.a_username.setText(listData.get(position));
+        String[] value = listData.get(position).split("/");
+        holder.a_username.setText(value[0]);
+        holder.a_service.setText(value[1]);
+        holder.a_date.setText(value[2]);
+        holder.a_time.setText(value[3]);
+     // holder.a_username.setText(listData.get(position));
 
         holder.setItemClickListener(new ScheduleItemClickListener() {
             @Override

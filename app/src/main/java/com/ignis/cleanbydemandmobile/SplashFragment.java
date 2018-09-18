@@ -2,9 +2,11 @@ package com.ignis.cleanbydemandmobile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,11 +35,15 @@ public class SplashFragment extends Fragment {
 
     @BindView(R.id.splashimage) ImageView splashimage;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
+
+
 
         ButterKnife.bind(this, view);
 
@@ -56,20 +63,31 @@ public class SplashFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                String id = sharedPreferences.getString("id", "");
+                String role = sharedPreferences.getString("role", "");
 
-              /*  if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(getApplicationContext(), MapsActivity.class));
-                    overridePendingTransition(R.anim.fadein_activity, R.anim.fadeout_activity);
-                } else {
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                    overridePendingTransition(R.anim.fadein_activity, R.anim.fadeout_activity);
-                }*/
 
-                fragmentManager = getFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                Login_SignupHomeFragment login_signupHomeFragment = new Login_SignupHomeFragment();
-                fragmentTransaction.replace(R.id.fragment_container,login_signupHomeFragment, null);
-                fragmentTransaction.addToBackStack(null).commit();
+                if(id.equals("") && role.equals("")){
+                    fragmentManager = getFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    Login_SignupHomeFragment login_signupHomeFragment = new Login_SignupHomeFragment();
+                    fragmentTransaction.replace(R.id.fragment_container,login_signupHomeFragment, null);
+                    fragmentTransaction.commit();
+                }else{
+
+                    if (role.equals("user")){
+                        Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
+                        startActivity(i);
+                        getActivity().finish();
+
+                    }else if (role.equals("cleaner")){
+                        Intent i = new Intent(getActivity().getBaseContext(), CleanerMapActivity.class);
+                        startActivity(i);
+                        getActivity().finish();
+                    }
+                }
+
             }
         },SPLASH_TIME_OUT);
 

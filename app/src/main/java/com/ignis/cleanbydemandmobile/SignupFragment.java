@@ -1,9 +1,12 @@
 package com.ignis.cleanbydemandmobile;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -42,12 +45,15 @@ public class SignupFragment extends Fragment {
     @BindView(R.id.contact) EditText contact;
     @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText password;
+    SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         ButterKnife.bind(this, view);
         return  view;
@@ -152,8 +158,12 @@ public class SignupFragment extends Fragment {
         protected void onPostExecute(String s) {
             String err = null;
 
-
             if(!s.contains("Username already exist")) {
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id","id1" );
+                editor.putString("role","user" );
+                editor.commit();
 
                 Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
                 startActivity(i);
@@ -163,6 +173,7 @@ public class SignupFragment extends Fragment {
             }else{
                 Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
             }
+
 
         }
     }

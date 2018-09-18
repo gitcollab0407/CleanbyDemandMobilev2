@@ -6,12 +6,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -25,6 +28,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
@@ -103,12 +107,36 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     //@BindView(R.id.average) TextView tv;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cleaner_map);
         ButterKnife.bind(this);
         getLocationPermission();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                Rect r = new Rect();
+                getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+                int screenHeight = getWindow().getDecorView().getRootView().getHeight();
+
+                int keypadHeight = screenHeight - r.bottom;
+
+                //Log.d(TAG, "keypadHeight = " + keypadHeight);
+
+                if (keypadHeight > screenHeight * 0.15) {
+                    //Keyboard is opened
+
+                } else {
+                    // keyboard is closed
+                    hidenavbar();
+                }
+            }
+        });
 
         mtoolbar = (Toolbar) findViewById(R.id.nav_action);
         setSupportActionBar(mtoolbar);
@@ -194,6 +222,14 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     case R.id.d_logout:
 
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("id","" );
+                        editor.putString("role","" );
+                        editor.commit();
+
+                        Intent v = new Intent(getBaseContext(), Login_SignupActivity.class);
+                        startActivity(v);
+                        finish();
                         item.setChecked(true);
                         mdrawelayout.closeDrawers();
                         break;
