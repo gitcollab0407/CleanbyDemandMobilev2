@@ -65,6 +65,14 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
             set_message = PublicVariables.B_message;
             set_cleaner = PublicVariables.B_cleaner;
 
+            if(set_service == "Deluxe Cleaning"){
+                PublicVariables.B_price = "400";
+            }else if(set_service == "Premium Cleaning"){
+                PublicVariables.B_price = "800";
+            }else if(set_service == "Yaya for a day"){
+                PublicVariables.B_price = "1600";
+            }
+
             service.setText(set_service);
             locationcontent.setText(set_address);
             datepickercontent.setText(set_date+" "+ set_time);
@@ -137,9 +145,9 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         String aTime = new StringBuilder().append(i).append(':')
                                .append(minutes).append(" ").append(timeSet).toString();
 
-        datepickercontent.setText(monthFinal + "/" + dayFinal + "/" + yearFinal + " " + aTime);
+        datepickercontent.setText(monthFinal + "-" + dayFinal + "-" + yearFinal + " " + aTime);
 
-        PublicVariables.B_date = monthFinal + "/" + dayFinal + "/" + yearFinal;
+        PublicVariables.B_date = monthFinal + "-" + dayFinal + "-" + yearFinal;
         PublicVariables.B_time = aTime;
 
     }
@@ -186,7 +194,8 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         if (Integer.parseInt(cleanercontent.getText().toString()) > 1) {
             cleanercontent.setText("" + (Integer.parseInt(cleanercontent.getText().toString()) - 1));
             PublicVariables.B_cleaner = cleanercontent.getText().toString();
-        }
+
+         }
     }
 
     @OnClick(R.id.cash)
@@ -196,9 +205,12 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
+        PublicVariables.B_price = (""+ (Integer.parseInt(PublicVariables.B_price )* Integer.parseInt(PublicVariables.B_cleaner)));
+
+
         PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
 
-        PublicVariables.B_payment = "cash";
+        PublicVariables.B_payment = "CASH";
 
         fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
         fragmentTransaction.addToBackStack(null).commit();
@@ -211,9 +223,12 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
+        PublicVariables.B_price = (""+ (Integer.parseInt(PublicVariables.B_price )* Integer.parseInt(PublicVariables.B_cleaner)));
+
+
         PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
 
-        PublicVariables.B_payment = "credit card";
+        PublicVariables.B_payment = "DRAGON PAY";
 
         fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
         fragmentTransaction.addToBackStack(null).commit();

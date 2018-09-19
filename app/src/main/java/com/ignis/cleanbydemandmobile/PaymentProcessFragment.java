@@ -37,6 +37,8 @@ public class PaymentProcessFragment extends Fragment {
 
     String set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service, set_payment, set_price;
 
+    String cleaninghours;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +48,6 @@ public class PaymentProcessFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         try {
-            Bundle arguments = getArguments();
             set_service = PublicVariables.B_service;
             set_coordinates = PublicVariables.B_coordinates;
             set_address = PublicVariables.B_address;
@@ -57,9 +58,8 @@ public class PaymentProcessFragment extends Fragment {
             set_payment = PublicVariables.B_payment;
             set_price = PublicVariables.B_price;
 
-
             contents.setText(set_date + "\n" + set_time + "\n" + set_address + "\n" + set_coordinates + "\n" + set_message
-                                     + "\n" + set_cleaner + "\n" + set_payment + "\n" + set_service + "\n"+ set_price);
+                                     + "\n" + set_cleaner + "\n" + set_payment + "\n" + set_service + "\n" + set_price);
 
 
         } catch(Exception ex) {
@@ -72,8 +72,7 @@ public class PaymentProcessFragment extends Fragment {
     @OnClick(R.id.book)
     public void book(View view) {
         PaymentProcessFragment.BackGround booknow = new PaymentProcessFragment.BackGround();
-        booknow.execute(set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service, set_payment);
-//comme
+        booknow.execute();
 
     }
 
@@ -86,24 +85,23 @@ public class PaymentProcessFragment extends Fragment {
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String id = sharedPreferences.getString("id", "");
 
-            String set_date_time1 = params[0],
-                    set_address1 = params[1],
-                    set_coordinates1 = params[2],
-                    set_message1 = params[3],
-                    set_cleaner1 = params[4],
-                    set_service1 = params[5],
-                    set_payment1 = params[6];
-
-
             String data = "";
             int tmp;
 
+            if (set_service == "Deluxe Cleaning") {
+                cleaninghours = "2";
+            } else if (set_service == "Premium Cleaning") {
+                cleaninghours = "4";
+            } else if (set_service == "Yaya for a day") {
+                cleaninghours = "8";
+            }
+
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 3 + "&user_id=" + id + "&bldg_info=" + set_address + "&type_clean=" + set_service
-                                           + "&cleaners=" + set_cleaner + "&hours=" + set_time + "&price=" + set_price
-                                           + "&date_time=" + set_cleaner + "&hours_from=" + set_cleaner + "&remarks=" + set_cleaner
-                                           + "&p_method=" + set_cleaner + "&p_method=" + set_cleaner;
+                String urlParams = "id=" + 3 + "&user_id=" + id + "&bldg_info=" + "Condo/House" + "&type_clean=" + set_service
+                                           + "&cleaners=" + set_cleaner + "&hours=" + cleaninghours + "&price=" + set_price
+                                           + "&date_time=" + set_date + "&hours_from=" + set_time + "&remarks=" + set_message
+                                           + "&location=" + set_address + "&coordinate=" + set_coordinates + "&p_method=" + set_payment;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -133,7 +131,6 @@ public class PaymentProcessFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-
 
             Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
 
