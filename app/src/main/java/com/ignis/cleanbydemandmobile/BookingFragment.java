@@ -147,7 +147,7 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
         datepickercontent.setText(monthFinal + "-" + dayFinal + "-" + yearFinal + " " + aTime);
 
-        PublicVariables.B_date = monthFinal + "-" + dayFinal + "-" + yearFinal;
+        PublicVariables.B_date = yearFinal + "-" + monthFinal + "-" + dayFinal;
         PublicVariables.B_time = aTime;
 
     }
