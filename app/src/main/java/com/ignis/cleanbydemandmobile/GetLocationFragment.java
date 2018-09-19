@@ -197,10 +197,8 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
 
         BookingFragment bookingFragment = new BookingFragment();
 
-        Bundle arguments = new Bundle();
-        arguments.putString( "address" , set_address);
-        arguments.putString( "coordinates" , set_coordinates);
-        bookingFragment.setArguments(arguments);
+        PublicVariables.B_address = set_address;
+        PublicVariables.B_coordinates = set_coordinates;
 
         fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
         fragmentTransaction.addToBackStack(null).commit();

@@ -68,9 +68,8 @@ public class ClientCleanMyHouseFragment extends Fragment {
 
                     BookingFragment bookingFragment = new BookingFragment();
 
-                    Bundle arguments = new Bundle();
-                    arguments.putString( "service" , "Deluxe Cleaning (2 Hours)");
-                    bookingFragment.setArguments(arguments);
+                    PublicVariables.B_service ="Deluxe Cleaning";
+                    PublicVariables.B_price = "400";
 
                     fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
                     fragmentTransaction.addToBackStack(null).commit();
@@ -122,9 +121,8 @@ public class ClientCleanMyHouseFragment extends Fragment {
 
                     BookingFragment bookingFragment = new BookingFragment();
 
-                    Bundle arguments = new Bundle();
-                    arguments.putString( "service" , "Premium Cleaning (4 Hours)");
-                    bookingFragment.setArguments(arguments);
+                    PublicVariables.B_service ="Premium Cleaning";
+                    PublicVariables.B_price = "800";
 
                     fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
                     fragmentTransaction.addToBackStack(null).commit();
@@ -176,9 +174,8 @@ public class ClientCleanMyHouseFragment extends Fragment {
 
                     BookingFragment bookingFragment = new BookingFragment();
 
-                    Bundle arguments = new Bundle();
-                    arguments.putString( "service" , "Yaya for a day (8 Hours)");
-                    bookingFragment.setArguments(arguments);
+                    PublicVariables.B_service = "Yaya for a day";
+                    PublicVariables.B_price = "1600";
 
                     fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
                     fragmentTransaction.addToBackStack(null).commit();

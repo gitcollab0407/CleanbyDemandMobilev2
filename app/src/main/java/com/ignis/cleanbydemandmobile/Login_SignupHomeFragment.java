@@ -132,7 +132,7 @@ public class Login_SignupHomeFragment extends Fragment {
                 String[] value = s.split(",");
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("id","id1" );
+                editor.putString("id",value[7] );
                 editor.putString("role",value[6] );
                 editor.commit();
 

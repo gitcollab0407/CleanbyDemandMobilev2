@@ -158,7 +158,7 @@ public class SignupFragment extends Fragment {
         protected void onPostExecute(String s) {
             String err = null;
 
-            if(!s.contains("Username already exist")) {
+      /*      if(!s.contains("Username already exist")) {
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("id","id1" );
@@ -172,7 +172,7 @@ public class SignupFragment extends Fragment {
 
             }else{
                 Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
-            }
+            }*/
 
 
         }

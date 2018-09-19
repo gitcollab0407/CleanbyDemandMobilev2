@@ -2,23 +2,20 @@ package com.ignis.cleanbydemandmobile;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.sql.Time;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -38,14 +35,18 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    @BindView(R.id.datepickercontent) TextView datepickercontent;
-    @BindView(R.id.locationcontent) TextView locationcontent;
-    @BindView(R.id.messagecontent) TextView messagecontent;
-    @BindView(R.id.cleanercontent) TextView cleanercontent;
-    @BindView(R.id.service) TextView service;
+    @BindView(R.id.datepickercontent)
+    TextView datepickercontent;
+    @BindView(R.id.locationcontent)
+    TextView locationcontent;
+    @BindView(R.id.messagecontent)
+    TextView messagecontent;
+    @BindView(R.id.cleanercontent)
+    TextView cleanercontent;
+    @BindView(R.id.service)
+    TextView service;
 
-
-    String set_address, set_coordinates, set_service;
+    String set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,14 +57,37 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         ButterKnife.bind(this, view);
 
         try {
-            Bundle arguments = getArguments();
-            set_address = arguments.getString("address");
-            set_coordinates = arguments.getString("coordinates");
-            set_service = arguments.getString("service");
+            set_service = PublicVariables.B_service;
+            set_coordinates = PublicVariables.B_coordinates;
+            set_address = PublicVariables.B_address;
+            set_date = PublicVariables.B_date;
+            set_time = PublicVariables.B_time;
+            set_message = PublicVariables.B_message;
+            set_cleaner = PublicVariables.B_cleaner;
+
             service.setText(set_service);
             locationcontent.setText(set_address);
-        }catch(Exception ex){}
-        Log.d("fragment_booking", "");
+            datepickercontent.setText(set_date+" "+ set_time);
+            messagecontent.setText(set_message);
+            cleanercontent.setText(set_cleaner);
+
+        } catch(Exception ex) {
+        }
+
+        messagecontent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH
+                            || actionId == EditorInfo.IME_ACTION_DONE
+                            || keyEvent.getAction() == android.view.KeyEvent.ACTION_DOWN
+                            || keyEvent.getAction() == android.view.KeyEvent.KEYCODE_ENTER) {
+
+                    PublicVariables.B_message = messagecontent.getText().toString();
+                }
+
+                return false;
+            }
+        });
 
         return view;
     }
@@ -115,6 +139,9 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
         datepickercontent.setText(monthFinal + "/" + dayFinal + "/" + yearFinal + " " + aTime);
 
+        PublicVariables.B_date = monthFinal + "/" + dayFinal + "/" + yearFinal;
+        PublicVariables.B_time = aTime;
+
     }
 
     @OnClick(R.id.datepicker)
@@ -135,41 +162,61 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         try {
 
             ((ClientMainActivityFragment) getActivity()).action_title.setText("Location");
-        }catch(Exception ex){
-            Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+        } catch(Exception ex) {
+            Toast.makeText(getActivity(), "" + ex, Toast.LENGTH_SHORT).show();
         }
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
         GetLocationFragment getLocationFragment = new GetLocationFragment();
-        fragmentTransaction.replace(R.id.fragment_container,getLocationFragment, null);
+        fragmentTransaction.replace(R.id.fragment_container, getLocationFragment, null);
         fragmentTransaction.addToBackStack(null).commit();
 
     }
 
     @OnClick(R.id.increase)
     public void increase(View view) {
-      cleanercontent.setText(""+(Integer.parseInt(cleanercontent.getText().toString())+1));
+        cleanercontent.setText("" + (Integer.parseInt(cleanercontent.getText().toString()) + 1));
+        PublicVariables.B_cleaner = cleanercontent.getText().toString();
 
     }
 
     @OnClick(R.id.decrease)
     public void decrease(View view) {
-        if(Integer.parseInt(cleanercontent.getText().toString()) >1) {
-            cleanercontent.setText(""+(Integer.parseInt(cleanercontent.getText().toString()) - 1));
+        if (Integer.parseInt(cleanercontent.getText().toString()) > 1) {
+            cleanercontent.setText("" + (Integer.parseInt(cleanercontent.getText().toString()) - 1));
+            PublicVariables.B_cleaner = cleanercontent.getText().toString();
         }
     }
 
     @OnClick(R.id.cash)
     public void cash(View view) {
         Toast.makeText(getActivity(), "cash", Toast.LENGTH_SHORT).show();
+
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
+
+        PublicVariables.B_payment = "cash";
+
+        fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
+        fragmentTransaction.addToBackStack(null).commit();
     }
-
-
 
     @OnClick(R.id.card)
     public void card(View view) {
         Toast.makeText(getActivity(), "credit card", Toast.LENGTH_SHORT).show();
+
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
+
+        PublicVariables.B_payment = "credit card";
+
+        fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
+        fragmentTransaction.addToBackStack(null).commit();
     }
 
 
