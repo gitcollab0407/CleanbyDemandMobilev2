@@ -42,7 +42,7 @@ public class PaymentProcessFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceStatae) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_payment_process, container, false);
         ButterKnife.bind(this, view);

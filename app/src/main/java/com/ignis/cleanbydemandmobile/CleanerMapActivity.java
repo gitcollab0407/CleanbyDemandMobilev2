@@ -35,6 +35,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -55,6 +58,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 //AppCompatActivity
 public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.OnCameraMoveStartedListener,
@@ -105,7 +109,14 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     Intent i;
 
-    //@BindView(R.id.average) TextView tv;
+    @BindView(R.id.nojobschedule)
+    TextView nojobschedule;
+    @BindView(R.id.infobar)
+    RelativeLayout infobar;
+
+    TextView h_email, h_username;
+    CircleImageView h_profile;
+    RatingBar MyRating;
 
     SharedPreferences sharedPreferences;
 
@@ -155,7 +166,27 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View headerView = navigationView.getHeaderView(0);
 
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        h_username = (TextView) headerView.findViewById(R.id.h_username);
+        h_profile = (CircleImageView) headerView.findViewById(R.id.h_profile);
+        h_email = (TextView) headerView.findViewById(R.id.h_email);
+        MyRating = (RatingBar) headerView.findViewById(R.id.MyRating);
 
+
+        try {
+
+            h_email.setText("asdasd");
+            h_username.setText("asdasd");
+            MyRating.setRating(3);
+
+            nojobschedule.setVisibility(View.INVISIBLE);
+            infobar.setVisibility(View.VISIBLE);
+
+            Picasso.with(this)
+                    .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
+                    .into(h_profile);
+        } catch(Exception e) {
+        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -268,9 +299,11 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         try {
             android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
             View mView = getLayoutInflater().inflate(R.layout.dialog_schedule_info, null);
-            ImageView call = (ImageView) mView.findViewById(R.id.call);
+            TextView call = (TextView) mView.findViewById(R.id.call);
+
             TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
             TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
+
             mBuilder.setView(mView);
             final android.support.v7.app.AlertDialog dialog = mBuilder.create();
             dialog.show();

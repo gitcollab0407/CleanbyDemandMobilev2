@@ -7,13 +7,16 @@
     android:background="@color/white">
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/no_schedule"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -58,11 +61,11 @@
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/client_recyclerview_schedule"
+            android:id="@+id/yes_schedule"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
     </RelativeLayout>
 

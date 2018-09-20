@@ -15,11 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-;import butterknife.BindView;
+;import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ClientMainActivityFragment extends AppCompatActivity {
 
@@ -36,6 +40,10 @@ public class ClientMainActivityFragment extends AppCompatActivity {
     @BindView(R.id.action_title) TextView action_title;
 
     SharedPreferences sharedPreferences;
+
+    TextView h_email, h_username;
+    CircleImageView h_profile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,23 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
         navigationView = (NavigationView) findViewById(R.id.clienavigation_view);
         View headerView = navigationView.getHeaderView(0);
+
+        h_username = (TextView) headerView.findViewById(R.id.h_username);
+        h_profile = (CircleImageView) headerView.findViewById(R.id.h_profile);
+        h_email = (TextView) headerView.findViewById(R.id.h_email);
+
+
+        try {
+
+            h_email.setText("asdasd");
+            h_username.setText("asdasd");
+
+            Picasso.with(this)
+                    .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
+                    .into(h_profile);
+        } catch(Exception e) {
+        }
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 

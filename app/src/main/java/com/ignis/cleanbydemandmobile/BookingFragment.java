@@ -21,6 +21,7 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 
 
 public class BookingFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -82,22 +83,12 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         } catch(Exception ex) {
         }
 
-        messagecontent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH
-                            || actionId == EditorInfo.IME_ACTION_DONE
-                            || keyEvent.getAction() == android.view.KeyEvent.ACTION_DOWN
-                            || keyEvent.getAction() == android.view.KeyEvent.KEYCODE_ENTER) {
-
-                    PublicVariables.B_message = messagecontent.getText().toString();
-                }
-
-                return false;
-            }
-        });
-
         return view;
+    }
+
+    @OnFocusChange(R.id.messagecontent)
+    public void setMessagecontent(View view){
+        PublicVariables.B_message = messagecontent.getText().toString();
     }
 
     @Override
@@ -200,26 +191,19 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.cash)
     public void cash(View view) {
-        Toast.makeText(getActivity(), "cash", Toast.LENGTH_SHORT).show();
-
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        PublicVariables.B_price = (""+ (Integer.parseInt(PublicVariables.B_price )* Integer.parseInt(PublicVariables.B_cleaner)));
-
-
-        PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
 
         PublicVariables.B_payment = "CASH";
 
-        fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
-        fragmentTransaction.addToBackStack(null).commit();
     }
 
     @OnClick(R.id.card)
     public void card(View view) {
-        Toast.makeText(getActivity(), "credit card", Toast.LENGTH_SHORT).show();
 
+        PublicVariables.B_payment = "DRAGON PAY";
+
+    }
+    @OnClick(R.id.next)
+    public void next(View view){
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -227,12 +211,8 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
 
         PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
-
-        PublicVariables.B_payment = "DRAGON PAY";
-
         fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
         fragmentTransaction.addToBackStack(null).commit();
     }
-
 
 }

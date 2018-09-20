@@ -4,6 +4,9 @@ package com.ignis.cleanbydemandmobile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
@@ -14,8 +17,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
@@ -23,6 +34,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
     public TextView a_service;
     public TextView a_date;
     public TextView a_time;
+    public CircleImageView a_profile;
 
     private ScheduleItemClickListener scheduleItemClickListener;
 
@@ -32,6 +44,7 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
         a_service = (TextView) itemView.findViewById(R.id.a_service);
         a_date = (TextView) itemView.findViewById(R.id.a_date);
         a_time = (TextView) itemView.findViewById(R.id.a_time);
+        a_profile = (CircleImageView) itemView.findViewById(R.id.h_profile);
 
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
@@ -81,7 +94,15 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
         holder.a_service.setText(value[1]);
         holder.a_date.setText(value[2]);
         holder.a_time.setText(value[3]);
-     // holder.a_username.setText(listData.get(position));
+
+        try {
+            Picasso.with(context)
+                    .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
+                    .into(holder.a_profile);
+
+        } catch (Exception e) {
+
+        }
 
         holder.setItemClickListener(new ScheduleItemClickListener() {
             @Override

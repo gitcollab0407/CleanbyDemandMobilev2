@@ -1,117 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
-
-
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/h_profile"
-        android:layout_width="56dp"
-        android:layout_height="74dp"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:elevation="5dp"
-        android:src="@drawable/kindred"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="2dp" />
-
-
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_gravity="center">
-
-    <TextView
-        android:id="@+id/a_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kindred Inocencio"
-        android:textColor="@color/colorAccent"
-        android:layout_marginLeft="10dp"
-        android:textSize="20dp"
-        />
-
-    <TextView
-        android:id="@+id/a_service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Yaya for a day"
-        android:layout_marginLeft="10dp"
-        android:textSize="15dp"
-        />
-
-</LinearLayout>
-<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
-
-        <TextView
-            android:id="@+id/a_date"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Sep, 20, 2018"
-            android:gravity="center|right"
-            android:layout_marginRight="20dp"
-            android:textSize="15dp"
-            />
-
-        <TextView
-            android:id="@+id/a_time"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="9:00 AM"
-            android:gravity="center|right"
-            android:layout_marginRight="20dp"
-            android:textSize="20dp"
-            />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="right"
         android:orientation="horizontal">
 
-        <TextView
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/h_profile"
+            android:layout_width="56dp"
+            android:layout_height="74dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:elevation="5dp"
+            android:src="@drawable/kindred"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status: "
-            android:gravity="center|right"
-            android:textSize="13dp"
-            />
-        <TextView
-            android:id="@+id/a_status"
-            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/a_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Yaya for a day"
+                android:textColor="@color/colorAccent"
+                android:textSize="20dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|right"
+                    android:text="Status: "
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/a_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center|right"
+                    android:text="Pending"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13dp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Done"
-            android:gravity="center|right"
-            android:textColor="@color/colorAccent"
-            android:layout_marginRight="20dp"
-            android:textSize="13dp"
-            />
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/a_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:gravity="center|right"
+                android:text="Sep, 20, 2018"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/a_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:gravity="center|right"
+                android:text="9:00 AM"
+                android:textSize="18dp" />
+
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
 
-
-    </LinearLayout>
-
-
-</LinearLayout>
-
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/line"></LinearLayout>
 
 </LinearLayout>
 
