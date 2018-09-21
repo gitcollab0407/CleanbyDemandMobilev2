@@ -123,6 +123,7 @@ public class HistoryFragment extends Fragment {
                                          jsonObject.getString("location") + "_-/" +
                                          jsonObject.getString("cleaner") + "_-/"+
                                          jsonObject.getString("payment_method") + "_-/" +
+                                         jsonObject.getString("rate") + "_-/" +
                                          jsonObject.getString("name"));
 
 

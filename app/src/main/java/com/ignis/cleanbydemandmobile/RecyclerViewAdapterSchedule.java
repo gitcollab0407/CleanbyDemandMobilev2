@@ -4,26 +4,16 @@ package com.ignis.cleanbydemandmobile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,7 +139,7 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                     String location = value[11];
                     String cleaner = value[12];
                     String method = value[13];
-                    String name = value[14];
+                    String name = value[15];
 
                     String[] finalname = name.split(",");
 

@@ -172,7 +172,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                    final int rate = Integer.parseInt(value[14]);
 
-                    String name = value[14];
+                    String name = value[15];
 
                     d_message_content.setText(remarks);
                     d_address_content.setText(location);
