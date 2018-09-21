@@ -113,9 +113,9 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                     android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(context);
                     View mView = LayoutInflater.from(context).inflate(R.layout.dialog_client_schedule_info, null);
                     TextView cancel = (TextView) mView.findViewById(R.id.cancelbooking);
+                    TextView confirmation = (TextView) mView.findViewById(R.id.confirmation);
 
                     TextView d_date = (TextView) mView.findViewById(R.id.d_date);
-
                     TextView d_message_content = (TextView) mView.findViewById(R.id.d_message_content);
                     TextView d_address_content = (TextView) mView.findViewById(R.id.d_address_content);
                     TextView d_cleaner = (TextView) mView.findViewById(R.id.d_cleaner);
@@ -125,6 +125,12 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                     TextView d_price = (TextView) mView.findViewById(R.id.d_price);
 
                     LinearLayout a_profile = (LinearLayout) mView.findViewById(R.id.servicebg);
+                    LinearLayout a_profile2 = (LinearLayout) mView.findViewById(R.id.servicebg2);
+                    final LinearLayout height = (LinearLayout) mView.findViewById(R.id.height);
+
+                    final LinearLayout first_section = (LinearLayout) mView.findViewById(R.id.first_section);
+                    final LinearLayout second_section = (LinearLayout) mView.findViewById(R.id.second_section);
+
                     String[] value = listData.get(position).split("_-/");
 
                     String transaction_id = value[0];
@@ -161,10 +167,13 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                     try {
                         if (value[2].trim().contains("Deluxe Cleaning")){
                             a_profile.setBackgroundResource(R.drawable.d_deluxe);
+                            a_profile2.setBackgroundResource(R.drawable.d_deluxe);
                         }else if(value[2].trim().contains("Premium Cleaning")){
                             a_profile.setBackgroundResource(R.drawable.d_premium);
+                            a_profile2.setBackgroundResource(R.drawable.d_premium);
                         }else if(value[2].trim().contains("Yaya for a day")){
                             a_profile.setBackgroundResource(R.drawable.d_yaya);
+                            a_profile2.setBackgroundResource(R.drawable.d_yaya);
                         }
 
                     } catch(Exception e) {
@@ -183,7 +192,23 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
+
+                            first_section.setVisibility(View.INVISIBLE);
+                            second_section.setVisibility(View.VISIBLE);
+                            ViewGroup.LayoutParams params = height.getLayoutParams();
+                            params.height = 100;
+                            height.setLayoutParams(params);
+
+
+                        }
+                    });
+
+                    confirmation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
                             Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
+
                             hidenavbar();
                             dialog.hide();
                         }

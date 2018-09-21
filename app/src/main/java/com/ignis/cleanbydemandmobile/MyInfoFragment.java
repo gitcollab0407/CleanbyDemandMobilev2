@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -58,80 +59,32 @@ public class MyInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_info, container, false);
         ButterKnife.bind(this, view);
-        //BackGround booknow = new BackGround();
-       // booknow.execute();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        try {
+            h_username.setText(sharedPreferences.getString("username", "").toString().trim());
+            h_email.setText("Email: " + sharedPreferences.getString("email", "").toString());
+            h_contact.setText("Contact Number: " + sharedPreferences.getString("contact", "").toString());
+            h_address.setText("Address: " + sharedPreferences.getString("address", "").toString());
+
+            double rate = Double.parseDouble( sharedPreferences.getString("rating", "").trim());
+            int finalrate = (int) rate;
+            MyRating.setRating(finalrate);
+
+
+
+
+
+          /*  Picasso.with(getActivity())
+                    .load(sharedPreferences.getString("profile", ""))
+                    .into(h_profile);*/
+
+        } catch(Exception e) {
+        }
+
         return view;
     }
 
 
-    class BackGround extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String id = sharedPreferences.getString("id", "");
-
-            String data = "";
-            int tmp;
-
-
-            try {
-                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 4 + "&user_id=" + id;
-
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setDoOutput(true);
-                OutputStream os = httpURLConnection.getOutputStream();
-                os.write(urlParams.getBytes());
-                os.flush();
-                os.close();
-
-                InputStream is = httpURLConnection.getInputStream();
-                while ((tmp = is.read()) != -1) {
-                    data += (char) tmp;
-                }
-
-                is.close();
-                httpURLConnection.disconnect();
-
-                return data;
-            } catch(MalformedURLException e) {
-                e.printStackTrace();
-                return "Exception: " + e.getMessage();
-            } catch(IOException e) {
-                e.printStackTrace();
-                return "Exception: " + e.getMessage();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            String err = null;
-            // Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
-
-            try {
-                JSONArray jsonArray = new JSONArray(s);
-                int count = jsonArray.length();
-
-
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                h_username.setText(jsonObject.getString("bldg_info"));
-                h_email.setText(jsonObject.getString("bldg_info"));
-                h_contact.setText(jsonObject.getString("bldg_info"));
-                h_address.setText(jsonObject.getString("bldg_info"));
-                MyRating.setRating(Integer.parseInt(jsonObject.getString("bldg_info")));
-
-                Picasso.with(getActivity())
-                        .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
-                        .into(h_profile);
-
-            } catch(JSONException er) {
-
-            }
-
-
-        }
-    }
 
 }

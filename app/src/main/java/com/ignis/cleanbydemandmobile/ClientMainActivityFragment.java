@@ -87,15 +87,20 @@ public class ClientMainActivityFragment extends AppCompatActivity {
 
         try {
 
-            h_email.setText("asdasd");
-            h_username.setText("asdasd");
+            h_username.setText(sharedPreferences.getString("username", "").toString().trim());
+            h_email.setText(sharedPreferences.getString("email", "").toString());
 
             Picasso.with(this)
                     .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
                     .into(h_profile);
+
+
+          /*  Picasso.with(getActivity())
+                    .load(sharedPreferences.getString("profile", ""))
+                    .into(h_profile);*/
+
         } catch(Exception e) {
         }
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 

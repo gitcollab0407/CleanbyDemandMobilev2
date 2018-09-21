@@ -41,7 +41,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:paddingTop="10dp"
-                android:text="Kindred Inocencio"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="40dp" />
 
@@ -52,7 +52,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="Email: kindred.inocencio@gmail.com"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="15dp" />
 
@@ -63,7 +63,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                android:text="Contact Number: 09369275915"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="15dp" />
 

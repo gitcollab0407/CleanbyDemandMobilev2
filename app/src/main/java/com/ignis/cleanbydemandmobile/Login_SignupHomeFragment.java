@@ -1,9 +1,7 @@
 package com.ignis.cleanbydemandmobile;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,14 +20,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class Login_SignupHomeFragment extends Fragment {
@@ -42,8 +36,10 @@ public class Login_SignupHomeFragment extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    @BindView(R.id.email) EditText email;
-    @BindView(R.id.password) EditText password;
+    @BindView(R.id.email)
+    EditText email;
+    @BindView(R.id.password)
+    EditText password;
 
     String role;
 
@@ -52,7 +48,7 @@ public class Login_SignupHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_login__signup_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_login__signup_home, container, false);
         ButterKnife.bind(this, view);
 
 
@@ -60,29 +56,29 @@ public class Login_SignupHomeFragment extends Fragment {
     }
 
     @OnClick(R.id.signup)
-    public void signup(View view){
+    public void signup(View view) {
 
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         SignupFragment signupFragment = new SignupFragment();
-        fragmentTransaction.replace(R.id.fragment_container,signupFragment, null);
+        fragmentTransaction.replace(R.id.fragment_container, signupFragment, null);
         fragmentTransaction.addToBackStack(null).commit();
     }
 
     @OnClick(R.id.signin)
-    public void signin(View view){
+    public void signin(View view) {
         BackGround signin = new BackGround();
         signin.execute(email.getText().toString(), password.getText().toString());
 
     }
 
     @OnClick(R.id.applyascleaner)
-    public void applyascleaner(View view){
+    public void applyascleaner(View view) {
 
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         ApplyAsCleanerFragment applyAsCleanerFragment = new ApplyAsCleanerFragment();
-        fragmentTransaction.replace(R.id.fragment_container,applyAsCleanerFragment, null);
+        fragmentTransaction.replace(R.id.fragment_container, applyAsCleanerFragment, null);
         fragmentTransaction.addToBackStack(null).commit();
     }
 
@@ -115,33 +111,48 @@ public class Login_SignupHomeFragment extends Fragment {
                 httpURLConnection.disconnect();
 
                 return data;
-            } catch (MalformedURLException e) {
+            } catch(MalformedURLException e) {
                 e.printStackTrace();
                 return "Exception: " + e.getMessage();
-            } catch (IOException e) {
+            } catch(IOException e) {
                 e.printStackTrace();
                 return "Exception: " + e.getMessage();
             }
         }
+
         @Override
         protected void onPostExecute(String s) {
             String err = null;
 
-            if(!s.contains("Invalid username or password")) {
-
+            if (!s.contains("Invalid username or password")) {
+                Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
                 String[] value = s.split(",");
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("id",value[7] );
-                editor.putString("role",value[6] );
+
+                try {
+                    editor.putString("username", value[0] + " " + value[1]);
+                    editor.putString("email", value[2]);
+                    editor.putString("contact", value[5]);
+                    editor.putString("id", value[7]);
+                    editor.putString("role", value[6]);
+                    editor.putString("profile", value[8]);
+
+                    editor.putString("address", value[9]);
+                    editor.putString("rating", value[10]);
+
+                } catch(Exception e) {
+                }
+
+
                 editor.commit();
 
-                if(value[6].equals("user")) {
+                if (value[6].equals("user")) {
                     Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
                     startActivity(i);
                     getActivity().finish();
 
-                }else if (value[6].equals("cleaner")){
+                } else if (value[6].equals("cleaner")) {
 
                     Intent i = new Intent(getActivity().getBaseContext(), CleanerMapActivity.class);
                     startActivity(i);
@@ -149,8 +160,8 @@ public class Login_SignupHomeFragment extends Fragment {
 
                 }
 
-            }else{
-                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
             }
 
         }
