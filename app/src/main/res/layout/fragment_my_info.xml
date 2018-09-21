@@ -47,6 +47,7 @@
             android:stepSize="0.1" />
 
         <TextView
+            android:id="@+id/h_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -58,6 +59,7 @@
 
         <TextView
             android:layout_width="320dp"
+            android:id="@+id/d_email"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
@@ -67,6 +69,7 @@
             android:textSize="15dp" />
 
         <TextView
+            android:id="@+id/h_contact"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -77,6 +80,7 @@
             android:textSize="15dp" />
 
         <TextView
+            android:id="@+id/"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

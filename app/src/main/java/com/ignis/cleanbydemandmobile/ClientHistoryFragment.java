@@ -49,11 +49,8 @@ public class ClientHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client_history, container, false);
 
-       // setupList();
-
         recyclerView = (RecyclerView) view.findViewById(R.id.client_recyclerview_history);
         recyclerView.setHasFixedSize(true);
-
 
         BackGround booknow = new BackGround();
         booknow.execute();

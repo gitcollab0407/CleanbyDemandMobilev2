@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +34,28 @@ public class PaymentProcessFragment extends Fragment {
 
     SharedPreferences sharedPreferences;
 
-    @BindView(R.id.contents)
-    TextView contents;
-
     String set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service, set_payment, set_price;
 
     String cleaninghours;
+
+    @BindView(R.id.datetime)
+    TextView datetime;
+    @BindView(R.id.location)
+    TextView location;
+    @BindView(R.id.message)
+    TextView message;
+    @BindView(R.id.cleaners)
+    TextView cleaners;
+    @BindView(R.id.payment)
+    TextView payment;
+    @BindView(R.id.service)
+    TextView service;
+    @BindView(R.id.price)
+    TextView price;
+
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
 
     @Override
@@ -58,9 +76,13 @@ public class PaymentProcessFragment extends Fragment {
             set_payment = PublicVariables.B_payment;
             set_price = PublicVariables.B_price;
 
-            contents.setText(set_date + "\n" + set_time + "\n" + set_address + "\n" + set_coordinates + "\n" + set_message
-                                     + "\n" + set_cleaner + "\n" + set_payment + "\n" + set_service + "\n" + set_price);
-
+            datetime.setText(set_service);
+            location.setText(set_address);
+            message.setText(set_message);
+            cleaners.setText(set_cleaner);
+            payment.setText(set_payment);
+            service.setText(set_service);
+            price.setText("₱ " + set_price);
 
         } catch(Exception ex) {
         }
@@ -133,6 +155,20 @@ public class PaymentProcessFragment extends Fragment {
             String err = null;
 
             Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+
+            ClientScheduleFragment clientScheduleFragment = new ClientScheduleFragment();
+            fragmentTransaction.replace(R.id.fragment_container, clientScheduleFragment, null);
+            fragmentTransaction.commit();
+
+            PublicVariables.B_date ="";
+            PublicVariables.B_time = "";
+            PublicVariables.B_address = "";
+            PublicVariables.B_coordinates = "";
+            PublicVariables.B_message = "";
+            PublicVariables.B_cleaner = "1";
+            PublicVariables.B_payment = "";
+            PublicVariables.B_service = "";
+            PublicVariables.B_price = "";
 
         }
     }

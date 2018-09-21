@@ -121,7 +121,6 @@
 
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -307,13 +306,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:isIndicator="true"
                     android:numStars="5"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
                     android:progressTint="@color/progresstint"
                     android:rating="4"
-                    android:stepSize="0.1" />
+                    android:stepSize="1" />
 
 
             </RelativeLayout>

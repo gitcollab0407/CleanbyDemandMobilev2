@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -47,6 +49,12 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     @BindView(R.id.service)
     TextView service;
 
+    @BindView(R.id.cash)
+    Button cash;
+
+    @BindView(R.id.card)
+    Button card;
+
     String set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service;
 
     @Override
@@ -79,6 +87,8 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
             datepickercontent.setText(set_date+" "+ set_time);
             messagecontent.setText(set_message);
             cleanercontent.setText(set_cleaner);
+            messagecontent.setMovementMethod(new ScrollingMovementMethod());
+            locationcontent.setMovementMethod(new ScrollingMovementMethod());
 
         } catch(Exception ex) {
         }
@@ -193,13 +203,31 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     public void cash(View view) {
 
         PublicVariables.B_payment = "CASH";
-
+        cash.setBackgroundResource(R.drawable.notes);
+        card.setBackgroundResource(R.drawable.cardb);
     }
 
     @OnClick(R.id.card)
     public void card(View view) {
 
         PublicVariables.B_payment = "DRAGON PAY";
+        cash.setBackgroundResource(R.drawable.notesb);
+        card.setBackgroundResource(R.drawable.card);
+
+    }
+    @OnClick(R.id.casht)
+    public void casht(View view) {
+
+        PublicVariables.B_payment = "CASH";
+        cash.setBackgroundResource(R.drawable.notes);
+        card.setBackgroundResource(R.drawable.cardb);
+    }
+    @OnClick(R.id.cardt)
+    public void cardt(View view) {
+
+        PublicVariables.B_payment = "DRAGON PAY";
+        cash.setBackgroundResource(R.drawable.notesb);
+        card.setBackgroundResource(R.drawable.card);
 
     }
     @OnClick(R.id.next)
@@ -210,9 +238,18 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         PublicVariables.B_price = (""+ (Integer.parseInt(PublicVariables.B_price )* Integer.parseInt(PublicVariables.B_cleaner)));
 
 
+        try {
+
+            ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking Summary");
+        }catch(Exception ex){
+
+        }
+
         PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
         fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
         fragmentTransaction.addToBackStack(null).commit();
+
+
     }
 
 }

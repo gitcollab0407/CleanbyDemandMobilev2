@@ -4,37 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ClientCleanMyHouseFragment"
-    android:background="@drawable/gradient_background">
+    android:background="@color/white">
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center|top">
 
         <Button
             android:id="@+id/deluxecleaning"
             android:layout_width="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/deluxecleaning"/>
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+
+            android:text="Deluxe Cleaning"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:background="@drawable/d_deluxe"/>
 
         <Button
             android:id="@+id/premiumcleaning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/premiumcleaning"/>
+            android:text="Preminum Cleaning"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:background="@drawable/d_premium"/>
 
         <Button
             android:id="@+id/yayaforaday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/yayaforaday"/>
+            android:text="Yaya for a day"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:background="@drawable/d_yaya"/>
 
     </LinearLayout>
 

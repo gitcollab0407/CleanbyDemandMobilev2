@@ -167,7 +167,7 @@ public class ClientCleanMyHouseFragment extends Fragment {
 
                         ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking");
                     }catch(Exception ex){
-                        Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+
                     }
                     fragmentManager = getFragmentManager();
                     fragmentTransaction = fragmentManager.beginTransaction();

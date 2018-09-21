@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -133,6 +134,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     TextView d_service = (TextView) mView.findViewById(R.id.d_service);
                     TextView d_price = (TextView) mView.findViewById(R.id.d_price);
                     TextView d_status_content = (TextView) mView.findViewById(R.id.d_status_content);
+                    RatingBar MyRating = (RatingBar) mView.findViewById(R.id.MyRating);
 
                     TextView d_title = (TextView) mView.findViewById(R.id.d_title);
                     TextView d_title_content = (TextView) mView.findViewById(R.id.d_title_content);
@@ -163,7 +165,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     d_cleaner.setText(" = "+cleaners);
                     d_service.setText(type_clean +" ("+hours+"Hours)");
                     d_date.setText(" "+date_time);
-                    d_price.setText("Price: " + price);
+                    d_price.setText("Total: ₱ " + price);
                     d_status_content.setText(transaction_status);
                     d_title_content.setText(cleaner);
 
@@ -194,6 +196,14 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     } catch(Exception e) {
 
                     }
+
+
+                    MyRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                        @Override
+                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+
+                        }
+                    });
 
                     mBuilder.setView(mView);
                     final android.support.v7.app.AlertDialog dialog = mBuilder.create();

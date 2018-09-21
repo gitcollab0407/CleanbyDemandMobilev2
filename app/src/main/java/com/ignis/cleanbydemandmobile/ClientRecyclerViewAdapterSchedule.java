@@ -149,7 +149,7 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                     d_cleaner.setText(" = "+cleaners);
                     d_service.setText(type_clean +" ("+hours+"Hours)");
                     d_date.setText(" "+date_time);
-                    d_price.setText("Price: " + price);
+                    d_price.setText("Price: ₱ " + price);
 
                     if(method.contains("CASH")) {
                         d_payment.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_cash, 0, 0, 0);

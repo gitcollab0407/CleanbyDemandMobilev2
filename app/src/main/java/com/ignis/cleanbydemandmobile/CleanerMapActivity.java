@@ -299,10 +299,17 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         try {
             android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
             View mView = getLayoutInflater().inflate(R.layout.dialog_schedule_info, null);
+
+
             TextView call = (TextView) mView.findViewById(R.id.call);
 
             TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
             TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
+            TextView d_date = (TextView) mView.findViewById(R.id.d_date);
+            TextView d_time = (TextView) mView.findViewById(R.id.d_time);
+            TextView d_cleaner = (TextView) mView.findViewById(R.id.d_cleaner);
+            TextView d_payment = (TextView) mView.findViewById(R.id.d_payment);
+            TextView d_username = (TextView) mView.findViewById(R.id.d_username);
 
             mBuilder.setView(mView);
             final android.support.v7.app.AlertDialog dialog = mBuilder.create();
@@ -310,7 +317,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
             messagecontent.setMovementMethod(new ScrollingMovementMethod());
             addresscontent.setMovementMethod(new ScrollingMovementMethod());
-
+            d_date.setText(" date");
+            d_time.setText(" time");
+            d_cleaner.setText("cleaner");
+            d_payment.setText("payment");
             call.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -318,9 +328,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     hidenavbar();
                     dialog.hide();
                 }
-            });
-
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            });           dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     hidenavbar();

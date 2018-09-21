@@ -63,6 +63,11 @@ public class ClientScheduleFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         ButterKnife.bind(this, view);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String id = sharedPreferences.getString("id", "");
+        Toast.makeText(getActivity(), ""+ id, Toast.LENGTH_SHORT).show();
+
+
         BackGround booknow = new BackGround();
         booknow.execute();
 
@@ -80,13 +85,6 @@ public class ClientScheduleFragment extends Fragment {
         fragmentTransaction.addToBackStack(null).commit();
 
     }
-
-    /*    private void setupList() {
-     *//*      for (int i = 1; i <= 10; i++) {
-            listdata.add("kindred" + i + "/" + "service" + "/" +"Sep,03,2018" + "/" + "10:30 AM" + "/" + "Pending");
-            //listdata.add("kindred" + i);
-        }*//*
-    }*/
 
     class BackGround extends AsyncTask<String, String, String> {
 

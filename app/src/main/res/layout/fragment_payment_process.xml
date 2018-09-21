@@ -3,28 +3,172 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PaymentProcessFragment">
+    tools:context=".PaymentProcessFragment"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+       <TextView
+           android:id="@+id/service"
+           android:layout_marginTop="20dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:textSize="30dp"
+           android:textStyle="bold"
+           android:text="Booking Summary" />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="30dp"
+           android:layout_marginTop="20dp"
+           android:text="Date and Time"
+           android:textSize="20dp"
+           android:textColor="@color/colorAccent"/>
+
+       <TextView
+           android:id="@+id/datetime"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="30dp"
+           android:layout_marginTop="5dp"
+           android:textSize="18dp"
+           android:text="asdasdasdasdasd" />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="30dp"
+           android:layout_marginTop="10dp"
+           android:text="Location"
+           android:textSize="20dp"
+           android:textColor="@color/colorAccent"/>
+
+       <TextView
+           android:id="@+id/location"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="25dp"
+           android:textSize="18dp"
+           android:padding="5dp"
+           android:text="asdasdasdasdasd" />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="30dp"
+           android:layout_marginTop="10dp"
+           android:text="Message"
+           android:textSize="20dp"
+           android:textColor="@color/colorAccent"/>
+
+       <TextView
+           android:id="@+id/message"
+           android:layout_width="230dp"
+           android:layout_height="wrap_content"
+           android:maxHeight="70dp"
+           android:scrollbars="vertical"
+           android:layout_marginStart="25dp"
+
+           android:layout_marginRight="5dp"
+
+           android:paddingTop="5dp"
+           android:gravity="left|top"
+           android:padding="5dp"
+           android:textSize="18dp"
+           android:text="asdasdasdasdasd" />
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="30dp"
+             android:layout_marginTop="10dp"
+             android:text="Number of Cleaners: "
+             android:textSize="20dp"
+             android:textColor="@color/colorAccent"/>
+
+         <TextView
+             android:id="@+id/cleaners"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"
+             android:text="asdasdasdasdasd"
+             android:textSize="18dp"/>
+     </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="30dp"
+               android:layout_marginTop="10dp"
+               android:text="Mode of Payment: "
+               android:textSize="20dp"
+
+               android:textColor="@color/colorAccent"/>
 
 
-        <TextView
-            android:id="@+id/contents"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
+           <TextView
+               android:id="@+id/payment"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:text="Dragon Payment"
+               android:textSize="18dp"/>
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="30dp"
+               android:layout_marginTop="10dp"
+               android:text="Total Price: "
+               android:textSize="20dp"
+
+               android:textColor="@color/colorAccent"
+               />
+
+
+           <TextView
+               android:id="@+id/price"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:text="10000000"
+               android:textSize="18dp"/>
+       </LinearLayout>
+
+   </LinearLayout>
 
         <Button
             android:id="@+id/book"
-            android:layout_width="wrap_content"
+            android:layout_width="174dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="179dp"
-            android:text="book" />
+            android:layout_marginBottom="63dp"
+            android:background="@drawable/border2"
+            android:text="book now"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
