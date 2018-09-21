@@ -42,13 +42,14 @@ public class Application2Fragment extends Fragment {
     @OnClick(R.id.join)
     public void join(View view) {
 
-        String username = PublicVariables.a_username;
+        String name = PublicVariables.a_username;
         String email = PublicVariables.a_email;
         String contact = PublicVariables.a_contact;
         String address = PublicVariables.a_address;
 
+        String message="Name: "+name+"<br>Email: "+email+"<br>CellPhone#: "+contact+"<br>Address: "+address;
         BackGround signup = new BackGround();
-        signup.execute(username, email, contact, address);
+        signup.execute(name, email, message);
 
 
     }
@@ -66,17 +67,15 @@ public class Application2Fragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            String username = params[0];
+            String name = params[0];
             String email = params[1];
-            String contact = params[2];
-            String address = params[3];
+            String message = params[2];
             String data = "";
             int tmp;
 
             try {
-                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 1 + "&name=" + username + "&email=" + email + "&contact=" + contact
-                                           + "&address=" + address;
+                URL url = new URL("http://cleanbydemand.com/php/sendmail_applicant.php");
+                String urlParams = "name=" + name + "&email=" + email + "&message=" + message;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
