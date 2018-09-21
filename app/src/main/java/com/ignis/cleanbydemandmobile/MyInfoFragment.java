@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -60,13 +61,19 @@ public class MyInfoFragment extends Fragment {
         ButterKnife.bind(this, view);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-
         try {
             h_username.setText(sharedPreferences.getString("username", "").toString().trim());
             h_email.setText("Email: " + sharedPreferences.getString("email", "").toString());
             h_contact.setText("Contact Number: " + sharedPreferences.getString("contact", "").toString());
             h_address.setText("Address: " + sharedPreferences.getString("address", "").toString());
-            MyRating.setRating(Integer.parseInt(sharedPreferences.getString("rating", "")));
+
+            double rate = Double.parseDouble( sharedPreferences.getString("rating", "").trim());
+            int finalrate = (int) rate;
+            MyRating.setRating(finalrate);
+
+
+
+
 
           /*  Picasso.with(getActivity())
                     .load(sharedPreferences.getString("profile", ""))
