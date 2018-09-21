@@ -1,8 +1,6 @@
 package com.ignis.cleanbydemandmobile;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,7 +69,7 @@ public class ClientHistoryFragment extends Fragment {
 
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 4 + "&user_id=" + id;
+                String urlParams = "id=" + 5 + "&user_id=" + id;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -102,7 +99,7 @@ public class ClientHistoryFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-           // Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
@@ -122,8 +119,9 @@ public class ClientHistoryFragment extends Fragment {
                                          jsonObject.getString("transaction_status") + "_-/" +
                                          jsonObject.getString("payment_status") + "_-/" +
                                          jsonObject.getString("location") + "_-/" +
-                                         jsonObject.getString("cleaner") + "_-/"+
-                                         jsonObject.getString("payment_method") + " ");
+                                         jsonObject.getString("cleaner")+" " + "_-/" +
+                                         jsonObject.getString("payment_method") + "_-/" +
+                                         jsonObject.getString("rate"));
 
                 }
 
