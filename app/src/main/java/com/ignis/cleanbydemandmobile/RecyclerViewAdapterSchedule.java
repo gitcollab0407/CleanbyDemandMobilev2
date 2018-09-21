@@ -149,6 +149,10 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                     String location = value[11];
                     String cleaner = value[12];
                     String method = value[13];
+                    String name = value[14];
+
+                    String[] finalname = name.split(",");
+
 
                     d_message_content.setText(remarks);
                     d_address_content.setText(location);
@@ -158,7 +162,8 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                     d_service.setText(type_clean +" ("+hours+"Hours)");
                     d_date.setText(" "+date_time);
                     d_price.setText("Price: ₱ " + price);
-                    d_price.setText(cleaner);
+                    d_username.setText(finalname[0] +" "+ finalname[1]);
+
 
                     if(method.contains("CASH")) {
                         d_payment.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_cash, 0, 0, 0);
