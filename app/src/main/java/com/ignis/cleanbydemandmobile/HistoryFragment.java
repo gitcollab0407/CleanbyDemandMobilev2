@@ -1,8 +1,6 @@
 package com.ignis.cleanbydemandmobile;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -71,7 +69,7 @@ public class HistoryFragment extends Fragment {
 
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 4 + "&user_id=" + id;
+                String urlParams = "id=" + 5 + "&user_id=" + id;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
