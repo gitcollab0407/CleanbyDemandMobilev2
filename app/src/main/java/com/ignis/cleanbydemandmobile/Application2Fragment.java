@@ -110,7 +110,7 @@ public class Application2Fragment extends Fragment {
             fragmentTransaction = fragmentManager.beginTransaction();
             Application3Fragment application3Fragment = new Application3Fragment();
             fragmentTransaction.replace(R.id.fragment_container, application3Fragment, null);
-            fragmentTransaction.addToBackStack(null).commit();
+            fragmentTransaction.commit();
 
 
         }
