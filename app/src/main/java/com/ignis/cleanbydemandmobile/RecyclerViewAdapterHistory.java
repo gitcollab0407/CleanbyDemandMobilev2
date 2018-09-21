@@ -169,6 +169,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     String location = value[11];
                     String cleaner = value[12];
                     String method = value[13];
+
                    final int rate = Integer.parseInt(value[14]);
 
                     d_message_content.setText(remarks);

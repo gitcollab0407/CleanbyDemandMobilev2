@@ -14,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -31,9 +32,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -52,7 +50,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +74,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     LatLng userLocation;
     LatLng centerph = new LatLng(12.496333, 123.008514);// PH_Luzon
     LatLng lastKnown_userLocation;
+    LatLng locationnow;
+    String locationnow_lat, locationnow_lng;
 
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
@@ -105,7 +108,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     private Marker OtherUser;
 
     ArrayList<String> Locations = new ArrayList<String>();
-    @BindView(R.id.mylocation)  ImageView mylocation;
+    @BindView(R.id.mylocation)
+    ImageView mylocation;
 
     Intent i;
 
@@ -119,6 +123,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     RatingBar MyRating;
 
     SharedPreferences sharedPreferences;
+    TextView timeleftnow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +164,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         mToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView action_title = (TextView)findViewById(R.id.action_title);
+        TextView action_title = (TextView) findViewById(R.id.action_title);
         action_title.setText("Home");
 
 
@@ -177,7 +182,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
             h_username.setText(sharedPreferences.getString("username", "").toString().trim());
             h_email.setText(sharedPreferences.getString("email", "").toString());
-            double rate = Double.parseDouble( sharedPreferences.getString("rating", "").trim());
+            double rate = Double.parseDouble(sharedPreferences.getString("rating", "").trim());
             int finalrate = (int) rate;
             MyRating.setRating(finalrate);
 
@@ -257,8 +262,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     case R.id.d_logout:
 
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("id","" );
-                        editor.putString("role","" );
+                        editor.putString("id", "");
+                        editor.putString("role", "");
                         editor.commit();
 
                         Intent v = new Intent(getBaseContext(), Login_SignupActivity.class);
@@ -297,48 +302,84 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         }
     }
 
+    private static CountDownTimer countDownTimer;
+
     @OnClick(R.id.infobar)
-    public  void infobar(View view){
-        try {
-            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
-            View mView = getLayoutInflater().inflate(R.layout.dialog_schedule_info, null);
+    public void infobar(View view) {
+        String transac = sharedPreferences.getString("transaction", "");
+        if (transac.contains("yes")) {
+            timeleft();
+        }else {
+
+            try {
+                android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+                View mView = getLayoutInflater().inflate(R.layout.dialog_schedule_info, null);
+
+                TextView call = (TextView) mView.findViewById(R.id.call);
+
+                TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+                TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
+                TextView d_date = (TextView) mView.findViewById(R.id.d_date);
+                TextView d_time = (TextView) mView.findViewById(R.id.d_time);
+                TextView d_cleaner = (TextView) mView.findViewById(R.id.d_cleaner);
+                TextView d_payment = (TextView) mView.findViewById(R.id.d_payment);
+                TextView d_username = (TextView) mView.findViewById(R.id.d_username);
+
+                TextView d_price = (TextView) mView.findViewById(R.id.d_price);
+
+                TextView d_service = (TextView) mView.findViewById(R.id.d_service);
 
 
-            TextView call = (TextView) mView.findViewById(R.id.call);
+                mBuilder.setView(mView);
+                final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+                dialog.show();
 
-            TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
-            TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
-            TextView d_date = (TextView) mView.findViewById(R.id.d_date);
-            TextView d_time = (TextView) mView.findViewById(R.id.d_time);
-            TextView d_cleaner = (TextView) mView.findViewById(R.id.d_cleaner);
-            TextView d_payment = (TextView) mView.findViewById(R.id.d_payment);
-            TextView d_username = (TextView) mView.findViewById(R.id.d_username);
+                messagecontent.setMovementMethod(new ScrollingMovementMethod());
+                addresscontent.setMovementMethod(new ScrollingMovementMethod());
+                d_date.setText(" date");
+                d_time.setText(" time");
+                d_cleaner.setText("cleaner");
+                d_payment.setText("payment");
+                d_username.setText("kindred inocencio");
+                d_service.setText("Yaya for a day (8 Hours)");
+                d_price.setText("Total : ₱ " + "1,600");
+                messagecontent.setText("asdasdasdas");
+                addresscontent.setText("asdadadasdasd");
 
-            mBuilder.setView(mView);
-            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
-            dialog.show();
+                call.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
 
-            messagecontent.setMovementMethod(new ScrollingMovementMethod());
-            addresscontent.setMovementMethod(new ScrollingMovementMethod());
-            d_date.setText(" date");
-            d_time.setText(" time");
-            d_cleaner.setText("cleaner");
-            d_payment.setText("payment");
-            call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
-                    hidenavbar();
-                    dialog.hide();
-                }
-            });           dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    hidenavbar();
-                }
-            });
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm");
+                        String gettimenow = mdformat.format(calendar.getTime());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("transaction", "yes");
+                        editor.putString("timenow", gettimenow);
 
-        }catch(Exception e){}
+                        editor.commit();
+
+                        getlocationnow();
+
+                        hidenavbar();
+                        dialog.hide();
+
+
+                        timeleft();
+
+                    }
+                });
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        hidenavbar();
+                    }
+                });
+
+            } catch(Exception e) {
+            }
+        }
     }
 
     @Override
@@ -359,6 +400,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         Picasso.with(this)
                 .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
                 .into(h_profile2);
+
+        String transac = sharedPreferences.getString("transaction", "");
+
+        if (transac.contains("yes")) {
+            timeleft();
+        }
 
     }
 
@@ -399,7 +446,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             public void onLocationChanged(Location location) {
                 userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-                 Log.d(TAG, "user location: " + userLocation);
+                Log.d(TAG, "user location: " + userLocation);
 
 
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -412,10 +459,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     if (userLocation != null && focus_location == 1) {
 
-                            CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
-                            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
+                        CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
 
-                        if(mMap.isMyLocationEnabled() == false) {
+                        if (mMap.isMyLocationEnabled() == false) {
                             mMap.setMyLocationEnabled(true);
 
                             if (mylocation.getVisibility() == View.VISIBLE) {
@@ -511,6 +558,42 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         }
     }//end googlemap
 
+    public void getlocationnow() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location2 = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+        if (location != null) {
+            //NETWORK_PROVIDER
+            double latti = location.getLatitude();
+            double longi = location.getLongitude();
+            locationnow = new LatLng(latti, longi);
+
+        } else if (location1 != null) {
+            //GPS_PROVIDER
+            double latti = location1.getLatitude();
+            double longi = location1.getLongitude();
+            locationnow = new LatLng(latti, longi);
+
+        } else if (location2 != null) {
+            //PASSIVE_PROVIDER
+            double latti = location2.getLatitude();
+            double longi = location2.getLongitude();
+            locationnow = new LatLng(latti, longi);
+        }
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        locationnow_lat = "" + locationnow.latitude;
+        locationnow_lng = "" + locationnow.longitude;
+        editor.putString("coordinates", locationnow_lat + "," + locationnow_lng);
+
+        editor.commit();
+    }
+
     @Override
     public void onCameraMoveStarted(int reason) {
         //"The user gestured on the map."
@@ -575,12 +658,13 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     @Override
     public boolean onMarkerClick(Marker marker) {
         currentMarker = marker;
-        String transaction_id = ""+marker.getTag();
+        String transaction_id = "" + marker.getTag();
 
         try {
             android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
             View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
             TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
+            TextView btnclose = (TextView) mView.findViewById(R.id.close);
             TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
             TextView d_service1 = (TextView) mView.findViewById(R.id.d_service);
             TextView d_date1 = (TextView) mView.findViewById(R.id.d_date);
@@ -608,7 +692,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             messagecontent.setMovementMethod(new ScrollingMovementMethod());
 
 
-
             btnconfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -616,6 +699,18 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     hidenavbar();
                     dialog.hide();
 
+                    i = new Intent(getBaseContext(), MainActivityFragment.class);
+                    i.putExtra("fragment_state", "schedule");
+                    startActivity(i);
+
+                }
+            });
+
+            btnclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    hidenavbar();
+                    dialog.hide();
                 }
             });
 
@@ -626,7 +721,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 }
             });
 
-        }catch(Exception e){}
+        } catch(Exception e) {
+        }
 
         return false;
     }
@@ -713,6 +809,71 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     initMap();
                 }
             }
+        }
+    }
+
+    public void timeleft() {
+        try {
+            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+            View mView = getLayoutInflater().inflate(R.layout.dialog_transactionstart, null);
+
+
+            timeleftnow = (TextView) mView.findViewById(R.id.timeleft);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String transaction = sharedPreferences.getString("transaction", "");
+            String timenow = sharedPreferences.getString("timenow", "");
+            String coordinates = sharedPreferences.getString("coordinates", "");
+
+            int deluxe = 120;
+            int premium = 240;
+            int yaya = 480;
+            int noOfMinutes = premium * 60 * 1000;//Convert minutes into milliseconds
+
+            startTimer(noOfMinutes);//start countdown
+
+
+            timeleftnow.setText(timenow);
+
+            //editor.putString("transaction", "no");
+            editor.commit();
+
+            mBuilder.setView(mView);
+            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+            dialog.show();
+
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+
+                }
+            });
+
+        } catch(Exception e) {
+        }
+    }
+
+
+    private void startTimer(int noOfMinutes) {
+        countDownTimer = new CountDownTimer(noOfMinutes, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+                timeleftnow.setText(hms);//set text
+            }
+
+            public void onFinish() {
+                timeleftnow.setText("TIME'S UP!!"); //On finish change timer text
+            }
+        }.start();
+
+    }
+
+    private void stopCountdown() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
         }
     }
 
