@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -86,7 +84,7 @@ public class ScheduleFragment extends Fragment {
             int tmp;
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 4 + "&user_id=" + id;
+                String urlParams = "id=" + 8 + "&user_id=" + id;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);

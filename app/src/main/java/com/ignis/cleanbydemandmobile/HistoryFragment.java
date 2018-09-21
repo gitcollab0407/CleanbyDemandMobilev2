@@ -69,7 +69,7 @@ public class HistoryFragment extends Fragment {
 
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 5 + "&user_id=" + id;
+                String urlParams = "id=" + 9 + "&user_id=" + id;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
