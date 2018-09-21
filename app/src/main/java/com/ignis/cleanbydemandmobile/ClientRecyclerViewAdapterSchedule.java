@@ -123,9 +123,11 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                     TextView d_payment = (TextView) mView.findViewById(R.id.d_payment);
                     TextView d_service = (TextView) mView.findViewById(R.id.d_service);
                     TextView d_price = (TextView) mView.findViewById(R.id.d_price);
+                   final TextView reasoncontent = (TextView) mView.findViewById(R.id.reasoncontent);
 
                     LinearLayout a_profile = (LinearLayout) mView.findViewById(R.id.servicebg);
                     LinearLayout a_profile2 = (LinearLayout) mView.findViewById(R.id.servicebg2);
+
                     final LinearLayout height = (LinearLayout) mView.findViewById(R.id.height);
 
                     final LinearLayout first_section = (LinearLayout) mView.findViewById(R.id.first_section);
@@ -207,10 +209,16 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                     confirmation.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
 
-                            hidenavbar();
-                            dialog.hide();
+                            if(!reasoncontent.getText().toString().trim().equals("")) {
+                                Toast.makeText(context, "cancel "+ reasoncontent.getText(), Toast.LENGTH_SHORT).show();
+
+                                hidenavbar();
+                                dialog.hide();
+                            }else{
+                                Toast.makeText(context, "Please provide your reason for cancelling your booking", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     });
 

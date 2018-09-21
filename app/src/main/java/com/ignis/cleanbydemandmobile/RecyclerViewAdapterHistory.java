@@ -195,6 +195,11 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                         MyRating.setIsIndicator(true);
                     }
 
+                    if(transaction_status.contains("Cancelled")){
+                        MyRating.setIsIndicator(true);
+                        d_status_content.setTextColor(R.color.red);
+                    }
+
                     try {
                         if (value[2].trim().contains("Deluxe Cleaning")){
                             a_profile.setBackgroundResource(R.drawable.d_deluxe);
