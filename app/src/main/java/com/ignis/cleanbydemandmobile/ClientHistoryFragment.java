@@ -34,6 +34,7 @@ public class ClientHistoryFragment extends Fragment {
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+
     SharedPreferences sharedPreferences;
     RecyclerView recyclerView;
 

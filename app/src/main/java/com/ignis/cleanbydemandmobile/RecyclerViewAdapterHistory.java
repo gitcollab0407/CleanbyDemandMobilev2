@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -138,14 +141,14 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     TextView d_service = (TextView) mView.findViewById(R.id.d_service);
                     TextView d_price = (TextView) mView.findViewById(R.id.d_price);
                     TextView d_status_content = (TextView) mView.findViewById(R.id.d_status_content);
-                    RatingBar MyRating = (RatingBar) mView.findViewById(R.id.MyRating);
+                   final RatingBar MyRating = (RatingBar) mView.findViewById(R.id.MyRating);
 
                     TextView d_title = (TextView) mView.findViewById(R.id.d_title);
                     TextView d_title_content = (TextView) mView.findViewById(R.id.d_title_content);
 
                     LinearLayout a_profile = (LinearLayout) mView.findViewById(R.id.servicebg);
 
-                    String[] value = listData.get(position).split("_-/");
+                   final String[] value = listData.get(position).split("_-/");
 
                     final String transaction_id = value[0];
                     String bldg_info = value[1];
@@ -161,7 +164,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     String location = value[11];
                     String cleaner = value[12];
                     String method = value[13];
-                    int rate = Integer.parseInt(value[14]);
+                   final int rate = Integer.parseInt(value[14]);
 
                     d_message_content.setText(remarks);
                     d_address_content.setText(location);
@@ -228,6 +231,14 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
+                            if(MyRating.getRating() != rate) {
+                                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
+                                fragmentTransaction.replace(R.id.fragment_container, clientHistoryFragment, null);
+                                fragmentTransaction.addToBackStack(null).commit();
+                            }
                             hidenavbar();
                         }
                     });

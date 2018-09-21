@@ -134,6 +134,8 @@ public class Login_SignupHomeFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("id",value[7] );
                 editor.putString("role",value[6] );
+
+
                 editor.commit();
 
                 if(value[6].equals("user")) {
