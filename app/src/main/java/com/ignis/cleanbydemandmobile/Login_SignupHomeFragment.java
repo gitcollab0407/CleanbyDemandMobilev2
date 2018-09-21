@@ -128,12 +128,23 @@ public class Login_SignupHomeFragment extends Fragment {
             String err = null;
 
             if(!s.contains("Invalid username or password")) {
-
+                Toast.makeText(getActivity(), ""+s, Toast.LENGTH_SHORT).show();
                 String[] value = s.split(",");
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                try{
+                editor.putString("username",value[0] +" "+ value[1] );
+                editor.putString("email",value[2]);
+                editor.putString("contact",value[5]);
                 editor.putString("id",value[7] );
                 editor.putString("role",value[6] );
+                editor.putString("profile",value[8] );
+
+
+                    editor.putString("address",value[9] );
+                    editor.putString("rating",value[10] );
+
+                }catch(Exception e){}
 
 
                 editor.commit();

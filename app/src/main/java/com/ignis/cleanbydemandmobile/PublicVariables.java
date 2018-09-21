@@ -11,4 +11,10 @@ public class PublicVariables {
             , B_payment = ""
             , B_service = ""
             , B_price = "";
+
+    public static String a_username =""
+            , a_contact = ""
+            , a_email = ""
+            , a_address = "";
+
 }

@@ -114,19 +114,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     @BindView(R.id.infobar)
     RelativeLayout infobar;
 
-    @BindView(R.id.h_profile)
-    CircleImageView b_profile;
-    @BindView(R.id.b_username)
-    TextView b_username;
-    @BindView(R.id.b_clean)
-    TextView service;
-    @BindView(R.id.b_time)
-    RelativeLayout b_time;
-    @BindView(R.id.b_date)
-    RelativeLayout b_date;
-
-
-
     TextView h_email, h_username;
     CircleImageView h_profile;
     RatingBar MyRating;
@@ -200,10 +187,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     .into(h_profile);
         } catch(Exception e) {
         }
-
-
-
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 

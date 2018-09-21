@@ -34,6 +34,7 @@ public class ApplyAsCleanerFragment extends Fragment {
     @BindView(R.id.username) EditText username;
     @BindView(R.id.contact) EditText contact;
     @BindView(R.id.email) EditText email;
+    @BindView(R.id.address) EditText address;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +50,12 @@ public class ApplyAsCleanerFragment extends Fragment {
     @OnClick(R.id.next)
     public void next(View view){
         try {
+            PublicVariables.a_username = username.getText().toString();
+            PublicVariables.a_email = email.getText().toString();
+            PublicVariables.a_contact = contact.getText().toString();
+            PublicVariables.a_address = address.getText().toString();
+
+
             android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
             View mView = getLayoutInflater().inflate(R.layout.dialog_tems_and_condition, null);
 
@@ -88,6 +95,7 @@ public class ApplyAsCleanerFragment extends Fragment {
 
     @OnClick(R.id.back)
     public void back(View view){
+
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         Login_SignupHomeFragment login_signupHomeFragment = new Login_SignupHomeFragment();

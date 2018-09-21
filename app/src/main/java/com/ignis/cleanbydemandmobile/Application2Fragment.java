@@ -36,6 +36,11 @@ public class Application2Fragment extends Fragment {
     @OnClick(R.id.join)
     public void join(View view){
 
+        String username = PublicVariables.a_username;
+        String email = PublicVariables.a_email;
+        String contact = PublicVariables.a_contact;
+        String address = PublicVariables.a_address;
+
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         Application3Fragment application3Fragment = new Application3Fragment();

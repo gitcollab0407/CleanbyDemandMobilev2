@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,16 +35,26 @@ public class Application3Fragment extends Fragment {
         return view;
     }
 
+/*
     @OnClick(R.id.join)
     public void join(View view){
 
+        String username = PublicVariables.a_username;
+        String email = PublicVariables.a_email;
+        String contact = PublicVariables.a_contact;
+        String address = PublicVariables.a_address;
+
+        */
+/*
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         Application1Fragment application1Fragment = new Application1Fragment();
         fragmentTransaction.replace(R.id.fragment_container,application1Fragment, null);
         fragmentTransaction.addToBackStack(null).commit();
+*//*
 
     }
+*/
 
 
 }
