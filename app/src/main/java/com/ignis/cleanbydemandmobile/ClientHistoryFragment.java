@@ -108,8 +108,6 @@ public class ClientHistoryFragment extends Fragment {
                 JSONArray jsonArray = new JSONArray(s);
                 int count = jsonArray.length();
 
-
-
                 for (int v = 0; v < count; v++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(v);
                     listdata.add(jsonObject.getString("transaction_id") + "_-/" +

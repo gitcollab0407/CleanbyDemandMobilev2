@@ -113,7 +113,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
             holder.setItemClickListener(new HistoryItemClickListener() {
             @Override
-            public void OnClick(View view, int position, boolean isLongClick) {
+            public void OnClick(final View view, int position, boolean isLongClick) {
            /*     if(isLongClick) {
                     Toast.makeText(context, "long click" + listData.get(position), Toast.LENGTH_SHORT).show();
                 }else {
@@ -180,8 +180,10 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                     if(role.contains("user")){
                         d_title.setText("Cleaners");
+                        MyRating.setIsIndicator(false);
                     }else if(role.contains("cleaner")){
                         d_title.setText("Client");
+                        MyRating.setIsIndicator(true);
                     }
 
                     try {
@@ -201,6 +203,8 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     MyRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                         @Override
                         public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+
+                            Toast.makeText(view.getContext(), ""+ ratingBar.getRating(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
