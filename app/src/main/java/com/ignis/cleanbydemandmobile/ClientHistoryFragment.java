@@ -119,7 +119,7 @@ public class ClientHistoryFragment extends Fragment {
                                          jsonObject.getString("transaction_status") + "_-/" +
                                          jsonObject.getString("payment_status") + "_-/" +
                                          jsonObject.getString("location") + "_-/" +
-                                         jsonObject.getString("cleaner"+" ") + "_-/" +
+                                         jsonObject.getString("cleaner")+" " + "_-/" +
                                          jsonObject.getString("payment_method") + "_-/" +
                                          jsonObject.getString("rate"));
 
