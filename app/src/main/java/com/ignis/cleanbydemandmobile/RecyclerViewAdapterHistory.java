@@ -174,7 +174,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     d_status_content.setText(transaction_status);
                     d_title_content.setText(cleaner);
                     MyRating.setRating(rate);
-
+//aeqweqw
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mView.getContext());
                     String role = sharedPreferences.getString("role", "");
 
