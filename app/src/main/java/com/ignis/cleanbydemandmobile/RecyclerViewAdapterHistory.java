@@ -161,6 +161,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     String location = value[11];
                     String cleaner = value[12];
                     String method = value[13];
+                    String rate = value[14];
 
                     d_message_content.setText(remarks);
                     d_address_content.setText(location);
@@ -172,6 +173,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     d_price.setText("Total: ₱ " + price);
                     d_status_content.setText(transaction_status);
                     d_title_content.setText(cleaner);
+                    MyRating.setRating(Integer.parseInt(rate));
 
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mView.getContext());
                     String role = sharedPreferences.getString("role", "");
@@ -209,7 +211,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                         public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 
                             BackGround bg=new BackGround();
-                            bg.execute(transaction_id,String.valueOf(ratingBar.getRating()));
+                            bg.execute(transaction_id,""+ratingBar.getRating());
                             Toast.makeText(view.getContext(), ""+ ratingBar.getRating(), Toast.LENGTH_SHORT).show();
 
                         }
@@ -294,6 +296,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
         @Override
         protected void onPostExecute(String s) {
+            Toast.makeText(context, ""+ s, Toast.LENGTH_SHORT).show();
 
         }
     }
