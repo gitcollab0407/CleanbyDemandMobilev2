@@ -146,7 +146,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     TextView d_service = (TextView) mView.findViewById(R.id.d_service);
                     TextView d_price = (TextView) mView.findViewById(R.id.d_price);
                     TextView d_status_content = (TextView) mView.findViewById(R.id.d_status_content);
-                   final RatingBar MyRating = (RatingBar) mView.findViewById(R.id.MyRating);
+                    final RatingBar MyRating = (RatingBar) mView.findViewById(R.id.MyRating);
 
                     TextView d_title = (TextView) mView.findViewById(R.id.d_title);
                     TextView d_title_content = (TextView) mView.findViewById(R.id.d_title_content);
@@ -172,6 +172,8 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                    final int rate = Integer.parseInt(value[14]);
 
+                    String name = value[14];
+
                     d_message_content.setText(remarks);
                     d_address_content.setText(location);
                     d_time.setText(" "+time);
@@ -196,6 +198,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     if(role.contains("user")){
                         d_title.setText("Cleaners");
                         MyRating.setIsIndicator(false);
+
                     }else if(role.contains("cleaner")){
                         d_title.setText("Client");
                         MyRating.setIsIndicator(true);
