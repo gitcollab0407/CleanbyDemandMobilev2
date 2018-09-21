@@ -245,7 +245,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                         mdrawelayout.closeDrawers();
                         break;*/
 
-
                     case R.id.d_aboutus:
 
                         i = new Intent(getBaseContext(), MainActivityFragment.class);
@@ -345,6 +344,22 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     @Override
     protected void onStart() {
         super.onStart();
+
+        TextView b_username2 = (TextView) findViewById(R.id.b_username);
+        TextView b_service2 = (TextView) findViewById(R.id.b_clean);
+        TextView b_date2 = (TextView) findViewById(R.id.b_date);
+        TextView b_time2 = (TextView) findViewById(R.id.b_time);
+        CircleImageView h_profile2 = (CircleImageView) findViewById(R.id.h_profile);
+
+        b_username2.setText("Kindred");
+        b_service2.setText("Yaya for a day");
+        b_date2.setText("Sep,9,2018");
+        b_time2.setText("10:00 AM");
+
+        Picasso.with(this)
+                .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
+                .into(h_profile2);
+
     }
 
     @SuppressLint("MissingPermission")
@@ -561,17 +576,39 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     public boolean onMarkerClick(Marker marker) {
         currentMarker = marker;
         String transaction_id = ""+marker.getTag();
-        Toast.makeText(this, transaction_id, Toast.LENGTH_SHORT).show();
 
-        /*try {
+        try {
             android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
             View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
             TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
             TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+            TextView d_service1 = (TextView) mView.findViewById(R.id.d_service);
+            TextView d_date1 = (TextView) mView.findViewById(R.id.d_date);
+            TextView d_time1 = (TextView) mView.findViewById(R.id.d_time);
+            TextView d_cleaner1 = (TextView) mView.findViewById(R.id.d_cleaner);
+            TextView d_payment1 = (TextView) mView.findViewById(R.id.d_payment);
+            TextView d_username1 = (TextView) mView.findViewById(R.id.d_username);
+            CircleImageView h_profile1 = (CircleImageView) mView.findViewById(R.id.h_profile);
+
+            Picasso.with(this)
+                    .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
+                    .into(h_profile1);
+
+            d_username1.setText("Kindred Inocencio");
+            d_service1.setText("Premium Cleaning (4Hours)");
+            d_date1.setText("Sep, 20, 2018");
+            d_time1.setText("9:00AM");
+            d_cleaner1.setText("3");
+            d_payment1.setText("DRAGON PAY");
+            messagecontent.setText("asdadsasdasd");
+
             mBuilder.setView(mView);
             final android.support.v7.app.AlertDialog dialog = mBuilder.create();
             dialog.show();
             messagecontent.setMovementMethod(new ScrollingMovementMethod());
+
+
+
             btnconfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -589,7 +626,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 }
             });
 
-        }catch(Exception e){}*/
+        }catch(Exception e){}
 
         return false;
     }

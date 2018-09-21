@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ClientMyInfoFragment extends Fragment {
@@ -60,5 +61,11 @@ public class ClientMyInfoFragment extends Fragment {
         }
 
         return view;
+    }
+
+    @OnClick(R.id.changepic)
+    public void setChangepic(View view) {
+
+
     }
 }

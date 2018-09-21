@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -103,6 +104,10 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
         holder.a_time.setText(value[7].trim());
         holder.a_status.setText(value[9].trim());
 
+        if(value[9].contains("Cancelled")){
+            holder.a_status.setTextColor(Color.parseColor("#f23d3d"));
+        }
+
         try {
             if (value[2].trim().contains("Deluxe Cleaning")){
                 holder.a_profile.setImageResource(R.drawable.i_deluxe);
@@ -197,7 +202,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                     if(transaction_status.contains("Cancelled")){
                         MyRating.setIsIndicator(true);
-                        d_status_content.setTextColor(R.color.red);
+                        d_status_content.setTextColor(Color.parseColor("#f23d3d"));
                     }
 
                     try {
@@ -242,7 +247,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                                 ClientHistoryFragment clientHistoryFragment = new ClientHistoryFragment();
                                 fragmentTransaction.replace(R.id.fragment_container, clientHistoryFragment, null);
-                                fragmentTransaction.addToBackStack(null).commit();
+                                fragmentTransaction.commit();
                             }
                             hidenavbar();
                         }

@@ -1,8 +1,6 @@
 package com.ignis.cleanbydemandmobile;
 
 import android.content.SharedPreferences;
-import android.media.Rating;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -11,23 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyInfoFragment extends Fragment {
@@ -67,7 +52,7 @@ public class MyInfoFragment extends Fragment {
             h_contact.setText("Contact Number: " + sharedPreferences.getString("contact", "").toString());
             h_address.setText("Address: " + sharedPreferences.getString("address", "").toString());
 
-            double rate = Double.parseDouble( sharedPreferences.getString("rating", "").trim());
+            double rate = Double.parseDouble(sharedPreferences.getString("rating", "").trim());
             int finalrate = (int) rate;
             MyRating.setRating(finalrate);
 
@@ -85,6 +70,11 @@ public class MyInfoFragment extends Fragment {
         return view;
     }
 
+    @OnClick(R.id.changepic)
+    public void setChangepic(View view) {
+
+
+    }
 
 
 }
