@@ -125,7 +125,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
             holder.setItemClickListener(new HistoryItemClickListener() {
             @Override
-            public void OnClick(final View view, int position, boolean isLongClick) {
+            public void OnClick(final View view, int position, boolean isLongClick) {   
            /*     if(isLongClick) {
                     Toast.makeText(context, "long click" + listData.get(position), Toast.LENGTH_SHORT).show();
                 }else {
@@ -172,7 +172,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                    final int rate = Integer.parseInt(value[14]);
 
-                    String name = value[14];
+                    String name = value[15];
 
                     d_message_content.setText(remarks);
                     d_address_content.setText(location);
