@@ -904,16 +904,17 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             params.height = 100;
             second_section.setLayoutParams(params);
 
-            int deluxe = 120;
-            int premium = 240;
-            int yaya = 480;
-            int test = 2;
+            String deluxe = "120";
+            String premium = "240";
+            String yaya = "480";
+            String test = "2";
             //startService(new Intent(CleanerMapActivity.this, BroadcastService.class));
             // serviceIntent.putExtra("UserID", "123456");
 
             Intent serviceIntent = new Intent(this,BroadcastService.class);
             serviceIntent.putExtra("time", test);
             startService(serviceIntent);
+
 
             Log.i(TAG, "Started service");
 

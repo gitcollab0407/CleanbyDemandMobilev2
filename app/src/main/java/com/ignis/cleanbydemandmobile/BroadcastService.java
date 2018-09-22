@@ -13,7 +13,7 @@ public class BroadcastService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        time = intent.getStringExtra("time");
+       // time = intent.getStringExtra("time");
         return null;
     }
 
@@ -23,12 +23,24 @@ public class BroadcastService extends Service {
     Intent bi = new Intent(COUNTDOWN_BR);
 
     CountDownTimer cdt = null;
-    String time = "1";
+
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        cdt.cancel();
+        Log.i(TAG, "Timer cancelled");
+        super.onDestroy();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        String time = intent.getStringExtra("time");
 
         Log.i(TAG, "Starting timer...");
 
@@ -54,19 +66,8 @@ public class BroadcastService extends Service {
         };
 
         cdt.start();
-    }
 
-    @Override
-    public void onDestroy() {
-        cdt.cancel();
-        Log.i(TAG, "Timer cancelled");
-        super.onDestroy();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
 
