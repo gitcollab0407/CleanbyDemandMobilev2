@@ -3,9 +3,11 @@ package com.ignis.cleanbydemandmobile;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -14,7 +16,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -29,10 +30,14 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -124,6 +129,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     SharedPreferences sharedPreferences;
     TextView timeleftnow;
+    android.support.v7.app.AlertDialog dialogtime;
+
+    LinearLayout first_section, second_section;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,14 +310,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         }
     }
 
-    private static CountDownTimer countDownTimer;
-
     @OnClick(R.id.infobar)
     public void infobar(View view) {
         String transac = sharedPreferences.getString("transaction", "");
-        if (transac.contains("yes")) {
+        if (transac.toString().trim().equals("yes")) {
             timeleft();
-        }else {
+        } else {
 
             try {
                 android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
@@ -324,9 +330,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 TextView d_cleaner = (TextView) mView.findViewById(R.id.d_cleaner);
                 TextView d_payment = (TextView) mView.findViewById(R.id.d_payment);
                 TextView d_username = (TextView) mView.findViewById(R.id.d_username);
-
                 TextView d_price = (TextView) mView.findViewById(R.id.d_price);
-
                 TextView d_service = (TextView) mView.findViewById(R.id.d_service);
 
 
@@ -349,14 +353,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 call.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
-
                         Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm");
                         String gettimenow = mdformat.format(calendar.getTime());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("transaction", "yes");
-                        editor.putString("timenow", gettimenow);
+                        editor.putString("timestart", gettimenow);
 
                         editor.commit();
 
@@ -401,11 +403,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
                 .into(h_profile2);
 
-        String transac = sharedPreferences.getString("transaction", "");
 
-        if (transac.contains("yes")) {
-            timeleft();
-        }
+        String transac = sharedPreferences.getString("transaction", "");
+        Toast.makeText(this, "" + transac, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -640,7 +640,85 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     public void onResume() {
         super.onResume();
         hidenavbar();
+        super.onResume();
+        registerReceiver(br, new IntentFilter(BroadcastService.COUNTDOWN_BR));
+        Log.i(TAG, "Registered broacast receiver");
 
+
+    }
+
+    private BroadcastReceiver br = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateGUI(intent); // or whatever method used to update your GUI fields
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(br);
+        Log.i(TAG, "Unregistered broacast receiver");
+    }
+
+    @Override
+    public void onStop() {
+        try {
+            unregisterReceiver(br);
+        } catch(Exception e) {
+            // Receiver was probably already stopped in onPause()
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, BroadcastService.class));
+        Log.i(TAG, "Stopped service");
+        super.onDestroy();
+    }
+
+    private void updateGUI(Intent intent) {
+        if (intent.getExtras() != null) {
+            long millisUntilFinished = intent.getLongExtra("countdown", 0);
+
+            long millis = millisUntilFinished;
+            //Convert milliseconds into hour,minute and seconds
+            String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+            Log.i(TAG, "Countdown seconds remaining: " + hms);
+
+            timeleftnow.setText(hms);
+
+            if (timeleftnow.getText().toString().contains("00:00:00")) {
+
+                timeleftnow.setText("Finish!");
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm:ss");
+                String gettimenow = mdformat.format(calendar.getTime());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("transaction", "no");
+                editor.putString("timefinish", gettimenow);
+
+                editor.commit();
+
+                getlocationnow();
+
+
+                stopService(new Intent(this, BroadcastService.class));
+                first_section.setVisibility(View.INVISIBLE);
+                second_section.setVisibility(View.VISIBLE);
+
+                second_section.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+                second_section.requestLayout();
+
+            }
+
+            dialogtime.setCancelable(false);
+            dialogtime.setCanceledOnTouchOutside(false);
+
+           // String transac = sharedPreferences.getString("transaction", "");
+           // Toast.makeText(this, "" + transac, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void hidenavbar() {
@@ -759,29 +837,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         return super.onOptionsItemSelected(item);
     }
 
-    private void getLocationPermission() {
-        // Log.d(TAG, "getLocationPermission: getting location permissions");
-        String[] permissions = { Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION };
-
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                mLocationPermissionsGranted = true;
-                initMap();
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        permissions,
-                        LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    permissions,
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        }
-    }
-
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -812,37 +867,83 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         }
     }
 
+    private void getLocationPermission() {
+        // Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = { Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION };
+
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionsGranted = true;
+                initMap();
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
     public void timeleft() {
         try {
             android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
             View mView = getLayoutInflater().inflate(R.layout.dialog_transactionstart, null);
 
-
             timeleftnow = (TextView) mView.findViewById(R.id.timeleft);
+            first_section = (LinearLayout) mView.findViewById(R.id.first_section);
+            second_section = (LinearLayout) mView.findViewById(R.id.second_section);
+            Button finishtransaction = (Button) mView.findViewById(R.id.finishtransaction);
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            String transaction = sharedPreferences.getString("transaction", "");
-            String timenow = sharedPreferences.getString("timenow", "");
-            String coordinates = sharedPreferences.getString("coordinates", "");
+            ViewGroup.LayoutParams params = second_section.getLayoutParams();
+            params.height = 100;
+            second_section.setLayoutParams(params);
 
             int deluxe = 120;
             int premium = 240;
             int yaya = 480;
-            int noOfMinutes = premium * 60 * 1000;//Convert minutes into milliseconds
+            int test = 2;
+            //startService(new Intent(CleanerMapActivity.this, BroadcastService.class));
+            // serviceIntent.putExtra("UserID", "123456");
 
-            startTimer(noOfMinutes);//start countdown
+            Intent serviceIntent = new Intent(this,BroadcastService.class);
+            serviceIntent.putExtra("time", test);
+            startService(serviceIntent);
+
+            Log.i(TAG, "Started service");
+
+            timeleftnow.setText("Finish!");
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm:ss");
+            String gettimenow = mdformat.format(calendar.getTime());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString("transaction", "yes");
+            editor.putString("timefinish", gettimenow);
 
 
-            timeleftnow.setText(timenow);
 
-            //editor.putString("transaction", "no");
-            editor.commit();
+            finishtransaction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(CleanerMapActivity.this, "finish transaction", Toast.LENGTH_SHORT).show();
+                    getlocationnow();
+                    dialogtime.hide();
+                    hidenavbar();
+                }
+            });
 
             mBuilder.setView(mView);
-            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
-            dialog.show();
+            dialogtime = mBuilder.create();
+            dialogtime.show();
 
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+            dialogtime.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
 
@@ -850,30 +951,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             });
 
         } catch(Exception e) {
-        }
-    }
-
-
-    private void startTimer(int noOfMinutes) {
-        countDownTimer = new CountDownTimer(noOfMinutes, 1000) {
-            public void onTick(long millisUntilFinished) {
-                long millis = millisUntilFinished;
-                //Convert milliseconds into hour,minute and seconds
-                String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-                timeleftnow.setText(hms);//set text
-            }
-
-            public void onFinish() {
-                timeleftnow.setText("TIME'S UP!!"); //On finish change timer text
-            }
-        }.start();
-
-    }
-
-    private void stopCountdown() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            countDownTimer = null;
         }
     }
 
