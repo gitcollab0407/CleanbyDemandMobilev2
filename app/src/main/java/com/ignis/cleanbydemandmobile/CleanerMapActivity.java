@@ -908,8 +908,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             String premium = "240";
             String yaya = "480";
             String test = "2";
-            //startService(new Intent(CleanerMapActivity.this, BroadcastService.class));
-            // serviceIntent.putExtra("UserID", "123456");
 
             Intent serviceIntent = new Intent(this,BroadcastService.class);
             serviceIntent.putExtra("time", test);
