@@ -15,6 +15,7 @@ import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -25,6 +26,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -55,9 +57,20 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -133,6 +146,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     LinearLayout first_section, second_section;
 
+    private List<String> listdata = new ArrayList<>();
+
+    String transaction_id = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,7 +216,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     .into(h_profile);
 
               /*  Picasso.with(getActivity())
-                    .load(sharedPreferences.getString("profile", ""))
+                    .load(sharedPreferences.getString(sharedPreferences.getString("profile", "").toString()))
                     .into(h_profile);*/
 
         } catch(Exception e) {
@@ -403,14 +420,14 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
                 .into(h_profile2);
 
-
-        String transac = sharedPreferences.getString("transaction", "");
-        Toast.makeText(this, "" + transac, Toast.LENGTH_SHORT).show();
+       // String transac = sharedPreferences.getString("transaction", "");
+       // Toast.makeText(this, "" + transac, Toast.LENGTH_SHORT).show();
 
     }
 
     @SuppressLint("MissingPermission")
     @Override
+
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
@@ -535,27 +552,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             mMap.setMyLocationEnabled(true);
         }
 //------------------------------------------------------------------------------------Other Location
-        Locations.add("14.552045, 121.017155");
-        Locations.add("14.552419, 121.015031");
-        Locations.add("14.550570, 121.013775");
-        Locations.add("14.554831, 121.014166");
-        Locations.add("14.5485926,121.00755");
 
-        for (int a = 0; a < 5; a++) {
+        BackGround booknow = new BackGround();
+        booknow.execute();
 
-            String[] separated = Locations.get(a).split(",");
 
-            Double lat = Double.parseDouble(separated[0]);
-            Double lng = Double.parseDouble(separated[1]);
 
-            LatLng UsersCoordinate = new LatLng(lat, lng);
-
-            //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
-            OtherUser = mMap.addMarker(new MarkerOptions()
-                                               .position(UsersCoordinate)
-                                               .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
-            OtherUser.setTag(lat);
-        }
     }//end googlemap
 
     public void getlocationnow() {
@@ -736,71 +738,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     @Override
     public boolean onMarkerClick(Marker marker) {
         currentMarker = marker;
-        String transaction_id = "" + marker.getTag();
+        transaction_id = "" + marker.getTag();
 
-        try {
-            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(this);
-            View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
-            TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
-            TextView btnclose = (TextView) mView.findViewById(R.id.close);
-            TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
-            TextView d_service1 = (TextView) mView.findViewById(R.id.d_service);
-            TextView d_date1 = (TextView) mView.findViewById(R.id.d_date);
-            TextView d_time1 = (TextView) mView.findViewById(R.id.d_time);
-            TextView d_cleaner1 = (TextView) mView.findViewById(R.id.d_cleaner);
-            TextView d_payment1 = (TextView) mView.findViewById(R.id.d_payment);
-            TextView d_username1 = (TextView) mView.findViewById(R.id.d_username);
-            CircleImageView h_profile1 = (CircleImageView) mView.findViewById(R.id.h_profile);
+        BackGround1 booknow = new BackGround1();
+        booknow.execute();
 
-            Picasso.with(this)
-                    .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
-                    .into(h_profile1);
-
-            d_username1.setText("Kindred Inocencio");
-            d_service1.setText("Premium Cleaning (4Hours)");
-            d_date1.setText("Sep, 20, 2018");
-            d_time1.setText("9:00AM");
-            d_cleaner1.setText("3");
-            d_payment1.setText("DRAGON PAY");
-            messagecontent.setText("asdadsasdasd");
-
-            mBuilder.setView(mView);
-            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
-            dialog.show();
-            messagecontent.setMovementMethod(new ScrollingMovementMethod());
-
-
-            btnconfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
-                    hidenavbar();
-                    dialog.hide();
-
-                    i = new Intent(getBaseContext(), MainActivityFragment.class);
-                    i.putExtra("fragment_state", "schedule");
-                    startActivity(i);
-
-                }
-            });
-
-            btnclose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    hidenavbar();
-                    dialog.hide();
-                }
-            });
-
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    hidenavbar();
-                }
-            });
-
-        } catch(Exception e) {
-        }
+       // Toast.makeText(this, transaction_id, Toast.LENGTH_SHORT).show();
 
         return false;
     }
@@ -953,5 +896,244 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         }
     }
 
+    class BackGround extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
+                String urlParams = "id=" + 10;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+
+            try {
+                JSONArray jsonArray = new JSONArray(s);
+                int count = jsonArray.length();
+
+                //Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
+
+                for (int v = 0; v < count; v++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(v);
+                    listdata.add(jsonObject.getString("transaction_id") + "_-/" +
+                                         jsonObject.getString("coordinate") + "_-/");
+
+
+                }
+
+              //  Toast.makeText(CleanerMapActivity.this, ""+listdata.size(), Toast.LENGTH_SHORT).show();
+
+                for (int a = 0; a < listdata.size(); a++) {
+
+                    final String[] separated = listdata.get(a).split("_-/");
+
+                    final String[] location = separated[1].split(",");
+
+
+
+                    Double lat = Double.parseDouble(location[0]);
+                    Double lng = Double.parseDouble(location[1]);
+
+                    LatLng UsersCoordinate = new LatLng(lat, lng);
+
+                    //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
+                    OtherUser = mMap.addMarker(new MarkerOptions()
+                                                       .position(UsersCoordinate)
+                                                       .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
+                    OtherUser.setTag(separated[0]);
+                }
+
+
+
+            } catch(JSONException er) {
+
+            }
+
+
+        }
+    }
+
+    class BackGround1 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
+                String urlParams = "id=" + 12+ "&trans_id=" + transaction_id;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+           final String data;
+
+            try {
+                JSONArray jsonArray = new JSONArray(s);
+                int count = jsonArray.length();
+
+                Toast.makeText(CleanerMapActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+
+
+                    JSONObject jsonObject = jsonArray.getJSONObject( 0);
+                    data = (jsonObject.getString("name") + "_-/" +
+                                    jsonObject.getString("type_clean") + "_-/" +
+                                    jsonObject.getString("date_time") + "_-/" +
+                                    jsonObject.getString("hours_from") + "_-/" +
+                                    jsonObject.getString("remarks") + "_-/" +
+                                    jsonObject.getString("payment_method") + "_-/" +
+                                    jsonObject.getString("cleaners") + "_-/" +
+                                    jsonObject.getString("transaction_id") + "_-/" +
+                                    jsonObject.getString("hours") + "_-/" +
+                                    jsonObject.getString("username"));
+
+
+                String[] value = data.split("_-/");
+
+                String name = value[0];
+                String type_clean = value[1];
+                String date_time = value[2];
+                String hours_from = value[3];
+                String remarks = value[4];
+                String payment_method = value[5];
+                String cleaners = value[6];
+                String transaction_id1 = value[7];
+                String hours = value[8];
+                String profile = value[9];
+
+
+                android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(CleanerMapActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
+                TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
+                TextView btnclose = (TextView) mView.findViewById(R.id.close);
+                TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+                TextView d_service1 = (TextView) mView.findViewById(R.id.d_service);
+                TextView d_date1 = (TextView) mView.findViewById(R.id.d_date);
+                TextView d_time1 = (TextView) mView.findViewById(R.id.d_time);
+                TextView d_cleaner1 = (TextView) mView.findViewById(R.id.d_cleaner);
+                TextView d_payment1 = (TextView) mView.findViewById(R.id.d_payment);
+                TextView d_username1 = (TextView) mView.findViewById(R.id.d_username);
+                CircleImageView h_profile1 = (CircleImageView) mView.findViewById(R.id.h_profile);
+
+                Picasso.with(CleanerMapActivity.this)
+                        .load(profile)
+                        .into(h_profile1);
+
+                String[] username = name.split(",");
+
+
+                d_username1.setText(" "+ username[0] +" "+ username[1]);
+                d_service1.setText(" "+ type_clean+" ("+hours+" Hours)");
+                d_date1.setText(" "+ date_time);
+                d_time1.setText(" "+ hours_from);
+                d_cleaner1.setText(" "+ cleaners);
+                messagecontent.setText(" "+ remarks);
+                d_payment1.setText(" "+ payment_method);
+
+                if(payment_method.contains("CASH")) {
+                    d_payment1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_cash, 0, 0, 0);
+                }else{
+                    d_payment1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_credit_card, 0, 0, 0);
+
+                }
+
+                mBuilder.setView(mView);
+                final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+                dialog.show();
+                messagecontent.setMovementMethod(new ScrollingMovementMethod());
+
+
+                btnconfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
+                        hidenavbar();
+                        dialog.hide();
+
+                        i = new Intent(getBaseContext(), MainActivityFragment.class);
+                        i.putExtra("fragment_state", "schedule");
+                        startActivity(i);
+
+                    }
+                });
+
+                btnclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hidenavbar();
+                        dialog.hide();
+                    }
+                });
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        hidenavbar();
+                    }
+                });
+
+            } catch(JSONException er) {
+            }
+
+
+        }
+    }
 
 }

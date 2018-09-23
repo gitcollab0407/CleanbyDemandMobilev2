@@ -157,22 +157,17 @@ public class SignupFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             String err = null;
+            Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+            if(!s.contains("Username already exist")) {
 
-      /*      if(!s.contains("Username already exist")) {
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("id","id1" );
-                editor.putString("role","user" );
-                editor.commit();
-
-                Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
+                Intent i = new Intent(getActivity().getBaseContext(), Login_SignupActivity.class);
                 startActivity(i);
 
                 getActivity().finish();
 
             }else{
                 Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
-            }*/
+            }
 
 
         }
