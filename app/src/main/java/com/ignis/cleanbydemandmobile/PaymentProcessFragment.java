@@ -154,7 +154,7 @@ public class PaymentProcessFragment extends Fragment {
         protected void onPostExecute(String s) {
             String err = null;
 
-            Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+         //   Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
 
             ClientScheduleFragment clientScheduleFragment = new ClientScheduleFragment();
             fragmentTransaction.replace(R.id.fragment_container, clientScheduleFragment, null);

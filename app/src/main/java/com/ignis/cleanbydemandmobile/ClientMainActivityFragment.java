@@ -94,7 +94,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
                     .load("http://cleanbydemand.com/php/profile/kindred.inocencio@gmail.com.jpg")
                     .into(h_profile);*/
 
-            Toast.makeText(this, ""+sharedPreferences.getString("profile", "").toString(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, ""+sharedPreferences.getString("profile", "").toString(), Toast.LENGTH_SHORT).show();
 
             Picasso.with(this)
                     .load(sharedPreferences.getString("profile", "").toString())

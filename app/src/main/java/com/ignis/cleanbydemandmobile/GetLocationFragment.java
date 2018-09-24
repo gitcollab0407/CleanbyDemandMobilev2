@@ -187,7 +187,7 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
 
             ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking");
         }catch(Exception ex){
-            Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
         }
 
 

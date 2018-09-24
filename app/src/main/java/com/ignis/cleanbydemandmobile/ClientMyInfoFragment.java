@@ -20,11 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
@@ -125,7 +122,7 @@ public class ClientMyInfoFragment extends Fragment {
     }
 
     @OnClick(R.id.upload)
-    public void upload(View view){
+    public void upload(View view) {
         uploadMultipart();
 
     }
@@ -137,10 +134,10 @@ public class ClientMyInfoFragment extends Fragment {
             filePath = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                Path = "Path: ". concat(getPath(filePath));
+                Path = "Path: ".concat(getPath(filePath));
                 h_profile.setImageBitmap(bitmap);
 
-            } catch (IOException e) {
+            } catch(IOException e) {
                 e.printStackTrace();
             }
         }
@@ -164,14 +161,11 @@ public class ClientMyInfoFragment extends Fragment {
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the upload
+            ((ClientMainActivityFragment) getActivity()).h_profile1.setImageBitmap(bitmap);
 
-
-
-
-        } catch (Exception exc) {
+        } catch(Exception exc) {
             Toast.makeText(getActivity(), exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
 
 
     }
@@ -185,7 +179,7 @@ public class ClientMyInfoFragment extends Fragment {
 
         cursor = getActivity().getContentResolver().query(
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+                null, MediaStore.Images.Media._ID + " = ? ", new String[] { document_id }, null);
         cursor.moveToFirst();
         String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
         cursor.close();
@@ -203,7 +197,7 @@ public class ClientMyInfoFragment extends Fragment {
             //Explain here why you need this permission
         }
         //And finally ask for the permission
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+        ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, STORAGE_PERMISSION_CODE);
     }
 
     @Override
@@ -224,36 +218,31 @@ public class ClientMyInfoFragment extends Fragment {
     }
 
 
-    private class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
+    private class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
         CircleImageView imageView;
-        public DownLoadImageTask(CircleImageView imageView){
+
+        public DownLoadImageTask(CircleImageView imageView) {
             this.imageView = imageView;
         }
-        /*
-            doInBackground(Params... params)
-                Override this method to perform a computation on a background thread.
-         */
-        protected Bitmap doInBackground(String...urls){
+
+        protected Bitmap doInBackground(String... urls) {
             String urlOfImage = urls[0];
             Bitmap logo = null;
-            try{
+            try {
                 InputStream is = new URL(urlOfImage).openStream();
                 /*
                     decodeStream(InputStream is)
                         Decode an input stream into a bitmap.
                  */
                 logo = BitmapFactory.decodeStream(is);
-            }catch(Exception e){ // Catch the download exception
+            } catch(Exception e) { // Catch the download exception
                 e.printStackTrace();
             }
             return logo;
         }
 
-        /*
-            onPostExecute(Result result)
-                Runs on the UI thread after doInBackground(Params...).
-         */
-        protected void onPostExecute(Bitmap result){
+
+        protected void onPostExecute(Bitmap result) {
             h_profile.setImageBitmap(result);
         }
     }

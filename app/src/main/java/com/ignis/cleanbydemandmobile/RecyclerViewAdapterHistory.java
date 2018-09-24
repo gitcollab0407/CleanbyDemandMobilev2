@@ -229,7 +229,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                             BackGround bg=new BackGround();
                             bg.execute(transaction_id,""+ratingBar.getRating());
-                            Toast.makeText(view.getContext(), ""+ ratingBar.getRating(), Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(view.getContext(), ""+ ratingBar.getRating(), Toast.LENGTH_SHORT).show();
 
                         }
                     });

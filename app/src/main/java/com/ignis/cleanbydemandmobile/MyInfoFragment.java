@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -102,9 +103,7 @@ public class MyInfoFragment extends Fragment {
 
 
 
-            Picasso.with(getContext())
-                    .load(sharedPreferences.getString("profile", "").toString())
-                    .into(h_profile);
+            new MyInfoFragment.DownLoadImageTask(h_profile).execute(sharedPreferences.getString("profile", "").toString());
 
         } catch(Exception e) {
         }
@@ -116,21 +115,21 @@ public class MyInfoFragment extends Fragment {
     public void setChangepic(View view) {
 
 
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
 
 
-            upload.setVisibility(View.VISIBLE);
-       // BackGround upload = new BackGround();
-       // upload.execute();
+        upload.setVisibility(View.VISIBLE);
+        // BackGround upload = new BackGround();
+        // upload.execute();
 
 
     }
 
     @OnClick(R.id.upload)
-    public void upload(View view){
+    public void upload(View view) {
         uploadMultipart();
 
     }
@@ -142,10 +141,10 @@ public class MyInfoFragment extends Fragment {
             filePath = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                Path = "Path: ". concat(getPath(filePath));
+                Path = "Path: ".concat(getPath(filePath));
                 h_profile.setImageBitmap(bitmap);
 
-            } catch (IOException e) {
+            } catch(IOException e) {
                 e.printStackTrace();
             }
         }
@@ -155,8 +154,6 @@ public class MyInfoFragment extends Fragment {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         //getting the actual path of the image
         String path = getPath(filePath);
-
-        Toast.makeText(getActivity(), path, Toast.LENGTH_SHORT).show();
 
         //Uploading code
         try {
@@ -171,9 +168,13 @@ public class MyInfoFragment extends Fragment {
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the upload
-        } catch (Exception exc) {
+            //((CleanerMapActivity) getActivity()).h_profile1.setImageBitmap(bitmap);
+            ((MainActivityFragment) getActivity()).h_profile1.setImageBitmap(bitmap);
+        } catch(Exception exc) {
             Toast.makeText(getActivity(), exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     public String getPath(Uri uri) {
@@ -185,7 +186,7 @@ public class MyInfoFragment extends Fragment {
 
         cursor = getActivity().getContentResolver().query(
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+                null, MediaStore.Images.Media._ID + " = ? ", new String[] { document_id }, null);
         cursor.moveToFirst();
         String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
         cursor.close();
@@ -203,7 +204,7 @@ public class MyInfoFragment extends Fragment {
             //Explain here why you need this permission
         }
         //And finally ask for the permission
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+        ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, STORAGE_PERMISSION_CODE);
     }
 
     @Override
@@ -223,4 +224,32 @@ public class MyInfoFragment extends Fragment {
         }
     }
 
+    private class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
+        CircleImageView imageView;
+
+        public DownLoadImageTask(CircleImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urlOfImage = urls[0];
+            Bitmap logo = null;
+            try {
+                InputStream is = new URL(urlOfImage).openStream();
+                /*
+                    decodeStream(InputStream is)
+                        Decode an input stream into a bitmap.
+                 */
+                logo = BitmapFactory.decodeStream(is);
+            } catch(Exception e) { // Catch the download exception
+                e.printStackTrace();
+            }
+            return logo;
+        }
+
+
+        protected void onPostExecute(Bitmap result) {
+            h_profile.setImageBitmap(result);
+        }
+    }
 }

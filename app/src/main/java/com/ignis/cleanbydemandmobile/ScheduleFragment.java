@@ -119,7 +119,7 @@ public class ScheduleFragment extends Fragment {
                 JSONArray jsonArray = new JSONArray(s);
                 int count = jsonArray.length();
 
-                Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
 
                 for (int v = 0; v < count; v++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(v);

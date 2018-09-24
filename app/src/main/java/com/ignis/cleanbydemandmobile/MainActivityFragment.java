@@ -43,7 +43,7 @@ public class MainActivityFragment extends AppCompatActivity {
 
 
     TextView h_email, h_username;
-    CircleImageView h_profile;
+    CircleImageView h_profile1;
     RatingBar MyRating;
 
 
@@ -112,7 +112,7 @@ public class MainActivityFragment extends AppCompatActivity {
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         h_username = (TextView) headerView.findViewById(R.id.h_username);
-        h_profile = (CircleImageView) headerView.findViewById(R.id.h_profile);
+        h_profile1 = (CircleImageView) headerView.findViewById(R.id.h_profile);
         h_email = (TextView) headerView.findViewById(R.id.h_email);
         MyRating = (RatingBar) headerView.findViewById(R.id.MyRating);
 
@@ -128,11 +128,11 @@ public class MainActivityFragment extends AppCompatActivity {
                     .load("http://cleanbydemand.com/php/profile/kindred.inocencio@gmail.com.jpg")
                     .into(h_profile);*/
 
-            Toast.makeText(this, ""+sharedPreferences.getString("profile", "").toString(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, ""+sharedPreferences.getString("profile", "").toString(), Toast.LENGTH_SHORT).show();
 
             Picasso.with(this)
                     .load(sharedPreferences.getString("profile", "").toString())
-                    .into(h_profile);
+                    .into(h_profile1);
 
         } catch(Exception e) {
         }

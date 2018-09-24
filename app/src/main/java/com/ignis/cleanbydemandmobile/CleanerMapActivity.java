@@ -3,6 +3,7 @@ package com.ignis.cleanbydemandmobile;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,7 +18,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -27,7 +27,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -37,7 +36,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,6 +69,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -138,7 +137,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     RelativeLayout infobar;
 
     TextView h_email, h_username;
-    CircleImageView h_profile;
+    CircleImageView h_profile1;
     RatingBar MyRating;
 
     SharedPreferences sharedPreferences;
@@ -151,6 +150,33 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     String transaction_id = "";
 
+    private ProgressDialog progressDialog;
+
+    String infobar_data;
+
+    String transaction_id1;
+    String bldg_info;
+    String type_clean;
+    String cleaners;
+    String hours;
+    String price;
+    String date_time;
+    String time;
+    String remarks;
+    String transaction_status;
+    String payment_status;
+    String location;
+    String cleaner;
+    String method;
+    String profile;
+    String name;
+
+    String date_time_click;
+
+    TextView btnconfirm;
+
+    String date_time_start, coordinates_start;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,6 +184,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         ButterKnife.bind(this);
         getLocationPermission();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        progressDialog = new ProgressDialog(this);
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -199,7 +227,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         h_username = (TextView) headerView.findViewById(R.id.h_username);
-        h_profile = (CircleImageView) headerView.findViewById(R.id.h_profile);
+        h_profile1 = (CircleImageView) headerView.findViewById(R.id.h_profile);
         h_email = (TextView) headerView.findViewById(R.id.h_email);
         MyRating = (RatingBar) headerView.findViewById(R.id.MyRating);
 
@@ -212,14 +240,13 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             int finalrate = (int) rate;
             MyRating.setRating(finalrate);
 
-           /* Picasso.with(this)
-                    .load("http://cleanbydemand.com/php/profile/kindred.inocencio@gmail.com.jpg")
-                    .into(h_profile);*/
-
-
             Picasso.with(this)
                     .load(sharedPreferences.getString("profile", "").toString())
-                    .into(h_profile);
+                    .into(h_profile1);
+
+              /*  Picasso.with(getActivity())
+                    .load(sharedPreferences.getString("profile", ""))
+                    .into(h_profile);*/
 
         } catch(Exception e) {
         }
@@ -308,6 +335,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein_icon);
         myFadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fadeout_icon);
 
+
     }//end oncreate
 
     @OnClick(R.id.mylocation)
@@ -359,35 +387,27 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                 messagecontent.setMovementMethod(new ScrollingMovementMethod());
                 addresscontent.setMovementMethod(new ScrollingMovementMethod());
-                d_date.setText(" date");
-                d_time.setText(" time");
-                d_cleaner.setText("cleaner");
-                d_payment.setText("payment");
-                d_username.setText("kindred inocencio");
-                d_service.setText("Yaya for a day (8 Hours)");
-                d_price.setText("Total : ₱ " + "1,600");
-                messagecontent.setText("asdasdasdas");
-                addresscontent.setText("asdadadasdasd");
+                d_date.setText(date_time);
+                d_time.setText(time);
+                d_cleaner.setText(cleaners);
+                d_payment.setText(method);
+                d_username.setText(name);
+                d_service.setText(type_clean + " (" + hours + " Hours)");
+                d_price.setText("Total : ₱ " + price);
+                messagecontent.setText(remarks);
+                addresscontent.setText(location);
 
                 call.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm");
-                        String gettimenow = mdformat.format(calendar.getTime());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("transaction", "yes");
-                        editor.putString("timestart", gettimenow);
-
                         editor.commit();
-
-                        getlocationnow();
 
                         hidenavbar();
                         dialog.hide();
 
-
-                        timeleft();
+                        getlocationnow();
 
                     }
                 });
@@ -407,23 +427,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     protected void onStart() {
         super.onStart();
 
-        TextView b_username2 = (TextView) findViewById(R.id.b_username);
-        TextView b_service2 = (TextView) findViewById(R.id.b_clean);
-        TextView b_date2 = (TextView) findViewById(R.id.b_date);
-        TextView b_time2 = (TextView) findViewById(R.id.b_time);
-        CircleImageView h_profile2 = (CircleImageView) findViewById(R.id.h_profile);
-
-        b_username2.setText("Kindred");
-        b_service2.setText("Yaya for a day");
-        b_date2.setText("Sep,9,2018");
-        b_time2.setText("10:00 AM");
-
-        Picasso.with(this)
-                .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
-                .into(h_profile2);
-
-       // String transac = sharedPreferences.getString("transaction", "");
-       // Toast.makeText(this, "" + transac, Toast.LENGTH_SHORT).show();
+        BackGround3 booknow = new BackGround3();
+        booknow.execute();
 
     }
 
@@ -554,25 +559,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             mMap.setMyLocationEnabled(true);
         }
 //------------------------------------------------------------------------------------Other Location
-/*
-
-        final Handler h = new Handler();
-        h.postDelayed(new Runnable()
-        {
-            private long time = 0;
-
-            @Override
-            public void run()
-            {
-                // do stuff then
-                // can call h again after work!
-                time += 1000;
-                Toast.makeText(CleanerMapActivity.this, "" + time, Toast.LENGTH_SHORT).show();
-                h.postDelayed(this, 1000);
-            }
-        }, 1000); // 1 second delay (takes millis)
-*/
-
 
         BackGround booknow = new BackGround();
         booknow.execute();
@@ -608,12 +594,29 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             locationnow = new LatLng(latti, longi);
         }
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+      /*  SharedPreferences.Editor editor = sharedPreferences.edit();
         locationnow_lat = "" + locationnow.latitude;
         locationnow_lng = "" + locationnow.longitude;
         editor.putString("coordinates", locationnow_lat + "," + locationnow_lng);
 
-        editor.commit();
+*/
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String currentDateandTime = sdf.format(new Date());
+
+
+        coordinates_start = locationnow_lat + "," + locationnow_lng;
+        date_time_start = currentDateandTime;
+
+        String transac = sharedPreferences.getString("transaction", "");
+
+        if (transac.toString().trim().equals("yes")) {
+            BackGround5 booking_accept = new BackGround5();
+            booking_accept.execute();
+
+        }else if (transac.toString().trim().equals("no")){
+            BackGround6 booking_accept = new BackGround6();
+            booking_accept.execute();
+        }
     }
 
     @Override
@@ -714,17 +717,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             if (timeleftnow.getText().toString().contains("00:00:00")) {
 
                 timeleftnow.setText("Finish!");
-                Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm:ss");
-                String gettimenow = mdformat.format(calendar.getTime());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("transaction", "no");
-                editor.putString("timefinish", gettimenow);
-
-                editor.commit();
-
-                getlocationnow();
-
 
                 stopService(new Intent(this, BroadcastService.class));
                 first_section.setVisibility(View.INVISIBLE);
@@ -738,8 +730,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             dialogtime.setCancelable(false);
             dialogtime.setCanceledOnTouchOutside(false);
 
-           // String transac = sharedPreferences.getString("transaction", "");
-           // Toast.makeText(this, "" + transac, Toast.LENGTH_SHORT).show();
+            // String transac = sharedPreferences.getString("transaction", "");
+            // Toast.makeText(this, "" + transac, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -760,10 +752,14 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         currentMarker = marker;
         transaction_id = "" + marker.getTag();
 
+        progressDialog.setMessage("Please wait");
+        progressDialog.show();
+
+
         BackGround1 booknow = new BackGround1();
         booknow.execute();
 
-       // Toast.makeText(this, transaction_id, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, transaction_id, Toast.LENGTH_SHORT).show();
 
         return false;
     }
@@ -870,31 +866,35 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             String deluxe = "120";
             String premium = "240";
             String yaya = "480";
-            String test = "2";
 
-            Intent serviceIntent = new Intent(this,BroadcastService.class);
-            serviceIntent.putExtra("time", test);
-            startService(serviceIntent);
+            Intent serviceIntent = new Intent(this, BroadcastService.class);
 
+            if(type_clean.contains("Deluxe")) {
+                serviceIntent.putExtra("time", deluxe);
+                startService(serviceIntent);
+            } else if(type_clean.contains("Premium")) {
+                serviceIntent.putExtra("time", premium);
+                startService(serviceIntent);
+            } else if(type_clean.contains("Yaya")) {
+                serviceIntent.putExtra("time", yaya);
+                startService(serviceIntent);
+            }
 
             Log.i(TAG, "Started service");
 
             timeleftnow.setText("Finish!");
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm:ss");
-            String gettimenow = mdformat.format(calendar.getTime());
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
-            editor.putString("transaction", "yes");
-            editor.putString("timefinish", gettimenow);
-
-
 
             finishtransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(CleanerMapActivity.this, "finish transaction", Toast.LENGTH_SHORT).show();
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("transaction", "no");
+
+                    editor.commit();
                     getlocationnow();
+
                     dialogtime.hide();
                     hidenavbar();
                 }
@@ -971,14 +971,13 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                 }
 
-              //  Toast.makeText(CleanerMapActivity.this, ""+listdata.size(), Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(CleanerMapActivity.this, ""+listdata.size(), Toast.LENGTH_SHORT).show();
 
                 for (int a = 0; a < listdata.size(); a++) {
 
                     final String[] separated = listdata.get(a).split("_-/");
 
                     final String[] location = separated[1].split(",");
-
 
 
                     Double lat = Double.parseDouble(location[0]);
@@ -992,7 +991,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
                     OtherUser.setTag(separated[0]);
                 }
-
 
 
             } catch(JSONException er) {
@@ -1013,7 +1011,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 12+ "&trans_id=" + transaction_id;
+                String urlParams = "id=" + 12 + "&trans_id=" + transaction_id;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -1043,26 +1041,25 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-           final String data;
+
+            progressDialog.dismiss();
+            final String data;
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
                 int count = jsonArray.length();
 
-                Toast.makeText(CleanerMapActivity.this, "" + s, Toast.LENGTH_SHORT).show();
-
-
-                    JSONObject jsonObject = jsonArray.getJSONObject( 0);
-                    data = (jsonObject.getString("name") + "_-/" +
-                                    jsonObject.getString("type_clean") + "_-/" +
-                                    jsonObject.getString("date_time") + "_-/" +
-                                    jsonObject.getString("hours_from") + "_-/" +
-                                    jsonObject.getString("remarks") + "_-/" +
-                                    jsonObject.getString("payment_method") + "_-/" +
-                                    jsonObject.getString("cleaners") + "_-/" +
-                                    jsonObject.getString("transaction_id") + "_-/" +
-                                    jsonObject.getString("hours") + "_-/" +
-                                    jsonObject.getString("username"));
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                data = (jsonObject.getString("name") + "_-/" +
+                                jsonObject.getString("type_clean") + "_-/" +
+                                jsonObject.getString("date_time") + "_-/" +
+                                jsonObject.getString("hours_from") + "_-/" +
+                                jsonObject.getString("remarks") + "_-/" +
+                                jsonObject.getString("payment_method") + "_-/" +
+                                jsonObject.getString("cleaners") + "_-/" +
+                                jsonObject.getString("transaction_id") + "_-/" +
+                                jsonObject.getString("hours") + "_-/" +
+                                jsonObject.getString("profile"));
 
 
                 String[] value = data.split("_-/");
@@ -1074,42 +1071,44 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 String remarks = value[4];
                 String payment_method = value[5];
                 String cleaners = value[6];
-                String transaction_id1 = value[7];
+                String transaction_id = value[7];
                 String hours = value[8];
                 String profile = value[9];
+
+                date_time_click = date_time;
 
 
                 android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(CleanerMapActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_booking_info, null);
-                TextView btnconfirm = (TextView) mView.findViewById(R.id.accept);
-                TextView btnclose = (TextView) mView.findViewById(R.id.close);
-                TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
-                TextView d_service1 = (TextView) mView.findViewById(R.id.d_service);
-                TextView d_date1 = (TextView) mView.findViewById(R.id.d_date);
-                TextView d_time1 = (TextView) mView.findViewById(R.id.d_time);
-                TextView d_cleaner1 = (TextView) mView.findViewById(R.id.d_cleaner);
-                TextView d_payment1 = (TextView) mView.findViewById(R.id.d_payment);
-                TextView d_username1 = (TextView) mView.findViewById(R.id.d_username);
-                CircleImageView h_profile1 = (CircleImageView) mView.findViewById(R.id.h_profile);
+                btnconfirm = (TextView) mView.findViewById(R.id.accept);
+                final TextView btnclose = (TextView) mView.findViewById(R.id.close);
+                final TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
+                final TextView d_service1 = (TextView) mView.findViewById(R.id.d_service);
+                final TextView d_date1 = (TextView) mView.findViewById(R.id.d_date);
+                final TextView d_time1 = (TextView) mView.findViewById(R.id.d_time);
+                final TextView d_cleaner1 = (TextView) mView.findViewById(R.id.d_cleaner);
+                final TextView d_payment1 = (TextView) mView.findViewById(R.id.d_payment);
+                final TextView d_username1 = (TextView) mView.findViewById(R.id.d_username);
+                final CircleImageView h_profile1 = (CircleImageView) mView.findViewById(R.id.h_profile);
 
                 Picasso.with(CleanerMapActivity.this)
-                        .load(profile)
+                        .load("http://cleanbydemand.com/php/profile/" + profile)
                         .into(h_profile1);
 
                 String[] username = name.split(",");
 
 
-                d_username1.setText(" "+ username[0] +" "+ username[1]);
-                d_service1.setText(" "+ type_clean+" ("+hours+" Hours)");
-                d_date1.setText(" "+ date_time);
-                d_time1.setText(" "+ hours_from);
-                d_cleaner1.setText(" "+ cleaners);
-                messagecontent.setText(" "+ remarks);
-                d_payment1.setText(" "+ payment_method);
+                d_username1.setText(" " + username[0] + " " + username[1]);
+                d_service1.setText(" " + type_clean + " (" + hours + " Hours)");
+                d_date1.setText(" " + date_time);
+                d_time1.setText(" " + hours_from);
+                d_cleaner1.setText(" " + cleaners);
+                messagecontent.setText(" " + remarks);
+                d_payment1.setText(" " + payment_method);
 
-                if(payment_method.contains("CASH")) {
+                if (payment_method.contains("CASH")) {
                     d_payment1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_cash, 0, 0, 0);
-                }else{
+                } else {
                     d_payment1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_credit_card, 0, 0, 0);
 
                 }
@@ -1123,13 +1122,16 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 btnconfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(CleanerMapActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
+                        progressDialog.setMessage("Proccessing");
+                        progressDialog.show();
+
+                        BackGround2 booking_accept = new BackGround2();
+                        booking_accept.execute();
+
+
                         hidenavbar();
                         dialog.hide();
 
-                        i = new Intent(getBaseContext(), MainActivityFragment.class);
-                        i.putExtra("fragment_state", "schedule");
-                        startActivity(i);
 
                     }
                 });
@@ -1149,6 +1151,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     }
                 });
 
+                BackGround4 booking_accept = new BackGround4();
+                booking_accept.execute();
+
             } catch(JSONException er) {
             }
 
@@ -1156,4 +1161,351 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         }
     }
 
+    class BackGround2 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String user_id = sharedPreferences.getString("id", "").toString();
+
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
+                String urlParams = "id=" + 14 + "&trans_id=" + transaction_id + "&user_id=" + user_id;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+            progressDialog.dismiss();
+
+            Toast.makeText(CleanerMapActivity.this, s.trim(), Toast.LENGTH_LONG).show();
+
+            if (!s.contains("Maximum Cleaner Reach") || !s.contains("Transaction Already Accepted")) {
+                i = new Intent(getBaseContext(), MainActivityFragment.class);
+                i.putExtra("fragment_state", "schedule");
+                startActivity(i);
+            } else {
+
+                Toast.makeText(CleanerMapActivity.this, s.trim(), Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+    }
+
+    class BackGround3 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(CleanerMapActivity.this);
+            String id = sharedPreferences.getString("id", "");
+
+            String data = "";
+            int tmp;
+            try {
+                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
+                String urlParams = "id=" + 8 + "&user_id=" + id;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+
+            try {
+                JSONArray jsonArray = new JSONArray(s);
+                int count = jsonArray.length();
+
+                if (count > 0) {
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    infobar_data = (jsonObject.getString("transaction_id") + " _-/" +
+                                            jsonObject.getString("bldg_info") + " _-/" +
+                                            jsonObject.getString("type_clean") + " _-/" +
+                                            jsonObject.getString("cleaners") + " _-/" +
+                                            jsonObject.getString("hours") + " _-/" +
+                                            jsonObject.getString("price") + " _-/" +
+                                            jsonObject.getString("date_time") + " _-/" +
+                                            jsonObject.getString("time") + " _-/" +
+                                            jsonObject.getString("remarks") + " _-/" +
+                                            jsonObject.getString("transaction_status") + " _-/" +
+                                            jsonObject.getString("payment_status") + " _-/" +
+                                            jsonObject.getString("location") + " _-/" +
+                                            jsonObject.getString("cleaner") + " _-/" +
+                                            jsonObject.getString("payment_method") + " _-/" +
+                                            jsonObject.getString("rate") + " _-/" +
+                                            jsonObject.getString("profile") + " _-/" +
+                                            jsonObject.getString("name"));
+
+                    String[] value = infobar_data.split("_-/");
+
+
+                    transaction_id1 = value[0];
+                    bldg_info = value[1];
+                    type_clean = value[2];
+                    cleaners = value[3];
+                    hours = value[4];
+                    price = value[5];
+                    date_time = value[6];
+                    time = value[7];
+                    remarks = value[8];
+                    transaction_status = value[9];
+                    payment_status = value[10];
+                    location = value[11];
+                    cleaner = value[12];
+                    method = value[13];
+                    profile = value[15];
+                    name = value[16];
+
+                    String[] username = name.split(",");
+                    name = username[0] + " " + username[1];
+                    TextView b_username2 = (TextView) findViewById(R.id.b_username);
+                    TextView b_service2 = (TextView) findViewById(R.id.b_clean);
+                    TextView b_date2 = (TextView) findViewById(R.id.b_date);
+                    TextView b_time2 = (TextView) findViewById(R.id.b_time);
+                    CircleImageView h_profile2 = (CircleImageView) findViewById(R.id.h_profile);
+
+                    b_username2.setText(name);
+                    b_service2.setText(type_clean);
+                    b_date2.setText(date_time);
+                    b_time2.setText(time);
+
+
+                    Picasso.with(CleanerMapActivity.this)
+                            .load("http://cleanbydemand.com/php/profile/" + profile)
+                            .into(h_profile2);
+
+                    infobar.setVisibility(View.VISIBLE);
+                    nojobschedule.setVisibility(View.INVISIBLE);
+
+                } else {
+
+                    infobar.setVisibility(View.INVISIBLE);
+                    nojobschedule.setVisibility(View.VISIBLE);
+                }
+            } catch(JSONException er) {
+
+            }
+
+
+        }
+    }
+
+    class BackGround4 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String user_id = sharedPreferences.getString("id", "").toString();
+
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
+                String urlParams = "id=" + 11 + "&trans_id=" + transaction_id + "&user_id=" + user_id
+                                           + "&date_time=" + date_time_click;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+            progressDialog.dismiss();
+
+            try {
+                JSONArray jsonArray = new JSONArray(s);
+                int count = jsonArray.length();
+
+
+
+                Toast.makeText(CleanerMapActivity.this, ""+count, Toast.LENGTH_LONG).show();
+
+                if(count == 0){
+                    btnconfirm.setEnabled(false);
+                }else{
+                    btnconfirm.setEnabled(true);
+                }
+
+            }
+            catch(JSONException e){
+
+            }
+        }
+    }
+
+    class BackGround5 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String user_id = sharedPreferences.getString("id", "").toString();
+
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
+                String urlParams = "id=" + 15 + "&trans_id=" + transaction_id1 + "&user_id=" + user_id
+                                           + "&date_time=" + date_time_start +"&scoordinate=" + coordinates_start;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+
+            Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+
+            timeleft();
+
+        }
+    }
+
+    class BackGround6 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String user_id = sharedPreferences.getString("id", "").toString();
+
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
+                String urlParams = "id=" + 16 + "&trans_id=" + transaction_id1 + "&user_id=" + user_id
+                                           + "&date_time=" + date_time_start +"&scoordinate=" + coordinates_start;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+
+            Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
+    }
 }

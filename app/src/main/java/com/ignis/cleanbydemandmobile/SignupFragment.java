@@ -160,7 +160,6 @@ public class SignupFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-            Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
             if(!s.contains("Username already exist")) {
 
