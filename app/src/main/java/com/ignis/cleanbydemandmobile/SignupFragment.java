@@ -1,5 +1,6 @@
 package com.ignis.cleanbydemandmobile;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,6 +47,7 @@ public class SignupFragment extends Fragment {
     @BindView(R.id.email) EditText email;
     @BindView(R.id.password) EditText password;
     SharedPreferences sharedPreferences;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +56,7 @@ public class SignupFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
+        progressDialog = new ProgressDialog(getActivity());
         ButterKnife.bind(this, view);
         return  view;
     }
@@ -86,7 +88,8 @@ public class SignupFragment extends Fragment {
                         BackGround signup = new BackGround();
                         signup.execute(firstname.getText().toString() + "," + lastname.getText().toString(), email.getText().toString(), password.getText().toString(), email.getText().toString(), contact.getText().toString());
 //comment moto
-
+                        progressDialog.setMessage("Signing up");
+                        progressDialog.show();
 
                     }
                 }
@@ -158,7 +161,9 @@ public class SignupFragment extends Fragment {
         protected void onPostExecute(String s) {
             String err = null;
             Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
             if(!s.contains("Username already exist")) {
+
 
                 Intent i = new Intent(getActivity().getBaseContext(), Login_SignupActivity.class);
                 startActivity(i);
@@ -166,7 +171,7 @@ public class SignupFragment extends Fragment {
                 getActivity().finish();
 
             }else{
-                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),s.trim(),Toast.LENGTH_LONG).show();
             }
 
 

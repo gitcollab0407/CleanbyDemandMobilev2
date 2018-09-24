@@ -1,5 +1,6 @@
 package com.ignis.cleanbydemandmobile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -44,12 +45,15 @@ public class Login_SignupHomeFragment extends Fragment {
     String role;
 
 
+    private ProgressDialog progressDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login__signup_home, container, false);
         ButterKnife.bind(this, view);
+
+        progressDialog = new ProgressDialog(getActivity());
 
 
         return view;
@@ -69,7 +73,8 @@ public class Login_SignupHomeFragment extends Fragment {
     public void signin(View view) {
         BackGround signin = new BackGround();
         signin.execute(email.getText().toString(), password.getText().toString());
-
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
     }
 
     @OnClick(R.id.applyascleaner)
@@ -123,7 +128,7 @@ public class Login_SignupHomeFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-
+            progressDialog.dismiss();
             if (!s.contains("Invalid username or password")) {
                 Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
                 String[] value = s.split(",");
@@ -136,7 +141,7 @@ public class Login_SignupHomeFragment extends Fragment {
                     editor.putString("contact", value[5]);
                     editor.putString("id", value[7]);
                     editor.putString("role", value[6]);
-                    editor.putString("profile", value[8]);
+                    editor.putString("profile", "http://cleanbydemand.com/php/profile/"+value[8]);
 
                     editor.putString("address", value[9]);
                     editor.putString("rating", value[10]);
@@ -148,6 +153,7 @@ public class Login_SignupHomeFragment extends Fragment {
                 editor.commit();
 
                 if (value[6].equals("user")) {
+
                     Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
                     startActivity(i);
                     getActivity().finish();
@@ -159,6 +165,9 @@ public class Login_SignupHomeFragment extends Fragment {
                     getActivity().finish();
 
                 }
+
+
+
 
             } else {
                 Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();

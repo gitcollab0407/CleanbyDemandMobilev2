@@ -124,13 +124,15 @@ public class MainActivityFragment extends AppCompatActivity {
             int finalrate = (int) rate;
             MyRating.setRating(finalrate);
 
-            Picasso.with(this)
-                    .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
-                    .into(h_profile);
-
-              /*  Picasso.with(getActivity())
-                    .load(sharedPreferences.getString("profile", ""))
+          /*  Picasso.with(this)
+                    .load("http://cleanbydemand.com/php/profile/kindred.inocencio@gmail.com.jpg")
                     .into(h_profile);*/
+
+            Toast.makeText(this, ""+sharedPreferences.getString("profile", "").toString(), Toast.LENGTH_SHORT).show();
+
+            Picasso.with(this)
+                    .load(sharedPreferences.getString("profile", "").toString())
+                    .into(h_profile);
 
         } catch(Exception e) {
         }

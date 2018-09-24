@@ -42,7 +42,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
     TextView h_email, h_username;
-    CircleImageView h_profile;
+    CircleImageView h_profile1;
 
 
     @Override
@@ -81,7 +81,7 @@ public class ClientMainActivityFragment extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
         h_username = (TextView) headerView.findViewById(R.id.h_username);
-        h_profile = (CircleImageView) headerView.findViewById(R.id.h_profile);
+        h_profile1 = (CircleImageView) headerView.findViewById(R.id.h_profile);
         h_email = (TextView) headerView.findViewById(R.id.h_email);
 
 
@@ -90,14 +90,15 @@ public class ClientMainActivityFragment extends AppCompatActivity {
             h_username.setText(sharedPreferences.getString("username", "").toString().trim());
             h_email.setText(sharedPreferences.getString("email", "").toString());
 
-            Picasso.with(this)
-                    .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
-                    .into(h_profile);
-
-
-          /*  Picasso.with(getActivity())
-                    .load(sharedPreferences.getString("profile", ""))
+           /* Picasso.with(this)
+                    .load("http://cleanbydemand.com/php/profile/kindred.inocencio@gmail.com.jpg")
                     .into(h_profile);*/
+
+            Toast.makeText(this, ""+sharedPreferences.getString("profile", "").toString(), Toast.LENGTH_SHORT).show();
+
+            Picasso.with(this)
+                    .load(sharedPreferences.getString("profile", "").toString())
+                    .into(h_profile1);
 
         } catch(Exception e) {
         }

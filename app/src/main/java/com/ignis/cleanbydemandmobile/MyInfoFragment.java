@@ -23,6 +23,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -100,11 +102,9 @@ public class MyInfoFragment extends Fragment {
 
 
 
-
-
-          /*  Picasso.with(getActivity())
-                    .load(sharedPreferences.getString("profile", ""))
-                    .into(h_profile);*/
+            Picasso.with(getContext())
+                    .load(sharedPreferences.getString("profile", "").toString())
+                    .into(h_profile);
 
         } catch(Exception e) {
         }
@@ -152,9 +152,11 @@ public class MyInfoFragment extends Fragment {
     }
 
     public void uploadMultipart() {
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         //getting the actual path of the image
         String path = getPath(filePath);
+
+        Toast.makeText(getActivity(), path, Toast.LENGTH_SHORT).show();
 
         //Uploading code
         try {
@@ -163,9 +165,9 @@ public class MyInfoFragment extends Fragment {
             //Creating a multi part request
             new MultipartUploadRequest(getActivity(), uploadId, UPLOAD_URL)
                     .addFileToUpload(path, "image") //Adding file
-                    .addParameter("id", 13) //Adding text parameter to the request
-                    .addParameter("username", 13) //Adding text parameter to the request
-                    .addParameter("user_id", 13) //Adding text parameter to the request
+                    .addParameter("id", "13") //Adding text parameter to the request
+                    .addParameter("username", sharedPreferences.getString("email", "").toString()) //Adding text parameter to the request
+                    .addParameter("user_id", sharedPreferences.getString("id", "").toString()) //Adding text parameter to the request
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the upload
@@ -220,4 +222,5 @@ public class MyInfoFragment extends Fragment {
             }
         }
     }
+
 }

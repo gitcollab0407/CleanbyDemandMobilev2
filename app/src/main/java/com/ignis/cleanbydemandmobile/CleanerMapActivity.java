@@ -212,13 +212,14 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             int finalrate = (int) rate;
             MyRating.setRating(finalrate);
 
-            Picasso.with(this)
-                    .load("http://www.vaultads.com/wp-content/uploads/2011/03/google-adsense.jpg")
-                    .into(h_profile);
-
-              /*  Picasso.with(getActivity())
-                    .load(sharedPreferences.getString(sharedPreferences.getString("profile", "").toString()))
+           /* Picasso.with(this)
+                    .load("http://cleanbydemand.com/php/profile/kindred.inocencio@gmail.com.jpg")
                     .into(h_profile);*/
+
+
+            Picasso.with(this)
+                    .load(sharedPreferences.getString("profile", "").toString())
+                    .into(h_profile);
 
         } catch(Exception e) {
         }
@@ -553,6 +554,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             mMap.setMyLocationEnabled(true);
         }
 //------------------------------------------------------------------------------------Other Location
+/*
 
         final Handler h = new Handler();
         h.postDelayed(new Runnable()
@@ -565,16 +567,15 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 // do stuff then
                 // can call h again after work!
                 time += 1000;
-
-
-                BackGround booknow = new BackGround();
-                booknow.execute();
-
+                Toast.makeText(CleanerMapActivity.this, "" + time, Toast.LENGTH_SHORT).show();
                 h.postDelayed(this, 1000);
             }
         }, 1000); // 1 second delay (takes millis)
+*/
 
 
+        BackGround booknow = new BackGround();
+        booknow.execute();
 
 
     }//end googlemap
