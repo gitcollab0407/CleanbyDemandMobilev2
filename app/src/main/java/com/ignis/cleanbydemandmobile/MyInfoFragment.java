@@ -144,7 +144,7 @@ public class MyInfoFragment extends Fragment {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 Path = "Path: ". concat(getPath(filePath));
                 h_profile.setImageBitmap(bitmap);
-                
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -17,6 +17,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -553,8 +554,26 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         }
 //------------------------------------------------------------------------------------Other Location
 
-        BackGround booknow = new BackGround();
-        booknow.execute();
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable()
+        {
+            private long time = 0;
+
+            @Override
+            public void run()
+            {
+                // do stuff then
+                // can call h again after work!
+                time += 1000;
+
+
+                BackGround booknow = new BackGround();
+                booknow.execute();
+
+                h.postDelayed(this, 1000);
+            }
+        }, 1000); // 1 second delay (takes millis)
+
 
 
 
