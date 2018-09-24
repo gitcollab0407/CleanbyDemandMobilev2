@@ -71,7 +71,7 @@ public class MyInfoFragment extends Fragment {
     String Path;
 
 
-    private static final String UPLOAD_URL = "http://192.168.1.2:8080/android_upload/insert_image.php";
+    private static final String UPLOAD_URL = "http://cleanbydemand.com/php/m_function.php";
     private static final int IMAGE_REQUEST_CODE = 3;
     private static final int STORAGE_PERMISSION_CODE = 123;
 
@@ -163,6 +163,9 @@ public class MyInfoFragment extends Fragment {
             //Creating a multi part request
             new MultipartUploadRequest(getActivity(), uploadId, UPLOAD_URL)
                     .addFileToUpload(path, "image") //Adding file
+                    .addParameter("id", 13) //Adding text parameter to the request
+                    .addParameter("username", 13) //Adding text parameter to the request
+                    .addParameter("user_id", 13) //Adding text parameter to the request
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the upload
