@@ -379,7 +379,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 TextView d_username = (TextView) mView.findViewById(R.id.d_username);
                 TextView d_price = (TextView) mView.findViewById(R.id.d_price);
                 TextView d_service = (TextView) mView.findViewById(R.id.d_service);
-
+                LinearLayout servicebg = (LinearLayout) mView.findViewById(R.id.servicebg);
 
                 mBuilder.setView(mView);
                 final android.support.v7.app.AlertDialog dialog = mBuilder.create();
@@ -396,6 +396,19 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 d_price.setText("Total : ₱ " + price);
                 messagecontent.setText(remarks);
                 addresscontent.setText(location);
+
+                try {
+                    if (type_clean.trim().contains("Deluxe Cleaning")){
+                        servicebg.setBackgroundResource(R.drawable.d_deluxe);
+                    }else if(type_clean.trim().contains("Premium Cleaning")){
+                        servicebg.setBackgroundResource(R.drawable.d_premium);
+                    }else if(type_clean.trim().contains("Yaya for a day")){
+                        servicebg.setBackgroundResource(R.drawable.d_yaya);
+                    }
+
+                } catch(Exception e) {
+
+                }
 
                 call.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -426,6 +439,14 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     @Override
     protected void onStart() {
         super.onStart();
+
+      /*  String transac = sharedPreferences.getString("transaction", "");
+
+        if (transac.toString().trim().equals("yes")) {
+            timeleft();
+        } else {
+
+        }*/
 
         BackGround3 booknow = new BackGround3();
         booknow.execute();
@@ -699,6 +720,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     @Override
     public void onDestroy() {
         stopService(new Intent(this, BroadcastService.class));
+
         Log.i(TAG, "Stopped service");
         super.onDestroy();
     }
@@ -859,13 +881,20 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             second_section = (LinearLayout) mView.findViewById(R.id.second_section);
             Button finishtransaction = (Button) mView.findViewById(R.id.finishtransaction);
 
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+            String currentDateandTime = sdf.format(new Date());
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("transaction", "no");
+            editor.commit();
+
             ViewGroup.LayoutParams params = second_section.getLayoutParams();
             params.height = 100;
             second_section.setLayoutParams(params);
 
-            String deluxe = "120";
-            String premium = "240";
-            String yaya = "480";
+            String deluxe = "1";
+            String premium = "2";
+            String yaya = "4";
 
             Intent serviceIntent = new Intent(this, BroadcastService.class);
 
@@ -1205,7 +1234,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             String err = null;
             progressDialog.dismiss();
 
-            Toast.makeText(CleanerMapActivity.this, s.trim(), Toast.LENGTH_LONG).show();
+           // Toast.makeText(CleanerMapActivity.this, s.trim(), Toast.LENGTH_LONG).show();
 
             if (!s.contains("Maximum Cleaner Reach") || !s.contains("Transaction Already Accepted")) {
                 i = new Intent(getBaseContext(), MainActivityFragment.class);
@@ -1393,7 +1422,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
 
 
-                Toast.makeText(CleanerMapActivity.this, ""+count, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(CleanerMapActivity.this, ""+count, Toast.LENGTH_LONG).show();
 
                 if(count == 0){
                     btnconfirm.setEnabled(false);
@@ -1452,7 +1481,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         protected void onPostExecute(String s) {
             String err = null;
 
-            Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
 
             timeleft();
@@ -1504,7 +1533,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         protected void onPostExecute(String s) {
             String err = null;
 
-            Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+          // Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
     }

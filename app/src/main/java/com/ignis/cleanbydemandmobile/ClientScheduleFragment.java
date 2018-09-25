@@ -65,7 +65,7 @@ public class ClientScheduleFragment extends Fragment {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String id = sharedPreferences.getString("id", "");
-        Toast.makeText(getActivity(), ""+ id, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(), ""+ id, Toast.LENGTH_SHORT).show();
 
 
         BackGround booknow = new BackGround();

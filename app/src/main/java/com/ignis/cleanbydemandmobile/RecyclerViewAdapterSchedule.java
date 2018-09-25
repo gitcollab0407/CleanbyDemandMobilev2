@@ -143,6 +143,7 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
 
                     String[] finalname = name.split(",");
 
+                    call.setVisibility(View.INVISIBLE);
 
                     d_message_content.setText(remarks);
                     d_address_content.setText(location);
