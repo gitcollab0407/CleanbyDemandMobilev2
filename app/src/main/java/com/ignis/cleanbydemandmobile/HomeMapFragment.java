@@ -138,7 +138,7 @@ public class HomeMapFragment extends Fragment implements GoogleMap.OnCameraMoveS
             btnconfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "asdasd", Toast.LENGTH_SHORT).show();
+
 
                     dialog.hide();
                 }

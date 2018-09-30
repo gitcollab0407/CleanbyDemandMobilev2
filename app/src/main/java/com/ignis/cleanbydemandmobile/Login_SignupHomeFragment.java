@@ -130,7 +130,7 @@ public class Login_SignupHomeFragment extends Fragment {
             String err = null;
             progressDialog.dismiss();
             if (!s.contains("Invalid username or password")) {
-                Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
+
                 String[] value = s.split(",");
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();

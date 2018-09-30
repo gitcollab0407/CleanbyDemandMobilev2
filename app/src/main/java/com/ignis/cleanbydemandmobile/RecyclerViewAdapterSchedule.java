@@ -186,7 +186,6 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                     call.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(view.getContext(), "asdasd", Toast.LENGTH_SHORT).show();
                             hidenavbar();
                             dialog.hide();
                         }

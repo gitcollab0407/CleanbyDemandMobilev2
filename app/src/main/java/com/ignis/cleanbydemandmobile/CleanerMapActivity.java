@@ -752,8 +752,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             dialogtime.setCancelable(false);
             dialogtime.setCanceledOnTouchOutside(false);
 
-            // String transac = sharedPreferences.getString("transaction", "");
-            // Toast.makeText(this, "" + transac, Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -781,7 +780,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         BackGround1 booknow = new BackGround1();
         booknow.execute();
 
-        // Toast.makeText(this, transaction_id, Toast.LENGTH_SHORT).show();
+
 
         return false;
     }
@@ -990,7 +989,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 JSONArray jsonArray = new JSONArray(s);
                 int count = jsonArray.length();
 
-                //Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
+
 
                 for (int v = 0; v < count; v++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(v);
@@ -1000,7 +999,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                 }
 
-                //  Toast.makeText(CleanerMapActivity.this, ""+listdata.size(), Toast.LENGTH_SHORT).show();
 
                 for (int a = 0; a < listdata.size(); a++) {
 
@@ -1234,7 +1232,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             String err = null;
             progressDialog.dismiss();
 
-           // Toast.makeText(CleanerMapActivity.this, s.trim(), Toast.LENGTH_LONG).show();
 
             if (!s.contains("Maximum Cleaner Reach") || !s.contains("Transaction Already Accepted")) {
                 i = new Intent(getBaseContext(), MainActivityFragment.class);

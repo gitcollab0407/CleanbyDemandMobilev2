@@ -171,7 +171,7 @@ public class MyInfoFragment extends Fragment {
             //((CleanerMapActivity) getActivity()).h_profile1.setImageBitmap(bitmap);
             ((MainActivityFragment) getActivity()).h_profile1.setImageBitmap(bitmap);
         } catch(Exception exc) {
-            Toast.makeText(getActivity(), exc.getMessage(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity(), exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 

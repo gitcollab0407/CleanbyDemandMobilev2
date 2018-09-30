@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
+
 
 import java.util.Calendar;
 
@@ -172,7 +172,6 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
             ((ClientMainActivityFragment) getActivity()).action_title.setText("Location");
         } catch(Exception ex) {
-            Toast.makeText(getActivity(), "" + ex, Toast.LENGTH_SHORT).show();
         }
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
