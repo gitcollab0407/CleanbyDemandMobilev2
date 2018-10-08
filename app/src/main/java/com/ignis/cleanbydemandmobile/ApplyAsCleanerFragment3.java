@@ -110,19 +110,34 @@ public class ApplyAsCleanerFragment3 extends Fragment {
         spinnerArrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner_sex.setAdapter(spinnerArrayAdapter2);
 
+        try {
+            age.setText(PublicVariables.a_age);
+            spouse.setText(PublicVariables.a_spouse);
+            children.setText(PublicVariables.a_no_children);
+            name_children.setText( PublicVariables.a_name_children);
+
+            spinner_sex.setSelection(PublicVariables.a_gender1);
+            spinner_civil.setSelection(PublicVariables.a_civil1);
+
+        }catch(Exception e){}
+
         return view;
     }
+
 
     @OnClick(R.id.next)
     public void next(View view) {
         try {
-            if (!age.getText().toString().isEmpty() && !spouse.getText().toString().isEmpty()
-                        && !spinner_sex.getSelectedItem().toString().trim().equals("Select your Gender")
-                        && !spinner_civil.getSelectedItem().toString().trim().equals("Select your Civil Status")
-                        && !spouse.getText().toString().isEmpty()
-                        && !children.getText().toString().isEmpty()
-                        && !name_children.getText().toString().isEmpty()) {
 
+            if (!age.getText().toString().isEmpty()
+                        && !spinner_sex.getSelectedItem().toString().trim().equals("Select your Gender")
+                        && !spinner_civil.getSelectedItem().toString().trim().equals("Select your Civil Status")) {
+
+
+                PublicVariables.a_gender1 = spinner_sex.getSelectedItemPosition();
+                PublicVariables.a_civil1 = spinner_civil.getSelectedItemPosition();
+
+                PublicVariables.a_age = age.getText().toString();
                 PublicVariables.a_spouse = spouse.getText().toString();
                 PublicVariables.a_gender = spinner_sex.getSelectedItem().toString().trim();
                 PublicVariables.a_civil =spinner_civil.getSelectedItem().toString().trim();

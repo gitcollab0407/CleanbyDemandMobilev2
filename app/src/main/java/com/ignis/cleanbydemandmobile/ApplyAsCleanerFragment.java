@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.io.IOException;
@@ -62,17 +63,36 @@ public class ApplyAsCleanerFragment extends Fragment {
 
         progressDialog = new ProgressDialog(getActivity());
 
+        try {
+            firstname.setText(PublicVariables.a_firstname);
+            lastname.setText(PublicVariables.a_lastname);
+            email.setText(PublicVariables.a_email);
+            contact.setText( PublicVariables.a_contact);
+            password.setText(PublicVariables.a_password);
+
+        }catch(Exception e){}
+
         return view;
     }
 
     @OnClick(R.id.next)
     public void next(View view) {
 
+        if(!firstname.getText().toString().isEmpty() && !email.getText().toString().isEmpty()
+                   && !contact.getText().toString().isEmpty() && !lastname.getText().toString().isEmpty()
+                   && !password.getText().toString().isEmpty()) {
+
        BackGround signin = new BackGround();
         signin.execute(email.getText().toString());
 
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+            progressDialog.setMessage("Authenticating...");
+            progressDialog.show();
+
+        }else {
+            Toast.makeText(getActivity(), "Please fill-up the information first", Toast.LENGTH_SHORT).show();
+        }
+
+
 
     }
 
@@ -118,11 +138,9 @@ public class ApplyAsCleanerFragment extends Fragment {
             String err = null;
             progressDialog.dismiss();
 
-            if(s.contains("Username already exists")){
+            if(!s.contains("Username already exists")){
                 try {
-                    if(!firstname.getText().toString().isEmpty() && !email.getText().toString().isEmpty()
-                               && !contact.getText().toString().isEmpty() && !lastname.getText().toString().isEmpty()
-                               && !password.getText().toString().isEmpty()) {
+
 
                         PublicVariables.a_firstname = firstname.getText().toString();
                         PublicVariables.a_lastname = lastname.getText().toString();
@@ -137,14 +155,14 @@ public class ApplyAsCleanerFragment extends Fragment {
                         fragmentTransaction.replace(R.id.fragment_container, ApplyAsCleanerFragment2, null);
                         fragmentTransaction.commit();
 
-                    }else {
-                        Toast.makeText(getActivity(), "Please fill-up the information first", Toast.LENGTH_SHORT).show();
-                    }
+
 
                 } catch(Exception e) {
                 }
 
 
+            }else{
+                Toast.makeText(getActivity(), ""+s, Toast.LENGTH_SHORT).show();
             }
 
 

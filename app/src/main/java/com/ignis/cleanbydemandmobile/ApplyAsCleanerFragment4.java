@@ -44,6 +44,14 @@ public class ApplyAsCleanerFragment4 extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        try {
+            emergency.setText(PublicVariables.a_em_name);
+            phone.setText(PublicVariables.a_em_contact);
+            language.setText(PublicVariables.a_language);
+            emp_history.setText( PublicVariables.a_emp_history);
+
+        }catch(Exception e){}
+
         return view;
     }
 

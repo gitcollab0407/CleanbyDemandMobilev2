@@ -102,6 +102,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:drawableLeft="@drawable/ic_user"
                                 android:drawableTint="#85e277"
+                              android:inputType="number"
                                 android:hint=" Age"
                                 android:textSize="15dp" />
 

@@ -57,6 +57,15 @@ public class ApplyAsCleanerFragment2 extends Fragment implements DatePickerDialo
 
         ButterKnife.bind(this, view);
 
+        try {
+            dateofbirth.setText(PublicVariables.a_date_of_birth);
+            weight.setText(PublicVariables.a_weight);
+            height.setText(PublicVariables.a_height);
+            perm_address.setText( PublicVariables.a_perm_address);
+            pres_address.setText(PublicVariables.a_pres_address);
+
+        }catch(Exception e){}
+
         return view;
     }
 
