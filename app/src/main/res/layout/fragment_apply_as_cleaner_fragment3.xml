@@ -125,7 +125,8 @@
                                 android:layout_height="40dp"
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
-                                android:drawableLeft="@drawable/ic_family_silhouette"
+                                android:background="@drawable/gender"
+                                android:paddingLeft="25dp"
                                 android:drawableTint="#85e277"
                                 android:hint=" Civil Status"
                                 android:textSize="15dp"
@@ -152,9 +153,10 @@
                                 android:layout_height="40dp"
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
-                                android:drawableLeft="@drawable/ic_family_silhouette"
                                 android:drawableTint="#85e277"
                                 android:hint=" Civil Status"
+                                android:paddingLeft="25dp"
+                                android:background="@drawable/family"
                                 android:textSize="15dp"
                                 android:spinnerMode="dialog"/>
 

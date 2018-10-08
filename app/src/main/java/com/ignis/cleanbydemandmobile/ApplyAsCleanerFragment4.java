@@ -31,11 +31,10 @@ public class ApplyAsCleanerFragment4 extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-  /*  @BindView(R.id.firstname) EditText firstname;
-    @BindView(R.id.lastname) EditText lastname;
-    @BindView(R.id.contact) EditText contact;
-    @BindView(R.id.email) EditText email;
-    @BindView(R.id.password) EditText password;*/
+    @BindView(R.id.emergency) EditText emergency;
+    @BindView(R.id.phone) EditText phone;
+    @BindView(R.id.language) EditText language;
+    @BindView(R.id.emp_history) EditText emp_history;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,12 +49,31 @@ public class ApplyAsCleanerFragment4 extends Fragment {
 
     @OnClick(R.id.next)
     public void next(View view){
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+        try {
+            if (!emergency.getText().toString().isEmpty() && !phone.getText().toString().isEmpty()
 
-        ApplyAsCleanerFragment5 applyAsCleanerFragment5 = new ApplyAsCleanerFragment5();
-        fragmentTransaction.replace(R.id.fragment_container, applyAsCleanerFragment5, null);
-        fragmentTransaction.addToBackStack(null).commit();
+                        && !language.getText().toString().isEmpty()
+                        && !emp_history.getText().toString().isEmpty()) {
+
+
+                PublicVariables.a_em_name = emergency.getText().toString();
+                PublicVariables.a_em_contact = phone.getText().toString();
+                PublicVariables.a_language = language.getText().toString();
+                PublicVariables.a_emp_history = emp_history.getText().toString();
+
+                fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+
+                ApplyAsCleanerFragment5 ApplyAsCleanerFragment5 = new ApplyAsCleanerFragment5();
+                fragmentTransaction.replace(R.id.fragment_container, ApplyAsCleanerFragment5, null);
+                fragmentTransaction.commit();
+
+            } else {
+                Toast.makeText(getActivity(), "Please fill-up the information first", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch(Exception e) {
+        }
     }
 
     @OnClick(R.id.back)

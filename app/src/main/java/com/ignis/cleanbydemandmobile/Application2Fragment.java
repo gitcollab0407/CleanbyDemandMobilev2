@@ -46,7 +46,6 @@ public class Application2Fragment extends Fragment {
         String lastname = PublicVariables.a_lastname;
         String email = PublicVariables.a_email;
         String contact = PublicVariables.a_contact;
-        String address = PublicVariables.a_address;
         String password = PublicVariables.a_password;
 
 

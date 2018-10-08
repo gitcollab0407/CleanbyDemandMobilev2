@@ -94,8 +94,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/dateofbirth"
+                                android:gravity="center|left"
                                 android:layout_width="250dp"
                                 android:layout_height="40dp"
                                 android:layout_alignParentTop="true"
@@ -126,6 +127,7 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
                                 android:drawableLeft="@drawable/ic_weighing"
+                                android:inputType="number"
                                 android:drawableTint="#85e277"
                                 android:hint=" Weight"
                                 android:textSize="15dp" />
@@ -153,6 +155,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:drawableLeft="@drawable/ic_man_standing_with_extended_arms_to_sides"
                                 android:drawableTint="#85e277"
+                                android:inputType="number"
                                 android:hint="Height"
                                 android:textSize="15dp" />
 

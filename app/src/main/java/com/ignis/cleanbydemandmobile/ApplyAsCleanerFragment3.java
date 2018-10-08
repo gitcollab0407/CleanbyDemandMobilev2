@@ -1,15 +1,10 @@
 package com.ignis.cleanbydemandmobile;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +29,19 @@ public class ApplyAsCleanerFragment3 extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-/*    @BindView(R.id.firstname) EditText firstname;
-    @BindView(R.id.lastname) EditText lastname;
-    @BindView(R.id.contact) EditText contact;
-    @BindView(R.id.email) EditText email;*/
-    @BindView(R.id.civil) Spinner spinner_civil;
-    @BindView(R.id.sex) Spinner spinner_sex;
+    @BindView(R.id.age)
+    EditText age;
+    @BindView(R.id.spouse)
+    EditText spouse;
+    @BindView(R.id.children)
+    EditText children;
+    @BindView(R.id.name_children)
+    EditText name_children;
+
+    @BindView(R.id.civil)
+    Spinner spinner_civil;
+    @BindView(R.id.sex)
+    Spinner spinner_sex;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,28 +54,25 @@ public class ApplyAsCleanerFragment3 extends Fragment {
 
         final String[] civillist = getResources().getStringArray(R.array.civil);
         final ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(
-                getActivity(),android.R.layout.simple_spinner_item,civillist){
+                getActivity(), android.R.layout.simple_spinner_item, civillist) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -84,28 +83,25 @@ public class ApplyAsCleanerFragment3 extends Fragment {
 
         final String[] sexlist = getResources().getStringArray(R.array.sex);
         final ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(
-                getActivity(),android.R.layout.simple_spinner_item,sexlist){
+                getActivity(), android.R.layout.simple_spinner_item, sexlist) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -118,17 +114,40 @@ public class ApplyAsCleanerFragment3 extends Fragment {
     }
 
     @OnClick(R.id.next)
-    public void next(View view){
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+    public void next(View view) {
+        try {
+            if (!age.getText().toString().isEmpty() && !spouse.getText().toString().isEmpty()
+                        && !spinner_sex.getSelectedItem().toString().trim().equals("Select your Gender")
+                        && !spinner_civil.getSelectedItem().toString().trim().equals("Select your Civil Status")
+                        && !spouse.getText().toString().isEmpty()
+                        && !children.getText().toString().isEmpty()
+                        && !name_children.getText().toString().isEmpty()) {
 
-        ApplyAsCleanerFragment4 applyAsCleanerFragment4 = new ApplyAsCleanerFragment4();
-        fragmentTransaction.replace(R.id.fragment_container, applyAsCleanerFragment4, null);
-        fragmentTransaction.addToBackStack(null).commit();
+                PublicVariables.a_spouse = spouse.getText().toString();
+                PublicVariables.a_gender = spinner_sex.getSelectedItem().toString().trim();
+                PublicVariables.a_civil =spinner_civil.getSelectedItem().toString().trim();
+                PublicVariables.a_spouse = spouse.getText().toString();
+                PublicVariables.a_no_children = children.getText().toString();
+                PublicVariables.a_name_children = name_children.getText().toString();
+
+                fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+
+                ApplyAsCleanerFragment4 ApplyAsCleanerFragment4 = new ApplyAsCleanerFragment4();
+                fragmentTransaction.replace(R.id.fragment_container, ApplyAsCleanerFragment4, null);
+                fragmentTransaction.commit();
+
+            } else {
+                Toast.makeText(getActivity(), "Please fill-up the information first", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch(Exception e) {
+        }
+
     }
 
     @OnClick(R.id.back)
-    public void back(View view){
+    public void back(View view) {
 
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();

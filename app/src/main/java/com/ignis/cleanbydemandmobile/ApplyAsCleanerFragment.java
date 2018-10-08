@@ -1,6 +1,12 @@
 package com.ignis.cleanbydemandmobile;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,7 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +50,8 @@ public class ApplyAsCleanerFragment extends Fragment {
     @BindView(R.id.password)
     EditText password;
 
+    private ProgressDialog progressDialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,25 +60,96 @@ public class ApplyAsCleanerFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        progressDialog = new ProgressDialog(getActivity());
+
         return view;
     }
 
     @OnClick(R.id.next)
     public void next(View view) {
-        if(!firstname.getText().toString().isEmpty() && !email.getText().toString().isEmpty()
-                   && !contact.getText().toString().isEmpty() && !lastname.getText().toString().isEmpty()
-                   && !password.getText().toString().isEmpty()) {
 
-            fragmentManager = getFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
+       BackGround signin = new BackGround();
+        signin.execute(email.getText().toString());
 
-            ApplyAsCleanerFragment2 applyAsCleanerFragment2 = new ApplyAsCleanerFragment2();
-            fragmentTransaction.replace(R.id.fragment_container, applyAsCleanerFragment2, null);
-            fragmentTransaction.addToBackStack(null).commit();
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
 
-        }else {
-            Toast.makeText(getActivity(), "Please fill-up the information first", Toast.LENGTH_SHORT).show();
+    }
+
+    class BackGround extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String email = params[0];
+            String data = "";
+            int tmp;
+
+            try {
+                URL url = new URL("http://cleanbydemand.com/php/m_function.php");
+                String urlParams = "id=" + 17 + "&email=" + email;
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                OutputStream os = httpURLConnection.getOutputStream();
+                os.write(urlParams.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = httpURLConnection.getInputStream();
+                while ((tmp = is.read()) != -1) {
+                    data += (char) tmp;
+                }
+
+                is.close();
+                httpURLConnection.disconnect();
+
+                return data;
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
         }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String err = null;
+            progressDialog.dismiss();
+
+            if(s.contains("Username already exists")){
+                try {
+                    if(!firstname.getText().toString().isEmpty() && !email.getText().toString().isEmpty()
+                               && !contact.getText().toString().isEmpty() && !lastname.getText().toString().isEmpty()
+                               && !password.getText().toString().isEmpty()) {
+
+                        PublicVariables.a_firstname = firstname.getText().toString();
+                        PublicVariables.a_lastname = lastname.getText().toString();
+                        PublicVariables.a_email = email.getText().toString();
+                        PublicVariables.a_contact = contact.getText().toString();
+                        PublicVariables.a_password = password.getText().toString();
+
+                        fragmentManager = getFragmentManager();
+                        fragmentTransaction = fragmentManager.beginTransaction();
+
+                        ApplyAsCleanerFragment2 ApplyAsCleanerFragment2 = new ApplyAsCleanerFragment2();
+                        fragmentTransaction.replace(R.id.fragment_container, ApplyAsCleanerFragment2, null);
+                        fragmentTransaction.commit();
+
+                    }else {
+                        Toast.makeText(getActivity(), "Please fill-up the information first", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch(Exception e) {
+                }
+
+
+            }
+
+
+        }
+
     }
 
     @OnClick(R.id.back)

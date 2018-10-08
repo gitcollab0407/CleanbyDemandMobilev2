@@ -157,7 +157,7 @@
                             android:layout_height="match_parent">
 
                             <EditText
-                                android:id="@+id/civil"
+                                android:id="@+id/language"
                                 android:layout_width="250dp"
                                 android:layout_height="40dp"
                                 android:layout_alignParentTop="true"
@@ -183,7 +183,7 @@
 
 
                             <EditText
-                                android:id="@+id/spouse"
+                                android:id="@+id/emp_history"
                                 android:layout_width="250dp"
                                 android:layout_height="40dp"
                                 android:layout_alignParentTop="true"
