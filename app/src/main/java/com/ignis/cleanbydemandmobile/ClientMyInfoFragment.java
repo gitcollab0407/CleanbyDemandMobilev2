@@ -164,7 +164,7 @@ public class ClientMyInfoFragment extends Fragment {
             ((ClientMainActivityFragment) getActivity()).h_profile1.setImageBitmap(bitmap);
 
         } catch(Exception exc) {
-            Toast.makeText(getActivity(), exc.getMessage(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity(), exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 

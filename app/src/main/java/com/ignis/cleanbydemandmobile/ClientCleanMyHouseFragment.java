@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,7 +61,7 @@ public class ClientCleanMyHouseFragment extends Fragment {
 
                         ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking");
                     }catch(Exception ex){
-                        Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+
                     }
                     fragmentManager = getFragmentManager();
                     fragmentTransaction = fragmentManager.beginTransaction();
@@ -117,7 +117,7 @@ public class ClientCleanMyHouseFragment extends Fragment {
 
                         ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking");
                     }catch(Exception ex){
-                        Toast.makeText(getActivity(), ""+ex, Toast.LENGTH_SHORT).show();
+
                     }
                     fragmentManager = getFragmentManager();
                     fragmentTransaction = fragmentManager.beginTransaction();
