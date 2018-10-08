@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SignupFragment">
+    tools:context=".ApplyAsCleanerFragment5">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,8 +28,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -42,23 +41,23 @@
 
                             <ImageView
                                 android:id="@+id/back"
-                                android:paddingTop="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="14dp"
+                                android:paddingTop="10dp"
                                 android:src="@drawable/arrowleft" />
 
                             <TextView
-                                android:layout_width="158dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="50dp"
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
-                                android:text="Sign Up"
                                 android:gravity="center"
-                                android:textSize="30dp"/>
+                                android:text="Join our team"
+                                android:textSize="30dp" />
 
                         </RelativeLayout>
 
@@ -74,22 +73,56 @@
                             android:layout_height="match_parent">
 
                             <LinearLayout
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
                                 android:layout_marginTop="5dp"
-                                android:background="@drawable/line">
-                            </LinearLayout>
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/line"></LinearLayout>
 
                         </RelativeLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/a"
+                                android:layout_width="250dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="15dp"
+                                android:layout_centerHorizontal="true"
+                                android:text="Upload Documents"/>
+
+
+                            <EditText
+                                android:id="@+id/biodata"
+                                android:layout_width="250dp"
+                                android:layout_height="40dp"
+                                android:layout_below="@+id/a"
+                                android:layout_centerHorizontal="true"
+                                android:drawableLeft="@drawable/ic_file"
+                                android:drawableTint="#85e277"
+                                android:hint=" CV/BioData"
+                                android:layout_marginTop="10dp"
+                                android:textSize="15dp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
                         <RelativeLayout
@@ -97,25 +130,24 @@
                             android:layout_height="match_parent">
 
                             <EditText
-                                android:id="@+id/firstname"
+                                android:id="@+id/barangay"
                                 android:layout_width="250dp"
                                 android:layout_height="40dp"
-                                android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
-                                android:drawableLeft="@drawable/ic_user"
+                                android:drawableLeft="@drawable/ic_file"
                                 android:drawableTint="#85e277"
-                                android:textSize="15dp"
-                                android:hint="Firstname"
-                                />
-
+                                android:hint=" Barangay Cleanrance"
+                                android:layout_marginTop="10dp"
+                                android:textSize="15dp" />
                         </RelativeLayout>
+
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
                         <RelativeLayout
@@ -123,108 +155,75 @@
                             android:layout_height="match_parent">
 
                             <EditText
-                                android:id="@+id/lastname"
+                                android:id="@+id/nbi"
                                 android:layout_width="250dp"
                                 android:layout_height="40dp"
-                                android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
-                                android:drawableLeft="@drawable/ic_user"
+                                android:drawableLeft="@drawable/ic_file"
                                 android:drawableTint="#85e277"
-                                android:textSize="15dp"
-                                android:hint="Lastname"
-                                />
-
+                                android:hint=" NBI Clearance"
+                                android:layout_marginTop="10dp"
+                                android:textSize="15dp" />
                         </RelativeLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
+
                             <EditText
-                                android:id="@+id/contact"
+                                android:id="@+id/gov_id"
                                 android:layout_width="250dp"
                                 android:layout_height="40dp"
-                                android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
-                                android:drawableLeft="@drawable/ic_phone"
+                                android:drawableLeft="@drawable/ic_file"
                                 android:drawableTint="#85e277"
-                                android:textSize="15dp"
-                                android:inputType="number"
-                                android:hint="Contact number"
-                                />
-
+                                android:hint="Goverment ID"
+                                android:layout_marginTop="10dp"
+                                android:textSize="15dp" />
                         </RelativeLayout>
+
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
+
                             <EditText
-                                android:id="@+id/email"
+                                android:id="@+id/photo"
                                 android:layout_width="250dp"
                                 android:layout_height="40dp"
-                                android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
-                                android:drawableLeft="@drawable/ic_email"
+                                android:drawableLeft="@drawable/ic_file"
                                 android:drawableTint="#85e277"
-                                android:inputType="textEmailAddress"
-                                android:textSize="15dp"
-                                android:hint=" Email"
-                                />
-
+                                android:hint=" 2X2 Photo"
+                                android:layout_marginTop="10dp"
+                                android:textSize="15dp" />
                         </RelativeLayout>
+
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <EditText
-                                android:id="@+id/password"
-                                android:layout_width="250dp"
-                                android:layout_height="40dp"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerHorizontal="true"
-                                android:textSize="15dp"
-                                android:drawableLeft="@drawable/ic_lock"
-                                android:drawableTint="#85e277"
-                                android:password="true"
-                                android:hint="Password"
-                                />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-
-
-                    <LinearLayout
                         android:layout_marginTop="30dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <RelativeLayout
@@ -232,17 +231,17 @@
                             android:layout_height="match_parent">
 
                             <Button
-                                android:layout_marginBottom="20dp"
-                                android:id="@+id/signup"
+                                android:id="@+id/next"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="20dp"
                                 android:background="#85e277"
-                                android:textColor="@color/white"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:text="Terms and condition / Sign Up" />
+                                android:text="terms And conditions / Next"
+                                android:textColor="@color/white" />
 
                         </RelativeLayout>
 

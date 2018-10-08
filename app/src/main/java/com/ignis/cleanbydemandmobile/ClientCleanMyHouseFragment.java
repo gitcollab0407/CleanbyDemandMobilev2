@@ -54,8 +54,8 @@ public class ClientCleanMyHouseFragment extends Fragment {
             booknow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialog.hide();
-                    hidenavbar();
+
+
 
                     try {
 
@@ -66,13 +66,17 @@ public class ClientCleanMyHouseFragment extends Fragment {
                     fragmentManager = getFragmentManager();
                     fragmentTransaction = fragmentManager.beginTransaction();
 
-                    BookingFragment bookingFragment = new BookingFragment();
+
 
                     PublicVariables.B_service ="Deluxe Cleaning";
                     PublicVariables.B_price = "400";
 
+                    dialog.hide();
+                    hidenavbar();
+                    BookingFragment bookingFragment = new BookingFragment();
                     fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
                     fragmentTransaction.addToBackStack(null).commit();
+
                 }
             });
 
@@ -107,8 +111,7 @@ public class ClientCleanMyHouseFragment extends Fragment {
             booknow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialog.hide();
-                    hidenavbar();
+
 
                     try {
 
@@ -119,13 +122,17 @@ public class ClientCleanMyHouseFragment extends Fragment {
                     fragmentManager = getFragmentManager();
                     fragmentTransaction = fragmentManager.beginTransaction();
 
-                    BookingFragment bookingFragment = new BookingFragment();
+
 
                     PublicVariables.B_service ="Premium Cleaning";
                     PublicVariables.B_price = "800";
 
+                    dialog.hide();
+                    hidenavbar();
+                    BookingFragment bookingFragment = new BookingFragment();
                     fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
                     fragmentTransaction.addToBackStack(null).commit();
+
                 }
             });
 
@@ -160,8 +167,6 @@ public class ClientCleanMyHouseFragment extends Fragment {
             booknow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialog.hide();
-                    hidenavbar();
 
                     try {
 
@@ -172,13 +177,19 @@ public class ClientCleanMyHouseFragment extends Fragment {
                     fragmentManager = getFragmentManager();
                     fragmentTransaction = fragmentManager.beginTransaction();
 
-                    BookingFragment bookingFragment = new BookingFragment();
 
                     PublicVariables.B_service = "Yaya for a day";
                     PublicVariables.B_price = "1600";
 
+
+                    dialog.hide();
+                    hidenavbar();
+
+                    BookingFragment bookingFragment = new BookingFragment();
+
                     fragmentTransaction.replace(R.id.fragment_container,bookingFragment, null);
                     fragmentTransaction.addToBackStack(null).commit();
+
                 }
             });
 

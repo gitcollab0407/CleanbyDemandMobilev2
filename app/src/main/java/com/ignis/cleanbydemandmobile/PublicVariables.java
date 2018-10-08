@@ -12,9 +12,11 @@ public class PublicVariables {
             , B_service = ""
             , B_price = "";
 
-    public static String a_username =""
+    public static String a_firstname =""
+            ,a_lastname = ""
             , a_contact = ""
             , a_email = ""
-            , a_address = "";
+            , a_address = ""
+            , a_password = "";
 
 }

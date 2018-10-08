@@ -35,26 +35,4 @@ public class Application3Fragment extends Fragment {
         return view;
     }
 
-/*
-    @OnClick(R.id.join)
-    public void join(View view){
-
-        String username = PublicVariables.a_username;
-        String email = PublicVariables.a_email;
-        String contact = PublicVariables.a_contact;
-        String address = PublicVariables.a_address;
-
-        */
-/*
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        Application1Fragment application1Fragment = new Application1Fragment();
-        fragmentTransaction.replace(R.id.fragment_container,application1Fragment, null);
-        fragmentTransaction.addToBackStack(null).commit();
-*//*
-
-    }
-*/
-
-
 }

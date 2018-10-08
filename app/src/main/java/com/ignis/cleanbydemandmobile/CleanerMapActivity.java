@@ -16,6 +16,7 @@ import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -170,6 +171,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     String method;
     String profile;
     String name;
+    String contact1;
 
     String date_time_click;
 
@@ -369,6 +371,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 View mView = getLayoutInflater().inflate(R.layout.dialog_schedule_info, null);
 
                 TextView call = (TextView) mView.findViewById(R.id.call);
+                final TextView contact = (TextView) mView.findViewById(R.id.contact);
 
                 TextView messagecontent = (TextView) mView.findViewById(R.id.d_message_content);
                 TextView addresscontent = (TextView) mView.findViewById(R.id.d_address_content);
@@ -379,6 +382,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 TextView d_username = (TextView) mView.findViewById(R.id.d_username);
                 TextView d_price = (TextView) mView.findViewById(R.id.d_price);
                 TextView d_service = (TextView) mView.findViewById(R.id.d_service);
+
+
                 LinearLayout servicebg = (LinearLayout) mView.findViewById(R.id.servicebg);
 
                 mBuilder.setView(mView);
@@ -396,6 +401,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 d_price.setText("Total : ₱ " + price);
                 messagecontent.setText(remarks);
                 addresscontent.setText(location);
+
 
                 try {
                     if (type_clean.trim().contains("Deluxe Cleaning")){
@@ -424,6 +430,18 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     }
                 });
+
+
+                contact.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:"+contact1));
+                        startActivity(intent);
+
+                    }
+                });
+
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
@@ -722,6 +740,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         stopService(new Intent(this, BroadcastService.class));
 
         Log.i(TAG, "Stopped service");
+        Toast.makeText(this, ""+timeleftnow.getText(), Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 
@@ -892,9 +911,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             params.height = 100;
             second_section.setLayoutParams(params);
 
-            String deluxe = "1";
-            String premium = "2";
-            String yaya = "4";
+            String deluxe = "120";
+            String premium = "240";
+            String yaya = "480"; //todo
 
             Intent serviceIntent = new Intent(this, BroadcastService.class);
 
@@ -1088,8 +1107,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                 jsonObject.getString("cleaners") + "_-/" +
                                 jsonObject.getString("transaction_id") + "_-/" +
                                 jsonObject.getString("hours") + "_-/" +
-                                jsonObject.getString("profile"));
-
+                                jsonObject.getString("profile") + "_-/" +
+                                jsonObject.getString("location"));
 
                 String[] value = data.split("_-/");
 
@@ -1103,7 +1122,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 String transaction_id = value[7];
                 String hours = value[8];
                 String profile = value[9];
-
+                String location = value[10];
                 date_time_click = date_time;
 
 
@@ -1118,6 +1137,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 final TextView d_cleaner1 = (TextView) mView.findViewById(R.id.d_cleaner);
                 final TextView d_payment1 = (TextView) mView.findViewById(R.id.d_payment);
                 final TextView d_username1 = (TextView) mView.findViewById(R.id.d_username);
+                final TextView address = (TextView) mView.findViewById(R.id.d_address_content);
                 final CircleImageView h_profile1 = (CircleImageView) mView.findViewById(R.id.h_profile);
 
                 Picasso.with(CleanerMapActivity.this)
@@ -1134,6 +1154,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                 d_cleaner1.setText(" " + cleaners);
                 messagecontent.setText(" " + remarks);
                 d_payment1.setText(" " + payment_method);
+                address.setText(location);
 
                 if (payment_method.contains("CASH")) {
                     d_payment1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_cash, 0, 0, 0);
@@ -1315,10 +1336,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                             jsonObject.getString("payment_method") + " _-/" +
                                             jsonObject.getString("rate") + " _-/" +
                                             jsonObject.getString("profile") + " _-/" +
-                                            jsonObject.getString("name"));
+                                            jsonObject.getString("name")+ " _-/" +
+                                            jsonObject.getString("contact"));
 
                     String[] value = infobar_data.split("_-/");
-
 
                     transaction_id1 = value[0];
                     bldg_info = value[1];
@@ -1336,6 +1357,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     method = value[13];
                     profile = value[15];
                     name = value[16];
+                    contact1 = value[17];
 
                     String[] username = name.split(",");
                     name = username[0] + " " + username[1];
@@ -1422,7 +1444,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
 
 
-              //  Toast.makeText(CleanerMapActivity.this, ""+count, Toast.LENGTH_LONG).show();
 
                 if(count == 0){
                     btnconfirm.setEnabled(false);

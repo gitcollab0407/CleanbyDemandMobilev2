@@ -18,7 +18,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +59,7 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     Button card;
 
     String set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service;
+    DatePickerDialog datePickerDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +97,8 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         } catch(Exception ex) {
         }
 
+
+
         return view;
     }
 
@@ -100,6 +106,8 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     public void setMessagecontent(View view){
         PublicVariables.B_message = messagecontent.getText().toString();
     }
+
+
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -112,10 +120,10 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), this,
-                hour, minute, android.text.format.DateFormat.is24HourFormat(getActivity()));
+            TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), this,
+                    hour, minute, android.text.format.DateFormat.is24HourFormat(getActivity()));
 
-        timePickerDialog.show();
+            timePickerDialog.show();
 
     }
 
@@ -148,6 +156,7 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
         datepickercontent.setText(monthFinal + "-" + dayFinal + "-" + yearFinal + " " + aTime);
 
+
         PublicVariables.B_date = yearFinal + "-" + monthFinal + "-" + dayFinal;
         PublicVariables.B_time = aTime;
 
@@ -160,11 +169,14 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity()
-                , this, year, month, day);
+        datePickerDialog = new DatePickerDialog(getActivity()
+                , this, year, month, day +1);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1)  );
         datePickerDialog.show();
 
     }
+
+
 
     @OnClick(R.id.location)
     public void location(View view) {
@@ -241,13 +253,15 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         try {
 
             ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking Summary");
+
+            PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
+            fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
+            fragmentTransaction.addToBackStack(null).commit();
+
         }catch(Exception ex){
 
         }
 
-        PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
-        fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
-        fragmentTransaction.addToBackStack(null).commit();
 
 
     }

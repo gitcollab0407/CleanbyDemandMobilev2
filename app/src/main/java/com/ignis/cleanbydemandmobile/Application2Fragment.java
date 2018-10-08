@@ -42,15 +42,18 @@ public class Application2Fragment extends Fragment {
     @OnClick(R.id.join)
     public void join(View view) {
 
-        String name = PublicVariables.a_username;
+        String firstname = PublicVariables.a_firstname;
+        String lastname = PublicVariables.a_lastname;
         String email = PublicVariables.a_email;
         String contact = PublicVariables.a_contact;
         String address = PublicVariables.a_address;
+        String password = PublicVariables.a_password;
 
-        String message="Name: "+name+"<br>Email: "+email+"<br>CellPhone#: "+contact+"<br>Address: "+address;
-        BackGround signup = new BackGround();
-        signup.execute(name, email, message);
 
+       /*     String message = "Name: " + name + "<br>Email: " + email + "<br>CellPhone#: " + contact + "<br>Address: " + address
+                                     + "<br>Password: " + password ;
+            BackGround signup = new BackGround();
+            signup.execute(name, email, message);*/
 
     }
 
