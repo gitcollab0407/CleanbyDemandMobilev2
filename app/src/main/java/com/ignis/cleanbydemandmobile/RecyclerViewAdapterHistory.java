@@ -17,6 +17,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -138,6 +139,8 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_history_info, null);
                     TextView d_date = (TextView) mView.findViewById(R.id.d_date);
 
+                    TextView d_feedback_content = (TextView) mView.findViewById(R.id.d_feedback_content);
+
                     TextView d_message_content = (TextView) mView.findViewById(R.id.d_message_content);
                     TextView d_address_content = (TextView) mView.findViewById(R.id.d_address_content);
                     TextView d_cleaner = (TextView) mView.findViewById(R.id.d_cleaner);
@@ -221,6 +224,24 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     } catch(Exception e) {
 
                     }
+
+                    d_feedback_content.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(context);
+                            View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_feedback, null);
+                            EditText content = (EditText) mView.findViewById(R.id.content);
+
+                            TextView sendfeedback = (TextView) mView.findViewById(R.id.sendfeedback);
+
+                            mBuilder.setView(mView);
+                            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+                            dialog.show();
+
+
+
+                        }
+                    });
 
 
                     MyRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

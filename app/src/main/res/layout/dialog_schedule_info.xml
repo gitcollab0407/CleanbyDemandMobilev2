@@ -208,7 +208,7 @@
             android:layout_alignParentTop="true"
             android:gravity="center|left"
             android:paddingLeft="25dp"
-            android:text="Message"
+            android:text="Special Request"
             android:textSize="20dp" />
 
         <TextView
