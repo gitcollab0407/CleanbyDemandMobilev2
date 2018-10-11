@@ -81,8 +81,9 @@
         <LinearLayout
 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -304,12 +305,11 @@
                     android:id="@+id/feedback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:gravity="center|left"
                     android:paddingLeft="25dp"
-                    android:text="Feedback"
+                    android:text="Feedback (Add)"
                     android:textSize="20dp" />
 
                 <TextView
@@ -323,7 +323,7 @@
                     android:paddingLeft="25dp"
                     android:paddingRight="30dp"
                     android:scrollbars="vertical"
-                    android:text="Click to add feedback"
+                    android:text="none"
                     android:textSize="15dp" />
 
             </RelativeLayout>
@@ -345,6 +345,7 @@
                     android:paddingTop="10dp"
                     android:progressTint="@color/progresstint"
                     android:rating="4"
+                    android:isIndicator="true"
                     android:stepSize="1" />
 
 

@@ -255,6 +255,10 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
                 fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
                 fragmentTransaction.addToBackStack(null).commit();
 
+                if(messagecontent.getText().toString().isEmpty()){
+                    PublicVariables.B_message = "No special request";
+                }
+
             }
         } catch(Exception ex) {
             if (!datepickercontent.getText().toString().isEmpty()

@@ -163,8 +163,6 @@ public class Login_SignupHomeFragment extends Fragment {
 
                 } else if (value[6].equals("cleaner")) {
 
-                    Toast.makeText(getActivity(), ""+value[11], Toast.LENGTH_SHORT).show();
-
                     if(value[11].trim().equals("Activate")) {
 
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -197,13 +195,14 @@ public class Login_SignupHomeFragment extends Fragment {
                         fragmentTransaction = fragmentManager.beginTransaction();
                         Application3Fragment application3Fragment = new Application3Fragment();
                         fragmentTransaction.replace(R.id.fragment_container, application3Fragment, null);
-                        fragmentTransaction.addToBackStack(null).commit();                   }
+                        fragmentTransaction.addToBackStack(null).commit();
+                    }
 
                 }
 
 
             } else {
-                Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), s.trim(), Toast.LENGTH_LONG).show();
             }
 
         }

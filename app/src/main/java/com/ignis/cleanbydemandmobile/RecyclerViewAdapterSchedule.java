@@ -4,6 +4,8 @@ package com.ignis.cleanbydemandmobile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
@@ -111,7 +113,7 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                     View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_schedule_info, null);
 
                     TextView call = (TextView) mView.findViewById(R.id.call);
-
+                    TextView contact = (TextView) mView.findViewById(R.id.contact);
                     TextView d_message_content = (TextView) mView.findViewById(R.id.d_message_content);
                     TextView d_address_content = (TextView) mView.findViewById(R.id.d_address_content);
                     TextView d_cleaner = (TextView) mView.findViewById(R.id.d_cleaner);
@@ -140,7 +142,7 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                     String cleaner = value[12];
                     String method = value[13];
                     String name = value[15];
-
+                    final String contact1 = value[16];
                     String[] finalname = name.split(",");
 
                     call.setVisibility(View.INVISIBLE);
@@ -183,6 +185,15 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                     d_message_content.setMovementMethod(new ScrollingMovementMethod());
                     d_address_content.setMovementMethod(new ScrollingMovementMethod());
 
+                    contact.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:"+contact1));
+                            context.startActivity(intent);
+                        }
+                    });
+
                     call.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -211,8 +222,6 @@ public class RecyclerViewAdapterSchedule extends RecyclerView.Adapter<RecyclerVi
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
     }
-
-
 
     @Override
     public int getItemCount() {

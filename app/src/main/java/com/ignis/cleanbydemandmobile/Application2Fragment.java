@@ -61,8 +61,6 @@ public class Application2Fragment extends Fragment implements SingleUploadBroadc
     @OnClick(R.id.join)
     public void join(View view) {
 
-
-
         uploadMultipart();
 
     }

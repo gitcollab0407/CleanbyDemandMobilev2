@@ -98,33 +98,32 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(@NonNull RecyclerViewHolder1 holder, int position) {
 
         String[] value = listData.get(position).split("_-/");
-         //Toast.makeText(context, ""+ value.length, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, ""+ value.length, Toast.LENGTH_SHORT).show();
 
         holder.a_service.setText(value[2].trim());
         holder.a_date.setText(value[6].trim());
         holder.a_time.setText(value[7].trim());
         holder.a_status.setText(value[9].trim());
 
-        if(value[9].contains("Cancelled")){
+        if (value[9].contains("Cancelled")) {
             holder.a_status.setTextColor(Color.parseColor("#f23d3d"));
         }
 
         try {
-            if (value[2].trim().contains("Deluxe Cleaning")){
+            if (value[2].trim().contains("Deluxe Cleaning")) {
                 holder.a_profile.setImageResource(R.drawable.i_deluxe);
-            }else if(value[2].trim().contains("Premium Cleaning")){
+            } else if (value[2].trim().contains("Premium Cleaning")) {
                 holder.a_profile.setImageResource(R.drawable.i_premium);
-            }else if(value[2].trim().contains("Yaya for a day")){
+            } else if (value[2].trim().contains("Yaya for a day")) {
                 holder.a_profile.setImageResource(R.drawable.i_yaya);
             }
-
 
 
         } catch(Exception e) {
 
         }
 
-            holder.setItemClickListener(new HistoryItemClickListener() {
+        holder.setItemClickListener(new HistoryItemClickListener() {
             @Override
             public void OnClick(final View view, int position, boolean isLongClick) {   
            /*     if(isLongClick) {
@@ -136,10 +135,9 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                 try {
                     android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(context);
-                    View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_history_info, null);
+                    View mView = LayoutInflater.from(context).inflate(R.layout.dialog_history_info, null);
                     TextView d_date = (TextView) mView.findViewById(R.id.d_date);
-
-                    TextView d_feedback_content = (TextView) mView.findViewById(R.id.d_feedback_content);
+                   final TextView d_feedback_content = (TextView) mView.findViewById(R.id.d_feedback_content);
 
                     TextView d_message_content = (TextView) mView.findViewById(R.id.d_message_content);
                     TextView d_address_content = (TextView) mView.findViewById(R.id.d_address_content);
@@ -150,13 +148,14 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     TextView d_price = (TextView) mView.findViewById(R.id.d_price);
                     TextView d_status_content = (TextView) mView.findViewById(R.id.d_status_content);
                     final RatingBar MyRating = (RatingBar) mView.findViewById(R.id.MyRating);
+                    final TextView feedback = (TextView) mView.findViewById(R.id.feedback);
 
                     TextView d_title = (TextView) mView.findViewById(R.id.d_title);
                     TextView d_title_content = (TextView) mView.findViewById(R.id.d_title_content);
 
                     LinearLayout a_profile = (LinearLayout) mView.findViewById(R.id.servicebg);
 
-                   final String[] value = listData.get(position).split("_-/");
+                    final String[] value = listData.get(position).split("_-/");
 
                     final String transaction_id = value[0];
                     String bldg_info = value[1];
@@ -173,51 +172,41 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     String cleaner = value[12];
                     String method = value[13];
 
-                   final int rate = Integer.parseInt(value[14]);
-
-                    String name = value[15];
+                    final int rate = Integer.parseInt(value[14]);
 
                     d_message_content.setText(remarks);
                     d_address_content.setText(location);
-                    d_time.setText(" "+time);
-                    d_payment.setText(" "+method);
-                    d_cleaner.setText(" = "+cleaners);
-                    d_service.setText(type_clean +" ("+hours+"Hours)");
-                    d_date.setText(" "+date_time);
+                    d_time.setText(" " + time);
+                    d_payment.setText(" " + method);
+                    d_cleaner.setText(" = " + cleaners);
+                    d_service.setText(type_clean + " (" + hours + "Hours)");
+                    d_date.setText(" " + date_time);
                     d_price.setText("Total: ₱ " + price);
                     d_status_content.setText(transaction_status);
-                    d_title_content.setText(cleaner);
+
                     MyRating.setRating(rate);
 //aeqweqw
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mView.getContext());
                     String role = sharedPreferences.getString("role", "");
 
-                    if(method.contains("CASH")) {
+                    if (method.contains("CASH")) {
                         d_payment.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_cash, 0, 0, 0);
-                    }else{
+                    } else {
                         d_payment.setCompoundDrawablesWithIntrinsicBounds(R.drawable.d_credit_card, 0, 0, 0);
                     }
 
-                    if(role.contains("user")){
-                        d_title.setText("Cleaners");
-                        MyRating.setIsIndicator(false);
 
-                    }else if(role.contains("cleaner")){
-                        d_title.setText("Client");
-                        MyRating.setIsIndicator(true);
-                    }
-
-                    if(transaction_status.contains("Cancelled")){
-                        MyRating.setIsIndicator(true);
+                    if (transaction_status.contains("Cancelled")) {
+                        feedback.setText("Feedback");
                         d_status_content.setTextColor(Color.parseColor("#f23d3d"));
                     }
 
                     try {
-                        if (value[2].trim().contains("Deluxe Cleaning")){
+                        if (value[2].trim().contains("Deluxe Cleaning")) {
                             a_profile.setBackgroundResource(R.drawable.d_deluxe);
-                        }else if(value[2].trim().contains("Premium Cleaning")){
+                        } else if (value[2].trim().contains("Premium Cleaning")) {
                             a_profile.setBackgroundResource(R.drawable.d_premium);
-                        }else if(value[2].trim().contains("Yaya for a day")){
+                        } else if (value[2].trim().contains("Yaya for a day")) {
                             a_profile.setBackgroundResource(R.drawable.d_yaya);
                         }
 
@@ -225,35 +214,87 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
                     }
 
-                    d_feedback_content.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(context);
-                            View mView =  LayoutInflater.from(context).inflate(R.layout.dialog_feedback, null);
-                            EditText content = (EditText) mView.findViewById(R.id.content);
+                    if (role.contains("user")) {
 
-                            TextView sendfeedback = (TextView) mView.findViewById(R.id.sendfeedback);
+                        String feedbackmessage = value[15];
 
-                            mBuilder.setView(mView);
-                            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
-                            dialog.show();
-
-
-
+                        if(feedbackmessage.trim().isEmpty()){
+                            d_feedback_content.setText("No feedback");
+                        }else{
+                            d_feedback_content.setText(feedbackmessage);
                         }
-                    });
+                        if (!transaction_status.contains("Cancelled")) {
+
+                            d_title.setText("Cleaners");
+
+                            final String[] value1 = cleaner.split(",");
+                            String first = value1[0];
+                            String last = value1[1];
+
+                            d_title_content.setText(first + " " + last);
+
+                            feedback.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(context);
+                                    View mView = LayoutInflater.from(context).inflate(R.layout.dialog_feedback, null);
+                                    final EditText content = (EditText) mView.findViewById(R.id.content);
+                                    final RatingBar MyRating1 = (RatingBar) mView.findViewById(R.id.MyRating1);
+
+                                    if(rate !=0) {
+                                        MyRating1.setRating(MyRating.getRating());
+                                    }else{
+                                        MyRating1.setRating(5);
+                                    }
+                                    TextView sendfeedback = (TextView) mView.findViewById(R.id.sendfeedback);
+                                    mBuilder.setView(mView);
+                                    final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+                                    dialog.show();
+
+                                    MyRating1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                                        @Override
+                                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+
+                                        }
+                                    });
+
+                                    sendfeedback.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            BackGround bg = new BackGround();
+                                        //    Toast.makeText(context, ""+MyRating1.getRating(), Toast.LENGTH_SHORT).show();
+                                            d_feedback_content.setText( content.getText().toString());
+                                            dialog.dismiss();
+                                            MyRating.setRating(MyRating1.getRating());
+                                            bg.execute(transaction_id, "" + MyRating1.getRating(), content.getText().toString());//todo
 
 
-                    MyRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                        @Override
-                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                                        }
 
-                            BackGround bg=new BackGround();
-                            bg.execute(transaction_id,""+ratingBar.getRating());
-                          //  Toast.makeText(view.getContext(), ""+ ratingBar.getRating(), Toast.LENGTH_SHORT).show();
-
+                                    });
+                                }
+                            });
                         }
-                    });
+
+                    } else if (role.contains("cleaner")) {
+                        String name = value[15];
+
+                        String feedbackmessage = value[16];
+                        if(feedbackmessage.trim().isEmpty()){
+                            d_feedback_content.setText("No feedback");
+                        }else{
+                            d_feedback_content.setText(feedbackmessage);
+                        }
+
+                        d_title.setText("Client");
+                        feedback.setText("Feedback");
+
+                        final String[] value1 = name.split(",");
+                        String first = value1[0];
+                        String last = value1[1];
+                        d_title_content.setText(first + " " + last);
+                    }
 
                     mBuilder.setView(mView);
                     final android.support.v7.app.AlertDialog dialog = mBuilder.create();
@@ -266,7 +307,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
-                            if(MyRating.getRating() != rate) {
+                            if (MyRating.getRating() != rate) {
                                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -279,9 +320,10 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                     });
 
                 } catch(Exception e) {
+                    Toast.makeText(context, "" + e, Toast.LENGTH_SHORT).show();
                 }
             }
-            });
+        });
     }
 
     private void hidenavbar() {
@@ -305,15 +347,15 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
         @Override
         protected String doInBackground(String... params) {
-            String id=params[0];
-            String rate=params[1];
+            String id = params[0];
+            String rate = params[1];
+            String feedback = params[2];
             String data = "";
             int tmp;
 
-
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 6 + "&trans_id=" + id+ "&rate=" + rate;
+                String urlParams = "id=" + 6 + "&trans_id=" + id + "&rate=" + rate + "&feedback=" + feedback;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -342,7 +384,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(context, ""+ s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Thank you", Toast.LENGTH_SHORT).show();
 
         }
     }

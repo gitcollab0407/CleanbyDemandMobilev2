@@ -69,7 +69,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -172,6 +171,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
     String profile;
     String name;
     String contact1;
+    String my_cleaners;
 
     String date_time_click;
 
@@ -404,29 +404,49 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
 
                 try {
-                    if (type_clean.trim().contains("Deluxe Cleaning")){
+                    if (type_clean.trim().contains("Deluxe Cleaning")) {
                         servicebg.setBackgroundResource(R.drawable.d_deluxe);
-                    }else if(type_clean.trim().contains("Premium Cleaning")){
+                    } else if (type_clean.trim().contains("Premium Cleaning")) {
                         servicebg.setBackgroundResource(R.drawable.d_premium);
-                    }else if(type_clean.trim().contains("Yaya for a day")){
+                    } else if (type_clean.trim().contains("Yaya for a day")) {
                         servicebg.setBackgroundResource(R.drawable.d_yaya);
                     }
 
                 } catch(Exception e) {
 
                 }
+                //  Toast.makeText(this, ""+cleanerconfirm, Toast.LENGTH_SHORT).show();
+
 
                 call.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("transaction", "yes");
-                        editor.commit();
 
-                        hidenavbar();
-                        dialog.hide();
 
-                        getlocationnow();
+                        String[] my_cleaner = my_cleaners.split(",");
+
+                        int cleanerconfirm = my_cleaner.length - 1;
+
+                       /* Toast.makeText(CleanerMapActivity.this, cleanerconfirm + "\n" +
+                                                                        cleaner
+                                                                        + "\n" + Integer.parseInt(cleaners.trim()), Toast.LENGTH_SHORT).show();
+*/
+
+                        if (Integer.parseInt(cleaners.trim()) == cleanerconfirm) {
+
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("transaction", "yes");
+                            editor.commit();
+
+                            hidenavbar();
+                            dialog.hide();
+
+                            getlocationnow();
+
+                        } else {
+                            Toast.makeText(CleanerMapActivity.this, "Not enough cleaner", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });
@@ -436,7 +456,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:"+contact1));
+                        intent.setData(Uri.parse("tel:" + contact1));
                         startActivity(intent);
 
                     }
@@ -466,8 +486,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
         }*/
 
-        BackGround3 booknow = new BackGround3();
-        booknow.execute();
+        BackGround3 call = new BackGround3();
+        call.execute();
 
     }
 
@@ -652,7 +672,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             BackGround5 booking_accept = new BackGround5();
             booking_accept.execute();
 
-        }else if (transac.toString().trim().equals("no")){
+        } else if (transac.toString().trim().equals("no")) {
             BackGround6 booking_accept = new BackGround6();
             booking_accept.execute();
         }
@@ -737,10 +757,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
     @Override
     public void onDestroy() {
-        stopService(new Intent(this, BroadcastService.class));
+        //  stopService(new Intent(this, BroadcastService.class));
 
         Log.i(TAG, "Stopped service");
-        Toast.makeText(this, ""+timeleftnow.getText(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, ""+timeleftnow.getText(), Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 
@@ -758,6 +778,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             if (timeleftnow.getText().toString().contains("00:00:00")) {
 
                 timeleftnow.setText("Finish!");
+
 
                 stopService(new Intent(this, BroadcastService.class));
                 first_section.setVisibility(View.INVISIBLE);
@@ -798,7 +819,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
         BackGround1 booknow = new BackGround1();
         booknow.execute();
-
 
 
         return false;
@@ -902,27 +922,27 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
             String currentDateandTime = sdf.format(new Date());
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+          /*  SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("transaction", "no");
             editor.commit();
-
+*/
             ViewGroup.LayoutParams params = second_section.getLayoutParams();
             params.height = 100;
             second_section.setLayoutParams(params);
 
-            String deluxe = "120";
-            String premium = "240";
-            String yaya = "480"; //todo
+            String deluxe = "1";
+            String premium = "2";
+            String yaya = "4"; //todo
 
             Intent serviceIntent = new Intent(this, BroadcastService.class);
 
-            if(type_clean.contains("Deluxe")) {
+            if (type_clean.contains("Deluxe")) {
                 serviceIntent.putExtra("time", deluxe);
                 startService(serviceIntent);
-            } else if(type_clean.contains("Premium")) {
+            } else if (type_clean.contains("Premium")) {
                 serviceIntent.putExtra("time", premium);
                 startService(serviceIntent);
-            } else if(type_clean.contains("Yaya")) {
+            } else if (type_clean.contains("Yaya")) {
                 serviceIntent.putExtra("time", yaya);
                 startService(serviceIntent);
             }
@@ -934,7 +954,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             finishtransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(CleanerMapActivity.this, "finish transaction", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CleanerMapActivity.this, "Done Cleaning", Toast.LENGTH_SHORT).show();
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("transaction", "no");
@@ -944,6 +964,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                     dialogtime.hide();
                     hidenavbar();
+                    BackGround3 call = new BackGround3();
+                    call.execute();
+
+
                 }
             });
 
@@ -1003,41 +1027,65 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         @Override
         protected void onPostExecute(String s) {
             String err = null;
+            // Toast.makeText(CleanerMapActivity.this, "" +s, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
                 int count = jsonArray.length();
 
-
-
                 for (int v = 0; v < count; v++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(v);
                     listdata.add(jsonObject.getString("transaction_id") + "_-/" +
-                                         jsonObject.getString("coordinate") + "_-/");
-
+                                         jsonObject.getString("coordinate") + "_-/ " +
+                                         jsonObject.getString("my_cleaner") + "_-/" +
+                                         jsonObject.getString("cleaners"));
 
                 }
 
+                String user_id = sharedPreferences.getString("id", "").toString();
 
+                String[] separated, location, my_cleaner;
                 for (int a = 0; a < listdata.size(); a++) {
 
-                    final String[] separated = listdata.get(a).split("_-/");
+                    separated = listdata.get(a).split("_-/");
 
-                    final String[] location = separated[1].split(",");
+                    location = separated[1].split(",");
 
+                    my_cleaner = separated[2].split(",");
 
-                    Double lat = Double.parseDouble(location[0]);
-                    Double lng = Double.parseDouble(location[1]);
+                    // Toast.makeText(CleanerMapActivity.this, "" + listdata.get(a), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(CleanerMapActivity.this, ""+separated[3], Toast.LENGTH_SHORT).show();
 
-                    LatLng UsersCoordinate = new LatLng(lat, lng);
+                    if (!separated[2].trim().isEmpty()) {
+                        if (my_cleaner.length - 1 < Integer.parseInt(separated[3])) {
+                            if (!separated[2].contains(user_id)) {
 
-                    //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
-                    OtherUser = mMap.addMarker(new MarkerOptions()
-                                                       .position(UsersCoordinate)
-                                                       .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
-                    OtherUser.setTag(separated[0]);
+                                Double lat = Double.parseDouble(location[0]);
+                                Double lng = Double.parseDouble(location[1]);
+
+                                LatLng UsersCoordinate = new LatLng(lat, lng);
+
+                                //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
+                                OtherUser = mMap.addMarker(new MarkerOptions()
+                                                                   .position(UsersCoordinate)
+                                                                   .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
+                                OtherUser.setTag(separated[0]);
+                            }
+                        }
+
+                    } else {
+                        Double lat = Double.parseDouble(location[0]);
+                        Double lng = Double.parseDouble(location[1]);
+
+                        LatLng UsersCoordinate = new LatLng(lat, lng);
+
+                        //  Log.d(TAG, "Coordinates: " + UsersCoordinate.toString());
+                        OtherUser = mMap.addMarker(new MarkerOptions()
+                                                           .position(UsersCoordinate)
+                                                           .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1)));
+                        OtherUser.setTag(separated[0]);
+                    }
                 }
-
 
             } catch(JSONException er) {
 
@@ -1172,10 +1220,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     public void onClick(View view) {
                         progressDialog.setMessage("Proccessing");
                         progressDialog.show();
-
+                        // Toast.makeText(CleanerMapActivity.this, "button click", Toast.LENGTH_SHORT).show();
                         BackGround2 booking_accept = new BackGround2();
                         booking_accept.execute();
-
 
                         hidenavbar();
                         dialog.hide();
@@ -1253,8 +1300,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             String err = null;
             progressDialog.dismiss();
 
+            //  Toast.makeText(CleanerMapActivity.this, s.trim(), Toast.LENGTH_LONG).show();
+/*
+            BackGround booknow = new BackGround();
+            booknow.execute();*/
 
-            if (!s.contains("Maximum Cleaner Reach") || !s.contains("Transaction Already Accepted")) {
+            if (!s.trim().contains("Maximum Cleaner Reach") || !s.trim().contains("Transaction Already Accepted")) {
                 i = new Intent(getBaseContext(), MainActivityFragment.class);
                 i.putExtra("fragment_state", "schedule");
                 startActivity(i);
@@ -1262,7 +1313,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                 Toast.makeText(CleanerMapActivity.this, s.trim(), Toast.LENGTH_LONG).show();
             }
-
 
         }
     }
@@ -1333,8 +1383,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                             jsonObject.getString("payment_method") + " _-/" +
                                             jsonObject.getString("rate") + " _-/" +
                                             jsonObject.getString("profile") + " _-/" +
-                                            jsonObject.getString("name")+ " _-/" +
-                                            jsonObject.getString("contact"));
+                                            jsonObject.getString("name") + " _-/" +
+                                            jsonObject.getString("contact") + " _-/" +
+                                            jsonObject.getString("my_cleaners"));
 
                     String[] value = infobar_data.split("_-/");
 
@@ -1355,8 +1406,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     profile = value[15];
                     name = value[16];
                     contact1 = value[17];
+                    my_cleaners =value[18];
 
-                    String[] username = name.split(",");
+
+                            String[]username = name.split(",");
                     name = username[0] + " " + username[1];
                     TextView b_username2 = (TextView) findViewById(R.id.b_username);
                     TextView b_service2 = (TextView) findViewById(R.id.b_clean);
@@ -1434,22 +1487,18 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         protected void onPostExecute(String s) {
             String err = null;
             progressDialog.dismiss();
-
+            //Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
             try {
                 JSONArray jsonArray = new JSONArray(s);
                 int count = jsonArray.length();
 
-
-
-
-                if(count == 0){
+                if (count == 0) {
                     btnconfirm.setEnabled(false);
-                }else{
+                } else {
                     btnconfirm.setEnabled(true);
                 }
 
-            }
-            catch(JSONException e){
+            } catch(JSONException e) {
 
             }
         }
@@ -1468,7 +1517,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
                 String urlParams = "id=" + 15 + "&trans_id=" + transaction_id1 + "&user_id=" + user_id
-                                           + "&date_time=" + date_time_start +"&scoordinate=" + coordinates_start;
+                                           + "&date_time=" + date_time_start + "&scoordinate=" + coordinates_start;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -1499,7 +1548,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         protected void onPostExecute(String s) {
             String err = null;
 
-           // Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
 
             timeleft();
@@ -1520,7 +1569,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             try {
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
                 String urlParams = "id=" + 16 + "&trans_id=" + transaction_id1 + "&user_id=" + user_id
-                                           + "&date_time=" + date_time_start +"&scoordinate=" + coordinates_start;
+                                           + "&date_time=" + date_time_start + "&scoordinate=" + coordinates_start;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -1551,7 +1600,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         protected void onPostExecute(String s) {
             String err = null;
 
-          // Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(CleanerMapActivity.this, ""+s, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
     }
