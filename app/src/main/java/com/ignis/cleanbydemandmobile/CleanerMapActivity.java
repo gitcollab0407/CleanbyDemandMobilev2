@@ -962,10 +962,12 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     editor.commit();
                     getlocationnow();
 
-                    dialogtime.hide();
-                    hidenavbar();
                     BackGround3 call = new BackGround3();
                     call.execute();
+
+                    dialogtime.hide();
+                    hidenavbar();
+
 
 
                 }
