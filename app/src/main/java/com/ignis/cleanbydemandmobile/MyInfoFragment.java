@@ -120,7 +120,6 @@ public class MyInfoFragment extends Fragment {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
 
-
         upload.setVisibility(View.VISIBLE);
         // BackGround upload = new BackGround();
         // upload.execute();
@@ -171,7 +170,7 @@ public class MyInfoFragment extends Fragment {
             //((CleanerMapActivity) getActivity()).h_profile1.setImageBitmap(bitmap);
             ((MainActivityFragment) getActivity()).h_profile1.setImageBitmap(bitmap);
         } catch(Exception exc) {
-            Toast.makeText(getActivity(), exc.getMessage(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity(), exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 

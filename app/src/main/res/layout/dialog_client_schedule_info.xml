@@ -175,39 +175,6 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
-                    android:id="@+id/d_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:gravity="center|left"
-                    android:paddingLeft="25dp"
-                    android:text="Message"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/d_message_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center|left|top"
-                    android:maxHeight="89dp"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="30dp"
-                    android:scrollbars="vertical"
-                    android:text="No Message"
-                    android:textSize="15dp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <TextView
                     android:id="@+id/d_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -228,10 +195,45 @@
                     android:paddingLeft="25dp"
                     android:paddingRight="30dp"
                     android:scrollbars="vertical"
-                    android:text=""
+                    android:text="address"
                     android:textSize="15dp" />
 
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/d_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center|left"
+                    android:paddingLeft="25dp"
+                    android:text="Special Request"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/d_message_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center|left|top"
+                    android:maxHeight="89dp"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="30dp"
+                    android:scrollbars="vertical"
+                    android:text="No Message"
+                    android:textSize="15dp" />
+
+            </RelativeLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"

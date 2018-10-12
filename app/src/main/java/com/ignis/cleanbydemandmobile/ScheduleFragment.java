@@ -138,7 +138,8 @@ public class ScheduleFragment extends Fragment {
                                          jsonObject.getString("cleaner") + "_-/"+
                                          jsonObject.getString("payment_method") + "_-/" +
                                          jsonObject.getString("rate") + "_-/" +
-                                         jsonObject.getString("name"));
+                                         jsonObject.getString("name") + "_-/" +
+                                         jsonObject.getString("contact"));
 
                 }
 

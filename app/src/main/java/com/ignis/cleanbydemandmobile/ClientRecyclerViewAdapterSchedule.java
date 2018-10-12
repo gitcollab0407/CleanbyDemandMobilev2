@@ -2,6 +2,7 @@ package com.ignis.cleanbydemandmobile;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -39,8 +40,7 @@ class ClientRecyclerViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public CircleImageView a_profile;
 
-
-    private ScheduleItemClickListener scheduleItemClickListener;
+     ScheduleItemClickListener scheduleItemClickListener;
 
     public ClientRecyclerViewHolder(View itemView) {
         super(itemView);
@@ -49,6 +49,8 @@ class ClientRecyclerViewHolder extends RecyclerView.ViewHolder implements View.O
         a_time = (TextView) itemView.findViewById(R.id.a_time);
         a_status = (TextView) itemView.findViewById(R.id.a_status);
         a_profile = (CircleImageView) itemView.findViewById(R.id.h_profile);
+
+
 
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
@@ -82,6 +84,7 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
     public ClientRecyclerViewAdapterSchedule(List<String> listData, Context context) {
         this.listData = listData;
         this.context = context;
+
     }
 
     @Override
@@ -104,6 +107,10 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
 
         if(value[9].contains("Cancelled")){
             holder.a_status.setTextColor(Color.parseColor("#f23d3d"));
+        }
+
+        if(value[9].contains("Confirmed")){
+            holder.a_status.setText("Accepted");
         }
 
         try {
@@ -208,7 +215,6 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                         @Override
                         public void onClick(View view) {
 
-
                             first_section.setVisibility(View.INVISIBLE);
                             second_section.setVisibility(View.VISIBLE);
                             ViewGroup.LayoutParams params = height.getLayoutParams();
@@ -229,6 +235,11 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
 
                                 hidenavbar();
                                 dialog.hide();
+
+                             /*   ProgressDialog progressDialog = new ProgressDialog(context);
+                                progressDialog.setMessage("Cancelling...");
+                                progressDialog.show();*/
+
                             }else{
                                 Toast.makeText(context, "Please provide your reason for cancelling your booking", Toast.LENGTH_SHORT).show();
                             }
@@ -260,8 +271,6 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
     }
-
-
     @Override
     public int getItemCount() {
         return listData.size();
@@ -309,6 +318,10 @@ public class ClientRecyclerViewAdapterSchedule extends RecyclerView.Adapter<Clie
         protected void onPostExecute(String s) {
             String err = null;
 
+          /*  ProgressDialog progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage("Cancelling...");
+            progressDialog.dismiss();
+*/
             Toast.makeText(context, "Cancellation has been processed", Toast.LENGTH_SHORT).show();
 
             FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();

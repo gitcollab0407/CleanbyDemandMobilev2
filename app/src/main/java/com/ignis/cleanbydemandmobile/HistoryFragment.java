@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -124,9 +125,8 @@ public class HistoryFragment extends Fragment {
                                          jsonObject.getString("cleaner") + "_-/"+
                                          jsonObject.getString("payment_method") + "_-/" +
                                          jsonObject.getString("rate") + "_-/" +
-                                         jsonObject.getString("name"));
-
-
+                                         jsonObject.getString("name") + "_-/ " +
+                                         jsonObject.getString("feedback"));
                 }
 
                 layoutManager = new LinearLayoutManager(getActivity());

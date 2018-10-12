@@ -100,7 +100,7 @@ public class ClientHistoryFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-            // Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
+
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
@@ -122,7 +122,8 @@ public class ClientHistoryFragment extends Fragment {
                                          jsonObject.getString("location") + "_-/" +
                                          jsonObject.getString("cleaner")+" " + "_-/ " +
                                          jsonObject.getString("payment_method") + "_-/" +
-                                         jsonObject.getString("rate"));
+                                         jsonObject.getString("rate") + "_-/" +
+                                         jsonObject.getString("feedback"));
 
                 }
 

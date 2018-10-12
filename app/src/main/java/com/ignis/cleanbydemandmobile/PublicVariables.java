@@ -12,9 +12,38 @@ public class PublicVariables {
             , B_service = ""
             , B_price = "";
 
-    public static String a_username =""
+    public static String
+            a_firstname =""
+            ,a_lastname = ""
             , a_contact = ""
             , a_email = ""
-            , a_address = "";
+            , a_password = ""
+            , a_date_of_birth = ""
+            , a_weight = ""
+            , a_height = ""
+            , a_perm_address= ""
+            , a_pres_address = ""
+            , a_age = ""
+
+            , a_gender = ""
+            , a_civil = ""
+
+
+            , a_spouse = ""
+            , a_no_children = ""
+            , a_name_children = ""
+            , a_em_name = ""
+            , a_em_contact = ""
+            , a_language = ""
+            , a_emp_history = ""
+
+            , a_cv_path = ""
+            , a_barangay_path = ""
+            , a_nbi_path = ""
+            , a_gov_id_path = ""
+            , a_photo_path= "";
+
+    public static int  a_gender1 = 0
+            , a_civil1 = 0;
 
 }

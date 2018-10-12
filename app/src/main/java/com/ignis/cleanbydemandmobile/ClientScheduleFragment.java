@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,8 +64,7 @@ public class ClientScheduleFragment extends Fragment {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String id = sharedPreferences.getString("id", "");
-        Toast.makeText(getActivity(), ""+ id, Toast.LENGTH_SHORT).show();
-
+       // Toast.makeText(getActivity(), ""+ id, Toast.LENGTH_SHORT).show();
 
         BackGround booknow = new BackGround();
         booknow.execute();

@@ -90,12 +90,6 @@ public class ClientMainActivityFragment extends AppCompatActivity {
             h_username.setText(sharedPreferences.getString("username", "").toString().trim());
             h_email.setText(sharedPreferences.getString("email", "").toString());
 
-           /* Picasso.with(this)
-                    .load("http://cleanbydemand.com/php/profile/kindred.inocencio@gmail.com.jpg")
-                    .into(h_profile);*/
-
-           // Toast.makeText(this, ""+sharedPreferences.getString("profile", "").toString(), Toast.LENGTH_SHORT).show();
-
             Picasso.with(this)
                     .load(sharedPreferences.getString("profile", "").toString())
                     .into(h_profile1);
