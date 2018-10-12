@@ -434,7 +434,8 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         String currentDateandTime = sdf.format(new Date());
 
-                        if(date_time == currentDateandTime) {
+
+                        if (date_time.trim().contains(currentDateandTime)) {
 
                             if (Integer.parseInt(cleaners.trim()) == cleanerconfirm) {
 
@@ -450,10 +451,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                             } else {
                                 Toast.makeText(CleanerMapActivity.this, "Not enough cleaner", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
-                            Toast.makeText(CleanerMapActivity.this, "It's to early to start ("+currentDateandTime+")", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(CleanerMapActivity.this, "It's to early to start (" + currentDateandTime + ")", Toast.LENGTH_SHORT).show();
                         }
-
 
 
                     }
@@ -1005,8 +1005,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             int tmp;
 
             try {
+
+                String user_id = sharedPreferences.getString("id", "");
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 10;
+                String urlParams = "id=" + 10 + "&user_id =" + user_id;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -1036,7 +1038,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-            // Toast.makeText(CleanerMapActivity.this, "" +s, Toast.LENGTH_SHORT).show();
+
+            String user_id = sharedPreferences.getString("id", "").toString();
+             Toast.makeText(CleanerMapActivity.this, "" +s +"\n"+user_id, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
@@ -1050,8 +1054,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                          jsonObject.getString("cleaners"));
 
                 }
-
-                String user_id = sharedPreferences.getString("id", "").toString();
 
                 String[] separated, location, my_cleaner;
                 for (int a = 0; a < listdata.size(); a++) {
