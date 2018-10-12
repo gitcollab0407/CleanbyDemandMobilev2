@@ -431,22 +431,30 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                                                         cleaner
                                                                         + "\n" + Integer.parseInt(cleaners.trim()), Toast.LENGTH_SHORT).show();
 */
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String currentDateandTime = sdf.format(new Date());
 
-                        if (Integer.parseInt(cleaners.trim()) == cleanerconfirm) {
+                        if(date_time == currentDateandTime) {
 
+                            if (Integer.parseInt(cleaners.trim()) == cleanerconfirm) {
 
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("transaction", "yes");
-                            editor.commit();
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("transaction", "yes");
+                                editor.commit();
 
-                            hidenavbar();
-                            dialog.hide();
+                                hidenavbar();
+                                dialog.hide();
 
-                            getlocationnow();
+                                getlocationnow();
 
-                        } else {
-                            Toast.makeText(CleanerMapActivity.this, "Not enough cleaner", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(CleanerMapActivity.this, "Not enough cleaner", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(CleanerMapActivity.this, "It's to early to start ("+currentDateandTime+")", Toast.LENGTH_SHORT).show();
                         }
+
+
 
                     }
                 });
@@ -969,7 +977,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     hidenavbar();
 
 
-
                 }
             });
 
@@ -1408,10 +1415,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     profile = value[15];
                     name = value[16];
                     contact1 = value[17];
-                    my_cleaners =value[18];
+                    my_cleaners = value[18];
 
 
-                            String[]username = name.split(",");
+                    String[] username = name.split(",");
                     name = username[0] + " " + username[1];
                     TextView b_username2 = (TextView) findViewById(R.id.b_username);
                     TextView b_service2 = (TextView) findViewById(R.id.b_clean);
