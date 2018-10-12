@@ -431,22 +431,30 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                                                         cleaner
                                                                         + "\n" + Integer.parseInt(cleaners.trim()), Toast.LENGTH_SHORT).show();
 */
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String currentDateandTime = sdf.format(new Date());
 
-                        if (Integer.parseInt(cleaners.trim()) == cleanerconfirm) {
 
+                        if (date_time.trim().contains(currentDateandTime)) {
 
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("transaction", "yes");
-                            editor.commit();
+                            if (Integer.parseInt(cleaners.trim()) == cleanerconfirm) {
 
-                            hidenavbar();
-                            dialog.hide();
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("transaction", "yes");
+                                editor.commit();
 
-                            getlocationnow();
+                                hidenavbar();
+                                dialog.hide();
 
+                                getlocationnow();
+
+                            } else {
+                                Toast.makeText(CleanerMapActivity.this, "Not enough cleaner", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(CleanerMapActivity.this, "Not enough cleaner", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CleanerMapActivity.this, "It's to early to start (" + currentDateandTime + ")", Toast.LENGTH_SHORT).show();
                         }
+
 
                     }
                 });
@@ -969,7 +977,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     hidenavbar();
 
 
-
                 }
             });
 
@@ -998,8 +1005,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             int tmp;
 
             try {
+
+                String user_id = sharedPreferences.getString("id", "");
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 10;
+                String urlParams = "id=" + 10 + "&user_id =" + user_id;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
@@ -1029,7 +1038,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
         @Override
         protected void onPostExecute(String s) {
             String err = null;
-            // Toast.makeText(CleanerMapActivity.this, "" +s, Toast.LENGTH_SHORT).show();
+
+            String user_id = sharedPreferences.getString("id", "").toString();
+             Toast.makeText(CleanerMapActivity.this, "" +s +"\n"+user_id, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
@@ -1043,8 +1054,6 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                                          jsonObject.getString("cleaners"));
 
                 }
-
-                String user_id = sharedPreferences.getString("id", "").toString();
 
                 String[] separated, location, my_cleaner;
                 for (int a = 0; a < listdata.size(); a++) {
@@ -1408,10 +1417,10 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
                     profile = value[15];
                     name = value[16];
                     contact1 = value[17];
-                    my_cleaners =value[18];
+                    my_cleaners = value[18];
 
 
-                            String[]username = name.split(",");
+                    String[] username = name.split(",");
                     name = username[0] + " " + username[1];
                     TextView b_username2 = (TextView) findViewById(R.id.b_username);
                     TextView b_service2 = (TextView) findViewById(R.id.b_clean);
