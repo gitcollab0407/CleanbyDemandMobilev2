@@ -1008,7 +1008,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
 
                 String user_id = sharedPreferences.getString("id", "");
                 URL url = new URL("http://cleanbydemand.com/php/m_function.php");
-                String urlParams = "id=" + 10 + "&user_id =" + user_id;
+                String urlParams = "id=" + 10 + "&user_id=" + user_id;
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
