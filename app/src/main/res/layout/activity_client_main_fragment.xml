@@ -28,8 +28,6 @@
 
     </LinearLayout>
 
-
-
     <android.support.design.widget.NavigationView
         android:id="@+id/clienavigation_view"
         android:layout_width="wrap_content"
