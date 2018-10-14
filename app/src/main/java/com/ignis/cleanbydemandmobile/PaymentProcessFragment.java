@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -154,13 +153,10 @@ public class PaymentProcessFragment extends Fragment {
         protected void onPostExecute(String s) {
             String err = null;
 
-         //   Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+            fragmentManager = getFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
 
-            ClientScheduleFragment clientScheduleFragment = new ClientScheduleFragment();
-            fragmentTransaction.replace(R.id.fragment_container, clientScheduleFragment, null);
-            fragmentTransaction.commit();
-
-            PublicVariables.B_date ="";
+            PublicVariables.B_date = "";
             PublicVariables.B_time = "";
             PublicVariables.B_address = "";
             PublicVariables.B_coordinates = "";
@@ -169,6 +165,22 @@ public class PaymentProcessFragment extends Fragment {
             PublicVariables.B_payment = "";
             PublicVariables.B_service = "";
             PublicVariables.B_price = "";
+
+
+            try {
+
+                ((ClientMainActivityFragment) getActivity()).action_title.setText("Schedule");
+
+                ClientScheduleFragment clientScheduleFragment = new ClientScheduleFragment();
+                fragmentTransaction.replace(R.id.fragment_container,clientScheduleFragment, null);
+                fragmentTransaction.addToBackStack(null).commit();
+            }catch(Exception ex){
+
+            }
+
+
+
+
 
         }
     }

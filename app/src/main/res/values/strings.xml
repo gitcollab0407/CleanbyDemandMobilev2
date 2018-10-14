@@ -8,6 +8,21 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="sex">
+        <item>Select your Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="civil">
+        <item>Select your Civil Status</item>
+        <item>Single</item>
+        <item>Married</item>
+        <item>Divorced</item>
+        <item>Separated</item>
+        <item>Widowed</item>
+    </string-array>
+
     <string name="terms_and_conditions">
 
 COVERAGE.The housekeeping service of Clean by Demand covers the following: dusting of shelves, sanitizing counters, cleaning of sink, polishing of faucets, cleaning of backsplash, cleaning and sanitizing of stove, cleaning of jars, washing dishes, tidying the bed, dry vacuuming of carpet, cleaning of interior glass windows, tidying of couch, sweep/mop/polishing of floor, polishing tables and furnitures, wiping clean of ornaments, dusting of frames, sanitizing of toilet bowl, polishing of faucets and showers, cleaning of bathroom tiles, cleaning of bathroom floor, and cleaning of mirrors.

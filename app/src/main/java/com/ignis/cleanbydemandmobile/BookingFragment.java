@@ -7,18 +7,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.method.ScrollingMovementMethod;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
+import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +54,8 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     @BindView(R.id.card)
     Button card;
 
-    String set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service;
+    String set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service, payment;
+    DatePickerDialog datePickerDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,17 +74,17 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
             set_message = PublicVariables.B_message;
             set_cleaner = PublicVariables.B_cleaner;
 
-            if(set_service == "Deluxe Cleaning"){
+            if (set_service == "Deluxe Cleaning") {
                 PublicVariables.B_price = "400";
-            }else if(set_service == "Premium Cleaning"){
+            } else if (set_service == "Premium Cleaning") {
                 PublicVariables.B_price = "800";
-            }else if(set_service == "Yaya for a day"){
+            } else if (set_service == "Yaya for a day") {
                 PublicVariables.B_price = "1600";
             }
 
             service.setText(set_service);
             locationcontent.setText(set_address);
-            datepickercontent.setText(set_date+" "+ set_time);
+            datepickercontent.setText(set_date + " " + set_time);
             messagecontent.setText(set_message);
             cleanercontent.setText(set_cleaner);
             messagecontent.setMovementMethod(new ScrollingMovementMethod());
@@ -93,13 +93,15 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         } catch(Exception ex) {
         }
 
+
         return view;
     }
 
     @OnFocusChange(R.id.messagecontent)
-    public void setMessagecontent(View view){
+    public void setMessagecontent(View view) {
         PublicVariables.B_message = messagecontent.getText().toString();
     }
+
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -148,6 +150,7 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
         datepickercontent.setText(monthFinal + "-" + dayFinal + "-" + yearFinal + " " + aTime);
 
+
         PublicVariables.B_date = yearFinal + "-" + monthFinal + "-" + dayFinal;
         PublicVariables.B_time = aTime;
 
@@ -160,11 +163,13 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity()
-                , this, year, month, day);
+        datePickerDialog = new DatePickerDialog(getActivity()
+                , this, year, month, day + 1);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1));
         datePickerDialog.show();
 
     }
+
 
     @OnClick(R.id.location)
     public void location(View view) {
@@ -195,12 +200,12 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
             cleanercontent.setText("" + (Integer.parseInt(cleanercontent.getText().toString()) - 1));
             PublicVariables.B_cleaner = cleanercontent.getText().toString();
 
-         }
+        }
     }
 
     @OnClick(R.id.cash)
     public void cash(View view) {
-
+        payment = "cash";
         PublicVariables.B_payment = "CASH";
         cash.setBackgroundResource(R.drawable.notes);
         card.setBackgroundResource(R.drawable.cardb);
@@ -208,46 +213,62 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.card)
     public void card(View view) {
-
+        payment = "card";
         PublicVariables.B_payment = "DRAGON PAY";
         cash.setBackgroundResource(R.drawable.notesb);
         card.setBackgroundResource(R.drawable.card);
 
     }
+
     @OnClick(R.id.casht)
     public void casht(View view) {
-
+        payment = "cash";
         PublicVariables.B_payment = "CASH";
         cash.setBackgroundResource(R.drawable.notes);
         card.setBackgroundResource(R.drawable.cardb);
     }
+
     @OnClick(R.id.cardt)
     public void cardt(View view) {
-
+        payment = "card";
         PublicVariables.B_payment = "DRAGON PAY";
         cash.setBackgroundResource(R.drawable.notesb);
         card.setBackgroundResource(R.drawable.card);
 
     }
+
     @OnClick(R.id.next)
-    public void next(View view){
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        PublicVariables.B_price = (""+ (Integer.parseInt(PublicVariables.B_price )* Integer.parseInt(PublicVariables.B_cleaner)));
-
+    public void next(View view) {
 
         try {
+            if (!datepickercontent.getText().toString().isEmpty()
+                        && !locationcontent.getText().toString().isEmpty()
+                        && !payment.isEmpty()) {
+                fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
 
-            ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking Summary");
-        }catch(Exception ex){
+                PublicVariables.B_price = ("" + (Integer.parseInt(PublicVariables.B_price) * Integer.parseInt(PublicVariables.B_cleaner)));
 
+                ((ClientMainActivityFragment) getActivity()).action_title.setText("Booking Summary");
+
+                PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
+                fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
+                fragmentTransaction.addToBackStack(null).commit();
+
+                if(messagecontent.getText().toString().isEmpty()){
+                    PublicVariables.B_message = "No special request";
+                }
+
+            }
+        } catch(Exception ex) {
+            if (!datepickercontent.getText().toString().isEmpty()
+                        && !locationcontent.getText().toString().isEmpty()) {
+                Toast.makeText(getActivity(), "Please select payment method", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getActivity(), "Please complete booking details", Toast.LENGTH_SHORT).show();
+
+            }
         }
-
-        PaymentProcessFragment paymentProcessFragment = new PaymentProcessFragment();
-        fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
-        fragmentTransaction.addToBackStack(null).commit();
-
 
     }
 

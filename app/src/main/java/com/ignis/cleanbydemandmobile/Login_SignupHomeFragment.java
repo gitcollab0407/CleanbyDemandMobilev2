@@ -130,47 +130,79 @@ public class Login_SignupHomeFragment extends Fragment {
             String err = null;
             progressDialog.dismiss();
             if (!s.contains("Invalid username or password")) {
-
+               // Toast.makeText(getActivity(), "" + s, Toast.LENGTH_SHORT).show();
                 String[] value = s.split(",");
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                try {
-                    editor.putString("username", value[0] + " " + value[1]);
-                    editor.putString("email", value[2]);
-                    editor.putString("contact", value[5]);
-                    editor.putString("id", value[7]);
-                    editor.putString("role", value[6]);
-                    editor.putString("profile", "http://cleanbydemand.com/php/profile/"+value[8]);
-
-                    editor.putString("address", value[9]);
-                    editor.putString("rating", value[10]);
-
-                } catch(Exception e) {
-                }
-
-
-                editor.commit();
 
                 if (value[6].equals("user")) {
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    try {
+                        editor.putString("username", value[0] + " " + value[1]);
+                        editor.putString("email", value[2]);
+                        editor.putString("contact", value[5]);
+                        editor.putString("id", value[7]);
+                        editor.putString("role", value[6]);
+                        editor.putString("profile", "http://cleanbydemand.com/php/profile/"+value[8]);
+
+                        editor.putString("address", value[9]);
+                        editor.putString("rating", value[10]);
+
+                    } catch(Exception e) {
+                    }
+
+
+                    editor.commit();
 
                     Intent i = new Intent(getActivity().getBaseContext(), ClientMainActivityFragment.class);
                     startActivity(i);
                     getActivity().finish();
 
+
                 } else if (value[6].equals("cleaner")) {
 
-                    Intent i = new Intent(getActivity().getBaseContext(), CleanerMapActivity.class);
-                    startActivity(i);
-                    getActivity().finish();
+                    if(value[11].trim().equals("Activate")) {
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        try {
+                            editor.putString("username", value[0] + " " + value[1]);
+                            editor.putString("email", value[2]);
+                            editor.putString("contact", value[5]);
+                            editor.putString("id", value[7]);
+                            editor.putString("role", value[6]);
+                            editor.putString("profile", "http://cleanbydemand.com/php/profile/"+value[8]);
+
+                            editor.putString("address", value[9]);
+                            editor.putString("rating", value[10]);
+
+                        } catch(Exception e) {
+                        }
+
+
+                        editor.commit();
+
+                        Intent i = new Intent(getActivity().getBaseContext(), CleanerMapActivity.class);
+                        startActivity(i);
+                        getActivity().finish();
+
+
+                    }else{
+                        fragmentManager = getFragmentManager();
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        Application3Fragment application3Fragment = new Application3Fragment();
+                        fragmentTransaction.replace(R.id.fragment_container, application3Fragment, null);
+                        fragmentTransaction.addToBackStack(null).commit();
+                    }
 
                 }
 
 
-
-
             } else {
-                Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), s.trim(), Toast.LENGTH_LONG).show();
             }
 
         }

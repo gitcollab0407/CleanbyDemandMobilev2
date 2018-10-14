@@ -242,7 +242,7 @@
                                 android:textColor="@color/white"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:text="Terms and condition/Sign Up" />
+                                android:text="Terms and condition / Sign Up" />
 
                         </RelativeLayout>
 

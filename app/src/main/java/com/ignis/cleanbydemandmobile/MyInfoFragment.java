@@ -120,7 +120,6 @@ public class MyInfoFragment extends Fragment {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
 
-
         upload.setVisibility(View.VISIBLE);
         // BackGround upload = new BackGround();
         // upload.execute();
