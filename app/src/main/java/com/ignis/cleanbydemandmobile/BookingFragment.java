@@ -86,7 +86,7 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
             } else if (set_service == "Premium Cleaning") {
                 PublicVariables.B_price = "800";
             } else if (set_service == "Yaya for a day") {
-                PublicVariables.B_price = "1600";
+                PublicVariables.B_price = "1200";
             }
 
             service.setText(set_service);

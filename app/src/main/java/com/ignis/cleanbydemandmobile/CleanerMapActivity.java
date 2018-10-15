@@ -1040,7 +1040,7 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             String err = null;
 
             String user_id = sharedPreferences.getString("id", "").toString();
-             Toast.makeText(CleanerMapActivity.this, "" +s +"\n"+user_id, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(CleanerMapActivity.this, "" +s +"\n"+user_id, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
