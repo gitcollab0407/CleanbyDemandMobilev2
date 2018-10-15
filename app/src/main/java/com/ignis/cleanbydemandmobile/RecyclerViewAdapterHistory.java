@@ -267,7 +267,7 @@ public class RecyclerViewAdapterHistory extends RecyclerView.Adapter<RecyclerVie
                                             d_feedback_content.setText( content.getText().toString());
                                             dialog.dismiss();
                                             MyRating.setRating(MyRating1.getRating());
-                                            bg.execute(transaction_id, "" + MyRating1.getRating(), content.getText().toString());//todo
+                                            bg.execute(transaction_id, "" + MyRating1.getRating(), content.getText().toString());
 
 
                                         }

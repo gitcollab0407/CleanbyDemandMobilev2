@@ -516,6 +516,18 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
         alert.show();
     }
 
+
+
+    private void initMap() {
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if(mapFragment == null){
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+        }
+        mapFragment.getMapAsync(this);
+
+    }
+
     private void getLocationPermission() {
         String[] permissions = { Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION };
@@ -536,16 +548,6 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
                     permissions,
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
-    }
-
-    private void initMap() {
-        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if(mapFragment == null){
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-        }
-        mapFragment.getMapAsync(this);
-
     }
 
     @Override

@@ -938,9 +938,9 @@ public class CleanerMapActivity extends AppCompatActivity implements GoogleMap.O
             params.height = 100;
             second_section.setLayoutParams(params);
 
-            String deluxe = "1";
-            String premium = "2";
-            String yaya = "4"; //todo
+            String deluxe = "120";
+            String premium = "240";
+            String yaya = "480"; //todo
 
             Intent serviceIntent = new Intent(this, BroadcastService.class);
 

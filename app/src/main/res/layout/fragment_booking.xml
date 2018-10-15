@@ -250,7 +250,7 @@
                             android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="5dp"
-                            android:background="@drawable/notesb"
+                            android:background="@drawable/notes"
                             android:paddingTop="5dp"
                             android:textColor="#ffffff"
                             android:textSize="20dp" />
@@ -272,7 +272,8 @@
                             android:background="@drawable/cardb"
                             android:paddingTop="5dp"
                             android:textColor="#ffffff"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/cardt"
@@ -280,6 +281,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:text="Dragon Pay" />
 
                     </LinearLayout>
