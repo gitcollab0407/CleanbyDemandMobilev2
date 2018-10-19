@@ -129,7 +129,7 @@
                                 android:drawableLeft="@drawable/ic_weighing"
                                 android:inputType="number"
                                 android:drawableTint="#85e277"
-                                android:hint=" Weight"
+                                android:hint=" Weight(lds)"
                                 android:textSize="15dp" />
 
                         </RelativeLayout>
@@ -156,7 +156,7 @@
                                 android:drawableLeft="@drawable/ic_man_standing_with_extended_arms_to_sides"
                                 android:drawableTint="#85e277"
                                 android:inputType="number"
-                                android:hint="Height"
+                                android:hint="Height(cm)"
                                 android:textSize="15dp" />
 
                         </RelativeLayout>

@@ -75,7 +75,7 @@ public class PaymentProcessFragment extends Fragment {
             set_payment = PublicVariables.B_payment;
             set_price = PublicVariables.B_price;
 
-            datetime.setText(set_service);
+            datetime.setText(set_date +" " +set_time);
             location.setText(set_address);
             message.setText(set_message);
             cleaners.setText(set_cleaner);

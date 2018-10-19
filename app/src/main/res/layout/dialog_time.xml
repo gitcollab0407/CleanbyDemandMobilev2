@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#17545454"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:text="Select Time"
+    android:textSize="30dp"/>
+
+    <ListView
+        android:id="@+id/timelist"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        android:entries="@array/time"
+        />
+
+
+</android.support.v7.widget.CardView>

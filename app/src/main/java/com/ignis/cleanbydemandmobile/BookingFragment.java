@@ -3,6 +3,7 @@ package com.ignis.cleanbydemandmobile;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,13 +16,18 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -30,7 +36,7 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 
 
-public class BookingFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class BookingFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     public BookingFragment() {
         // Required empty public constructor
@@ -59,9 +65,11 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
     @BindView(R.id.card)
     Button card;
 
+    @BindView(R.id.timepickercontent)
+    TextView timepickercontent;
+
     String set_date, set_time, set_address, set_coordinates, set_message, set_cleaner, set_service, payment;
     DatePickerDialog datePickerDialog;
-
 
 
     @Override
@@ -91,13 +99,14 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
             service.setText(set_service);
             locationcontent.setText(set_address);
-            datepickercontent.setText(set_date + " " + set_time);
+            datepickercontent.setText(set_date);
             messagecontent.setText(set_message);
             cleanercontent.setText(set_cleaner);
+            timepickercontent.setText(set_time);
             messagecontent.setMovementMethod(new ScrollingMovementMethod());
             locationcontent.setMovementMethod(new ScrollingMovementMethod());
 
-        } catch(Exception ex) {
+        } catch (Exception ex) {
         }
 
 
@@ -121,14 +130,15 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), this,
+       /* TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), this,
                 hour, minute, android.text.format.DateFormat.is24HourFormat(getActivity()));
 
-        timePickerDialog.show();
-
+        timePickerDialog.show();*/
+        datepickercontent.setText(monthFinal + "-" + dayFinal + "-" + yearFinal);
+        PublicVariables.B_date = yearFinal + "-" + monthFinal + "-" + dayFinal;
     }
 
-    @Override
+/*    @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         hourFinal = i;
         minuteFinal = i1;
@@ -161,7 +171,8 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
         PublicVariables.B_date = yearFinal + "-" + monthFinal + "-" + dayFinal;
         PublicVariables.B_time = aTime;
 
-    }
+    }*/
+
 
     @OnClick(R.id.datepicker)
     public void datepicker(View view) {
@@ -177,13 +188,41 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
 
     }
 
+    @OnClick(R.id.timepicker)
+    public void timepicker(View view) {
+        try {
+            android.support.v7.app.AlertDialog.Builder mBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+            View mView = getLayoutInflater().inflate(R.layout.dialog_time, null);
+
+            ListView timelist = (ListView) mView.findViewById(R.id.timelist);
+
+            mBuilder.setView(mView);
+            final android.support.v7.app.AlertDialog dialog = mBuilder.create();
+            dialog.show();
+
+            timelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    timepickercontent.setText(((TextView) view).getText());
+                    PublicVariables.B_time = ((TextView) view).getText().toString();
+
+                    dialog.dismiss();
+                }
+            });
+
+        } catch (Exception e) {
+        }
+
+    }
+
 
     @OnClick(R.id.location)
     public void location(View view) {
         try {
 
             ((ClientMainActivityFragment) getActivity()).action_title.setText("Location");
-        } catch(Exception ex) {
+        } catch (Exception ex) {
         }
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -253,8 +292,9 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
             PublicVariables.B_payment = "CASH";
 
             if (!datepickercontent.getText().toString().isEmpty()
-                        && !locationcontent.getText().toString().isEmpty()
-                        && !payment.isEmpty()) {
+                    && !timepickercontent.getText().toString().isEmpty()
+                    && !locationcontent.getText().toString().isEmpty()
+                    && !payment.isEmpty()) {
                 fragmentManager = getFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -266,16 +306,16 @@ public class BookingFragment extends Fragment implements DatePickerDialog.OnDate
                 fragmentTransaction.replace(R.id.fragment_container, paymentProcessFragment, null);
                 fragmentTransaction.addToBackStack(null).commit();
 
-                if(messagecontent.getText().toString().isEmpty()){
+                if (messagecontent.getText().toString().isEmpty()) {
                     PublicVariables.B_message = "No special request";
                 }
 
             }
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             if (!datepickercontent.getText().toString().isEmpty()
-                        && !locationcontent.getText().toString().isEmpty()) {
+                    && !locationcontent.getText().toString().isEmpty()) {
                 Toast.makeText(getActivity(), "Please select payment method", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 Toast.makeText(getActivity(), "Please complete booking details", Toast.LENGTH_SHORT).show();
 
             }

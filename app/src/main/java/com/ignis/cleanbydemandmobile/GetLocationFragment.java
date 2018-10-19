@@ -44,6 +44,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -63,13 +64,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 
 public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraMoveStartedListener,
                                                                      GoogleMap.OnCameraMoveListener,
                                                                      GoogleMap.OnCameraMoveCanceledListener,
                                                                      GoogleMap.OnCameraIdleListener,
-                                                                     OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+                                                                     OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+        GoogleApiClient.OnConnectionFailedListener {
 
     SupportMapFragment mapFragment;
     private GoogleMap mMap;
@@ -114,6 +120,8 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
     @BindView(R.id.mylocation) ImageView mylocation;
     @BindView(R.id.setlocation) Button setlocation;
     @BindView(R.id.searchbar) AutoCompleteTextView mSearchText;
+
+
     View view;
 
     String set_address, set_coordinates;
@@ -334,6 +342,7 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
         init();
     }//end googlemap
 
+
     private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
         String strAdd = "";
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
@@ -377,25 +386,12 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
 
     }
 
-    private void init() {
-
-
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH
-                            || actionId == EditorInfo.IME_ACTION_DONE
-                            || keyEvent.getAction() == KeyEvent.ACTION_DOWN
-                            || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
-
-                    //execute our method for searching
-                    geoLocate();
-                }
-
-                return false;
-            }
-        });
+    @OnClick(R.id.searchbar)
+    public void searchbar(View view){
+        mSearchText.setText("");
     }
+
+
 
     @Override
     public void onCameraMoveStarted(int reason) {
@@ -462,21 +458,46 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
 
     }
 
+    private void init() {
+
+        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
+
+                    //execute our method for searching
+                    geoLocate();
+                }
+
+                return false;
+
+
+            }
+        });
+
+    }
+
     private void geoLocate() {
         Log.d(TAG, "geoLocate: geolocating");
 
-        String searchString = mSearchText.getText().toString();
+        String searchString = mSearchText.getText().toString().trim();
 
         Geocoder geocoder = new Geocoder(getContext());
         List<Address> list = new ArrayList<>();
+
         try {
-            list = geocoder.getFromLocationName(searchString, 1);
+            list = geocoder.getFromLocationName(searchString, 20);
         } catch(IOException e) {
             Log.e(TAG, "geoLocate: IOException: " + e.getMessage());
         }
 
-        if (list.size() > 0) {
-            Address address = list.get(0);
+
+        for(int i=0; i<list.size(); i++){
+
+            Address address = list.get(i);
 
             Log.d(TAG, "geoLocate: found a location: " + address.toString());
             //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
@@ -573,5 +594,9 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
         }
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }
 

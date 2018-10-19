@@ -15,12 +15,36 @@
     </string-array>
 
     <string-array name="civil">
-        <item>Select your Civil Status</item>
-        <item>Single</item>
-        <item>Married</item>
-        <item>Divorced</item>
-        <item>Separated</item>
-        <item>Widowed</item>
+    <item>Select your Civil Status</item>
+    <item>Single</item>
+    <item>Married</item>
+    <item>Divorced</item>
+    <item>Separated</item>
+    <item>Widowed</item>
+</string-array>
+
+
+
+    <string-array name="time">
+        <item>8:00 AM</item>
+        <item>8:30 AM</item>
+        <item>9:00 AM</item>
+        <item>9:30 AM</item>
+        <item>10:00 AM</item>
+        <item>10:30 AM</item>
+        <item>11:00 AM</item>
+        <item>11:30 AM</item>
+
+        <item>12:00 PM</item>
+        <item>12:30 PM</item>
+        <item>1:00 PM</item>
+        <item>1:30 PM</item>
+        <item>2:00 PM</item>
+        <item>2:30 PM</item>
+        <item>3:00 PM</item>
+        <item>3:30 PM</item>
+        <item>4:00 PM</item>
+
     </string-array>
 
     <string name="terms_and_conditions">
