@@ -391,7 +391,27 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
         mSearchText.setText("");
     }
 
+    private void init() {
 
+            mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH
+                            || actionId == EditorInfo.IME_ACTION_DONE
+                            || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                            || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
+
+                        //execute our method for searching
+                        geoLocate();
+                    }
+
+                    return false;
+
+
+                }
+            });
+
+    }
 
     @Override
     public void onCameraMoveStarted(int reason) {
@@ -455,28 +475,6 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-    }
-
-    private void init() {
-
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || actionId == EditorInfo.IME_ACTION_DONE
-                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
-                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
-
-                    //execute our method for searching
-                    geoLocate();
-                }
-
-                return false;
-
-
-            }
-        });
 
     }
 
