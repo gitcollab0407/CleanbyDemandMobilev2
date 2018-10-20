@@ -269,7 +269,8 @@ public class ClientMainActivityFragment extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
 
-
-
+    }
 }

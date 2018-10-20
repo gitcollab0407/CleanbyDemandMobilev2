@@ -42,11 +42,13 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.wdullaer:materialdatetimepicker:3.6.3'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.google.android.gms:play-services-places:11.4.0'
+    implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation 'com.google.android.gms:play-services-location:11.4.0'
     implementation 'com.google.android.gms:play-services-games:15.0.1'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.loopeer.lib:shadow:0.0.4-beta3'
     implementation 'com.squareup.picasso:picasso:2.4.0'
     implementation 'net.gotev:uploadservice:2.1'
+
+
 }

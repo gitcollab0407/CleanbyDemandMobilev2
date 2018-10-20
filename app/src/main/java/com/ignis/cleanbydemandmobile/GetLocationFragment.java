@@ -44,7 +44,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -68,6 +70,9 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 
 public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraMoveStartedListener,
@@ -103,6 +108,9 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
+    private static final LatLngBounds LAT_LNG_BOUNDS  =  new LatLngBounds(
+            new LatLng(-40, -168), new LatLng(71, 136));
+
     private Boolean mLocationPermissionsGranted = false;
 
     private Unbinder unbinder;
@@ -124,6 +132,9 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
 
     View view;
 
+    private PlaceAutocompleteAdapter placeAutocompleteAdapter;
+    private GoogleApiClient mGoogleApiClient;
+
     String set_address, set_coordinates;
 
     public GetLocationFragment() {
@@ -136,6 +147,9 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
         View view = inflater.inflate(R.layout.fragment_get_location, container, false);
 
         ButterKnife.bind(this, view);
+
+
+
         getLocationPermission();
 
         myFadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadein_icon);
@@ -150,7 +164,7 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
         String locationrep2;
         String[] coordinate_separated;
 
-//fix this
+
         if (userLocation != null) {
             CameraPosition position = new CameraPosition.Builder().target(userLocation).zoom(17).build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
@@ -186,6 +200,27 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
             mylocation.setVisibility(View.INVISIBLE);
 
         }
+    }
+
+/*    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mGoogleApiClient.disconnect();
+    }*/
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
     }
 
     @OnClick(R.id.setlocation)
@@ -392,6 +427,39 @@ public class GetLocationFragment extends Fragment implements GoogleMap.OnCameraM
     }
 
     private void init() {
+
+
+        try {
+
+            mGoogleApiClient = new GoogleApiClient
+                    .Builder(getContext())
+                    .enableAutoManage(getActivity(), this)
+
+                    .addApi(Places.GEO_DATA_API)
+                    .addApi(Places.PLACE_DETECTION_API)
+                    .build();
+
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                    .setCountry("PH")
+                    .build();
+
+         /*   mGoogleApiClient = new GoogleApiClient
+                    .Builder(this)
+                    .enableAutoManage(this *//* FragmentActivity *//*,
+                            this *//* OnConnectionFailedListener *//*)
+                    .addApi(Drive.API)
+                    .addScope(Drive.SCOPE_FILE)
+                    .build();*/
+
+
+
+            placeAutocompleteAdapter = new PlaceAutocompleteAdapter(getActivity(), mGoogleApiClient, LAT_LNG_BOUNDS, typeFilter);
+
+            mSearchText.setAdapter(placeAutocompleteAdapter);
+
+        }catch (Exception ex){
+            Toast.makeText(getActivity(), ""+ ex, Toast.LENGTH_SHORT).show();
+        }
 
             mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
